@@ -1,97 +1,56 @@
-# PipsStore — Frontend
+# PipsStore
 
-A free forex trading education platform for complete beginners. Education only —
-no signals, no profit promises. Visual direction: **Notebook / Trading Journal** —
-warm cream ledger paper, terracotta ink, and custom SVG line drawings that sketch
-themselves in on scroll. **No photography anywhere** — every visual is a Phosphor
-icon, an animated line-art SVG, a typographic/data element, or a CSS texture.
+**Learn Forex, Trading & Market Analysis — the Right Way**
 
-## Stack
+PipsStore is a free, beginner-friendly trading education platform. It exists to help people build a solid understanding of forex and financial markets before they ever risk real money — through structured lessons, plain-language explanations, and practical tools.
 
-- **React 19** + **Vite 6**
-- **React Router 7** (`BrowserRouter`)
-- **Tailwind CSS v4** via `@tailwindcss/vite` — theme tokens + the `card-journal`,
-  `stamp`, `paper-ruled`, `paper-grid` utilities live in a CSS `@theme` / `@utility`
-  block in `src/index.css` (no `tailwind.config.js`)
-- **GSAP 3** + ScrollTrigger — one-time hero timeline reveal, a generic
-  scroll-triggered stagger reveal for card grids, and `strokeDashoffset`
-  draw-in animation for all line-art (`once: true`, no loops/parallax)
-- **Iconify** (`@iconify/react`) with the Phosphor set (`ph:*`)
-- **react-select** — every dropdown on the site (contact form experience field,
-  the two calculator currency-pair pickers), styled to the warm palette via
-  `src/lib/selectStyles.js`
-- **Axios** for the contact API call
-- `@/` path alias → `src/` (configured in `vite.config.js` and `jsconfig.json`)
+🔗 [pipsstore.com](https://pipsstore.com/)
 
-> Run `npm install` after pulling this change — `react-select` was added.
+## Mission
 
-## Getting started
+Education first. Always.
 
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build
-npm run preview
-```
+PipsStore believes that anyone who wants to learn about financial markets deserves access to clear, honest, structured content — without hype, without profit promises, and without trading signals. The platform's core belief:
 
-## Environment
+> Learn the basics, understand the markets, manage your risk.
 
-Copy `.env.example` to `.env` (a placeholder `.env` is already checked in):
+PipsStore is explicitly **not** a signals service, a broker, or a source of financial advice. It doesn't sell trade calls or claim anyone will make money. It teaches, and lets learners make their own informed decisions.
 
-```
-VITE_API_BASE_URL=https://api.pipsstore.com
-```
+## Who It's For
 
-The contact form POSTs to `${VITE_API_BASE_URL}/api/v1/contact`. The backend
-already exists elsewhere — no server code lives here.
+- Complete beginners learning forex for the first time
+- Students interested in how financial markets work
+- New traders who want to learn risk management before strategy
+- Anyone who wants to understand financial news and market-moving events
 
-## Project structure
+No prior trading experience is required, and the platform is 100% free to access — no subscriptions, no paywalls.
 
-```
-src/
-  components/
-    layout/     Navbar, Footer, Logo, Layout shell
-    common/     SectionHeading, PageHero, DrawnChart, IconBadge, DisclaimerBanner,
-                ClosingCTA, ContactForm, ToastProvider, Badge, Callout,
-                Accordion, IconTile, RevealGroup, LegalPage
-    cards/      LearningPathCard, CourseCard, GlossaryCard, MarketNewsCard,
-                CurrencyCard, PatternCard, IndicatorCard, BreakdownCard,
-                ToolPreviewCard, RoadmapStep
-  pages/        Home, Academy, Markets, Analysis, Tools, About, ThankYou,
-                PrivacyPolicy, TermsAndConditions
-  data/         Static placeholder content (courses, glossary, markets, …) +
-                chartArt.js (all line-art path/shape definitions)
-  hooks/        useAdTracking, useGsap (useHeroReveal / useStaggerReveal)
-  lib/          http (axios), tracking (gclid/keyword/location), gtag (conversion),
-                selectStyles (react-select theming)
-```
+## What's on the Platform
 
-`src/data/images.js` and `src/components/common/AnnotatedImage.jsx` are now empty
-stubs left from the old photo-based build — safe to delete.
+**Academy** — Structured learning paths and courses that build from complete-beginner concepts (what forex is, currency pairs, pips, lots, spreads) up through chart reading, risk management, and trading psychology. Includes a plain-English glossary of trading terms.
 
-## Key behaviours
+**Markets** — Live market context pulled straight from TradingView: a market news feed, real-time currency pair snapshots for a watchlist of major pairs, and a full economic calendar — all focused on helping beginners understand *why* markets move, not on giving trade tips.
 
-- **DrawnChart** (`components/common/DrawnChart.jsx`) — a reusable line-art SVG.
-  Pass a `viewBox` + an `elements` array (polyline / path / candle / hline / band
-  / arrow / note descriptors from `data/chartArt.js`); on scroll into view the
-  strokes draw themselves in and annotation marks fade in after. Powers the hero,
-  the Analysis dashboard, and every candlestick / indicator / chart-pattern card.
-- **Notebook styling** — `card-journal` (paper fill, soft shadow, inked left-edge
-  binding line, slightly uneven corners) for content cards; `stamp` (rotated,
-  rough-edged) for functional badges; `paper-ruled` / `paper-grid` textures on a
-  few section backgrounds only. Numbers everywhere use the JetBrains Mono
-  (`font-mono`) voice against the Inter body text.
-- **Ad tracking** — `gclid`, `keyword`, `loc_physical` query params are captured
-  into `sessionStorage` on app mount, forwarded by the contact form, and cleared
-  after a successful submit.
-- **Contact form** — react-select experience dropdown, client-side required-field
-  validation, honeypot field, toast on error, redirect to `/thank-you` with
-  `state.fromContactForm` on success (`response.data.code === "OK"`).
-- **/thank-you** — gated: shows the confirmation only when reached via router
-  state, otherwise auto-redirects home after 4s. Fires a Google Ads conversion
-  event once (guarded by a `useRef`).
-- **SEO** — meta/OG/Twitter tags, JSON-LD `WebSite` + `Organization`, and
-  gtag.js are wired in `index.html` with placeholder IDs (`G-XXXXXXX`,
-  `AW-XXXXXXX`).
+**Analysis** — Lessons on reading price charts: candlestick patterns, trends, support and resistance, timeframes, technical indicators, and chart patterns, illustrated with example charts.
 
-All content is realistic placeholder data in `src/data/*.js`.
+**Tools** — Free, practical calculators to learn by doing:
+- Pip Calculator
+- Profit Calculator
+
+**About / FAQ** — Background on the mission, curriculum, and answers to common questions (e.g., "Is PipsStore financial advice?" — No. "Does PipsStore provide trading signals?" — No.)
+
+## Approach
+
+- Structured learning paths, organized from beginner to advanced
+- Risk awareness taught from day one, before strategies or indicators
+- No signal selling, no profit promises
+- Plain language throughout — no unnecessary jargon
+
+## Disclaimer
+
+All content on PipsStore is for educational purposes only and does not constitute financial advice. Trading involves significant risk and may not be suitable for all individuals. Always conduct independent research and consult a qualified financial advisor before making investment decisions.
+
+## Contact
+
+- **Email:** support@pipsstore.com
+- **Response time:** within 48 hours
