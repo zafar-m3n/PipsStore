@@ -2,7 +2,7 @@
 
 **Learn Forex, Trading & Market Analysis — the Right Way**
 
-PipsStore is a free, beginner-friendly trading education platform. It exists to help people build a solid understanding of forex and financial markets before they ever risk real money — through structured lessons, plain-language explanations, and practical tools.
+Pips Store is a free, beginner-friendly trading education platform. It exists to help people build a solid understanding of forex and financial markets before they ever risk real money — through structured lessons, plain-language explanations, and practical tools.
 
 🔗 [pipsstore.com](https://pipsstore.com/)
 
