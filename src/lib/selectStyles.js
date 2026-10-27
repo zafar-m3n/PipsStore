@@ -1,67 +1,56 @@
-/* Shared react-select styling so every dropdown matches the PipsStore
-   notebook palette — warm paper background, terracotta focus, no default
-   blue anywhere. Used by the contact form and the calculator pair pickers. */
+/* Shared react-select styling, driven by the CSS tokens in src/index.css.
+   Used by the contact form and the calculator pair pickers. */
 
-const PIPS = {
-  surface: "#fffdf9",
-  line: "#e7ddd0",
-  ink: "#2f2620",
-  inkSoft: "#4b4038",
-  muted: "#8a7d72",
-  accent: "#c2542f",
-  accentSoft: "#f0d9cd",
-  accentTint: "#fbeee7",
-};
+const v = (name) => `var(--color-${name})`;
 
 export const selectStyles = {
   control: (base, state) => ({
     ...base,
-    minHeight: 44,
-    backgroundColor: PIPS.surface,
-    borderColor: state.isFocused ? PIPS.accent : PIPS.line,
-    borderRadius: 12,
-    boxShadow: state.isFocused ? `0 0 0 3px ${PIPS.accent}33` : "none",
-    fontSize: 14,
+    minHeight: 48,
+    backgroundColor: v("surface-2"),
+    borderColor: state.isFocused ? v("brand") : v("field"),
+    borderRadius: 4,
+    boxShadow: state.isFocused ? `0 0 0 1px ${v("brand")}` : "none",
+    fontSize: "var(--text-body)",
     transition: "border-color 120ms ease, box-shadow 120ms ease",
-    "&:hover": { borderColor: PIPS.accent },
+    "&:hover": { borderColor: v("brand") },
   }),
-  valueContainer: (base) => ({ ...base, padding: "2px 12px" }),
-  singleValue: (base) => ({ ...base, color: PIPS.ink }),
-  placeholder: (base) => ({ ...base, color: `${PIPS.muted}b3` }),
-  input: (base) => ({ ...base, color: PIPS.ink }),
-  indicatorSeparator: (base) => ({ ...base, backgroundColor: PIPS.line }),
+  valueContainer: (base) => ({ ...base, padding: "2px 16px" }),
+  singleValue: (base) => ({ ...base, color: v("ink") }),
+  placeholder: (base) => ({ ...base, color: v("ink-muted") }),
+  input: (base) => ({ ...base, color: v("ink") }),
+  indicatorSeparator: () => ({ display: "none" }),
   dropdownIndicator: (base, state) => ({
     ...base,
-    color: state.isFocused ? PIPS.accent : PIPS.muted,
-    "&:hover": { color: PIPS.accent },
+    color: state.isFocused ? v("brand") : v("ink-muted"),
+    "&:hover": { color: v("brand") },
   }),
   clearIndicator: (base) => ({
     ...base,
-    color: PIPS.muted,
-    "&:hover": { color: PIPS.accent },
+    color: v("ink-muted"),
+    "&:hover": { color: v("brand") },
   }),
   menu: (base) => ({
     ...base,
-    backgroundColor: PIPS.surface,
-    border: `1px solid ${PIPS.line}`,
-    borderRadius: 12,
+    backgroundColor: v("surface-3"),
+    borderRadius: 4,
     overflow: "hidden",
-    boxShadow: "0 12px 30px rgba(47, 38, 32, 0.14)",
+    boxShadow: "var(--shadow-float)",
   }),
   menuPortal: (base) => ({ ...base, zIndex: 60 }),
   menuList: (base) => ({ ...base, padding: 4 }),
   option: (base, state) => ({
     ...base,
-    borderRadius: 8,
-    fontSize: 14,
+    borderRadius: 4,
+    fontSize: "var(--text-body)",
     cursor: "pointer",
-    color: state.isSelected ? "#ffffff" : PIPS.inkSoft,
+    color: state.isSelected ? v("on-brand") : v("ink"),
     backgroundColor: state.isSelected
-      ? PIPS.accent
+      ? v("brand")
       : state.isFocused
-        ? PIPS.accentTint
+        ? v("surface-2")
         : "transparent",
-    "&:active": { backgroundColor: PIPS.accentSoft },
+    "&:active": { backgroundColor: v("brand-press"), color: v("on-brand") },
   }),
 };
 
@@ -69,12 +58,15 @@ export const selectTheme = (theme) => ({
   ...theme,
   colors: {
     ...theme.colors,
-    primary: PIPS.accent,
-    primary25: PIPS.accentTint,
-    primary50: PIPS.accentSoft,
-    primary75: PIPS.accentSoft,
-    neutral20: PIPS.line,
-    neutral30: PIPS.accent,
+    primary: v("brand"),
+    primary25: v("surface-2"),
+    primary50: v("surface-3"),
+    primary75: v("surface-3"),
+    neutral0: v("surface-2"),
+    neutral20: v("field"),
+    neutral30: v("brand"),
+    neutral50: v("ink-muted"),
+    neutral80: v("ink"),
   },
 });
 

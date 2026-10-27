@@ -1,23 +1,19 @@
 import { Icon } from "@iconify/react";
 
-/* Warm rounded-square icon holder. Static — no hover animation. */
+/* A bare inline icon in the brand colour. No tinted square. */
 const SIZES = {
-  sm: "h-10 w-10 text-lg",
-  md: "h-12 w-12 text-xl",
-  lg: "h-14 w-14 text-2xl",
+  sm: "text-lead",
+  md: "text-title",
+  lg: "text-title",
 };
 
 export function IconBadge({ icon, size = "md", className = "" }) {
   return (
-    <span
-      className={[
-        "inline-flex shrink-0 items-center justify-center rounded-xl bg-pips-accent-tint text-pips-accent ring-1 ring-pips-accent-soft",
-        SIZES[size] || SIZES.md,
-        className,
-      ].join(" ")}
-    >
-      <Icon icon={icon} />
-    </span>
+    <Icon
+      icon={icon}
+      aria-hidden="true"
+      className={["shrink-0 text-brand", SIZES[size] || SIZES.md, className].join(" ")}
+    />
   );
 }
 

@@ -10,33 +10,10 @@
      { type: "band", x,y,w,h, fill }                // highlighted zone, fades in
      { type: "candle", x, wickTop,wickBot, bodyTop,bodyBot, w, bear }
      { type: "arrow", x1,y1,x2,y2 }                 // fades in after strokes
-     { type: "note", x,y, text, size, anchor }      // Shantell Sans, fades in
+     { type: "note", x,y, text, size, anchor }      // fades in
    Optional per element: stroke, width, fill
+   Candles: bull (default) renders hollow blue, bear: true filled orange.
    ============================================================ */
-
-/* ---------------- Homepage hero ---------------- */
-export const HERO_ART = {
-  viewBox: "0 0 360 320",
-  ariaLabel:
-    "Hand-drawn rising price line with candlesticks and a trend arrow",
-  elements: [
-    { type: "hline", y: 286, x1: 18, x2: 344, dashArray: "2 7", width: 1.2 },
-    {
-      type: "polyline",
-      width: 2.6,
-      points:
-        "20,244 58,252 96,214 134,228 172,178 210,196 248,146 288,156 340,92",
-    },
-    { type: "candle", x: 70, wickTop: 224, wickBot: 266, bodyTop: 238, bodyBot: 258, w: 16, bear: true, width: 2 },
-    { type: "candle", x: 150, wickTop: 196, wickBot: 240, bodyTop: 206, bodyBot: 232, w: 16, width: 2 },
-    { type: "candle", x: 232, wickTop: 158, wickBot: 206, bodyTop: 170, bodyBot: 198, w: 16, bear: true, width: 2 },
-    { type: "candle", x: 312, wickTop: 108, wickBot: 166, bodyTop: 120, bodyBot: 150, w: 16, width: 2 },
-    { type: "band", x: 20, y: 214, w: 324, h: 22 },
-    { type: "arrow", x1: 42, y1: 252, x2: 330, y2: 104, width: 2.4 },
-    { type: "note", x: 24, y: 40, text: "higher highs, higher lows", size: 14 },
-    { type: "note", x: 24, y: 208, text: "support", size: 13 },
-  ],
-};
 
 /* ---------------- Analysis: live chart dashboard ---------------- */
 export const DASHBOARD_ART = {

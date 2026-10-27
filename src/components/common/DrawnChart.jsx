@@ -4,12 +4,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* Elements inherit the ink colour from the SVG's CSS `color`
-   (set on the root <svg> below) via `currentColor` — presentation
-   attributes don't reliably accept CSS var() across browsers. */
+/* Elements inherit the ink colour from the SVG's CSS `color` via
+   `currentColor`. Market colours go through `style`, because presentation
+   attributes don't reliably accept CSS var() across browsers.
+   Bull candles are hollow blue, bear candles filled orange; brand mint
+   never appears inside a chart. */
 const INK = "currentColor";
-const BAND_FILL = "rgba(194, 84, 47, 0.12)";
-const BEAR_FILL = "rgba(194, 84, 47, 0.18)";
+const BULL = "var(--color-bull)";
+const BEAR = "var(--color-bear)";
+const BAND_FILL = "rgb(184 198 193 / 0.1)";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -116,6 +119,7 @@ function renderElement(el, i) {
     case "candle": {
       const half = (el.w ?? 11) / 2;
       const bodyH = Math.max(1.5, el.bodyBot - el.bodyTop);
+      const tone = el.bear ? BEAR : BULL;
       return (
         <g key={i}>
           <line
@@ -124,14 +128,14 @@ function renderElement(el, i) {
             x2={el.x}
             y2={el.wickBot}
             {...strokeProps}
+            style={{ stroke: tone }}
             data-draw=""
           />
           <path
             d={`M ${el.x - half} ${el.bodyTop} h ${half * 2} v ${bodyH} h ${-half * 2} Z`}
-            stroke={stroke}
             strokeWidth={width}
             strokeLinejoin="round"
-            fill={el.bear ? BEAR_FILL : "none"}
+            style={{ stroke: tone, fill: el.bear ? BEAR : "none" }}
             vectorEffect="non-scaling-stroke"
             data-draw=""
           />
@@ -163,7 +167,7 @@ function renderElement(el, i) {
         <circle key={i} cx={el.cx} cy={el.cy} r={el.r} {...strokeProps} {...flag} />
       );
 
-    /* short handwritten note (Shantell Sans) — used sparingly */
+    /* short annotation — used sparingly */
     case "note":
       return (
         <text
@@ -171,9 +175,9 @@ function renderElement(el, i) {
           x={el.x}
           y={el.y}
           data-after=""
-          fontFamily='"Shantell Sans", cursive'
+          fontFamily='"Hanken Grotesk", ui-sans-serif, sans-serif'
           fontSize={el.size ?? 12}
-          fontWeight="600"
+          fontWeight="500"
           fill={el.stroke || INK}
           textAnchor={el.anchor || "start"}
         >
@@ -198,14 +202,14 @@ function renderElement(el, i) {
      elements      array of element descriptors (see renderElement)
      drawDuration  seconds per stroke (default 0.9)
      ariaLabel     accessible description
-     inkColor      stroke colour (default terracotta accent)
+     inkColor      stroke colour for non-market marks (default soft ink)
    ================================================================== */
 export function DrawnChart({
   viewBox = "0 0 320 200",
   elements = [],
   drawDuration = 0.9,
-  ariaLabel = "Hand-drawn chart illustration",
-  inkColor = "#c2542f",
+  ariaLabel = "Chart illustration",
+  inkColor = "var(--color-ink-soft)",
   className = "",
 }) {
   const ref = useRef(null);

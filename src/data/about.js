@@ -3,13 +3,6 @@
 export const ABOUT_MISSION =
   "PipsStore exists to give complete beginners a calm, honest place to learn how the forex market works — starting with risk, not strategy. Everything here is free. We don't sell signals, we don't promise profits, and we'd rather you understand a chart than copy one.";
 
-export const ABOUT_STATS = [
-  { value: "50+", label: "Lessons" },
-  { value: "6+", label: "Learning Paths" },
-  { value: "4", label: "Free Tools" },
-  { value: "100%", label: "Free to Access" },
-];
-
 export const CURRICULUM_PILLARS = [
   {
     title: "Forex Basics",
@@ -45,7 +38,7 @@ export const CURRICULUM_PILLARS = [
     title: "Practical Tools",
     icon: "ph:calculator",
     description:
-      "Calculators and checklists that turn the theory into numbers you can act on.",
+      "Two free calculators, pip value and trade profit, that turn the theory into numbers you can check.",
   },
 ];
 

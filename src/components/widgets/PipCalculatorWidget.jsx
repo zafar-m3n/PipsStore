@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 
 /* CashbackForex Pip Value Calculator embed.
-   The exact provided markup — the two <script> tags and the RemoteCalc(...)
-   call with its base64-encoded style params — is preserved verbatim in
-   WIDGET_HTML below and never altered.
+   The provided markup — the two <script> tags and the RemoteCalc(...) call —
+   is kept as supplied; only its base64-encoded style params are re-themed to
+   the dark tokens (surface-2/3 panes, ink text, field borders, brand button).
 
    <script> tags inserted via innerHTML do not execute, so on mount we parse
    the markup, then re-insert the scripts as executable clones: the external
    remote-widgets.js first, then the inline RemoteCalc(...) once it has loaded
    (or immediately if the library is already present from another calculator). */
-const WIDGET_HTML = `<div id="pip-value-calculator-737182"><script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script><script type="text/javascript"> RemoteCalc({"Url":"https://www.cashbackforex.com", "TopPaneStyle":"YmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KCNmZmZhZjUgMjAlLCAjZjVlZGUxIDQ1JSk7IGNvbG9yOiAjM2QyYjFmOyBib3JkZXI6IHNvbGlkIDFweCAjZTBjZmFlOyBib3JkZXItYm90dG9tOiBub25lOw==","BottomPaneStyle":"YmFja2dyb3VuZDogI2Y1ZWRlMTsgYm9yZGVyOiBzb2xpZCAxcHggI2UwY2ZhZTsgY29sb3I6ICMzZDJiMWY7","ButtonStyle":"YmFja2dyb3VuZDogI2MyNTQyZjsgY29sb3I6IHdoaXRlOyBib3JkZXItcmFkaXVzOiAxMnB4OyBmb250LXdlaWdodDogNjAwOw==","TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiAyOHB4OyBmb250LXdlaWdodDogNzAwOyBmb250LWZhbWlseTogJ1NvcmEnLCBzYW5zLXNlcmlmOyBjb2xvcjogIzNkMmIxZjs=","TextboxStyle":"YmFja2dyb3VuZC1jb2xvcjogI2ZmZmFmNTsgY29sb3I6ICMzZDJiMWY7IGJvcmRlcjogc29saWQgMXB4ICNkOWM3YWU7IGJvcmRlci1yYWRpdXM6IDhweDs=","ContainerWidth":"665","HighlightColor":"#ffff00","IsDisplayTitle":false,"IsShowChartLinks":true,"IsShowEmbedButton":true,"CompactType":"large","Calculator":"pip-value-calculator","ContainerId":"pip-value-calculator-737182"});</script></div>`;
+const WIDGET_HTML = `<div id="pip-value-calculator-737182"><script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-widgets.js"></script><script type="text/javascript"> RemoteCalc({"Url":"https://www.cashbackforex.com", "TopPaneStyle":"YmFja2dyb3VuZDogIzEzMjAxQzsgY29sb3I6ICNFM0VDRTk7IGJvcmRlcjogbm9uZTs=","BottomPaneStyle":"YmFja2dyb3VuZDogIzFCMkIyNjsgY29sb3I6ICNFM0VDRTk7IGJvcmRlcjogbm9uZTs=","ButtonStyle":"YmFja2dyb3VuZDogIzEyRTVBODsgY29sb3I6ICMwMzE0MEU7IGJvcmRlci1yYWRpdXM6IDRweDsgZm9udC13ZWlnaHQ6IDcwMDs=","TitleStyle":"dGV4dC1hbGlnbjogbGVmdDsgZm9udC1zaXplOiAyOHB4OyBmb250LXdlaWdodDogNzAwOyBmb250LWZhbWlseTogJ0hhbmtlbiBHcm90ZXNrJywgc2Fucy1zZXJpZjsgY29sb3I6ICNFM0VDRTk7","TextboxStyle":"YmFja2dyb3VuZC1jb2xvcjogIzA3MEQwQjsgY29sb3I6ICNFM0VDRTk7IGJvcmRlcjogc29saWQgMXB4ICM3NjkwOEE7IGJvcmRlci1yYWRpdXM6IDRweDs=","ContainerWidth":"665","HighlightColor":"#0A3A2F","IsDisplayTitle":false,"IsShowChartLinks":true,"IsShowEmbedButton":true,"CompactType":"large","Calculator":"pip-value-calculator","ContainerId":"pip-value-calculator-737182"});</script></div>`;
 
 export default function PipCalculatorWidget() {
   const hostRef = useRef(null);

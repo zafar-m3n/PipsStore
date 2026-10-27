@@ -141,3 +141,11 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Claude-only files
+.claude/
+CLAUDE.md
+skills-lock.json
+PRODUCT.md
+.impeccable/
+.taste-skill/

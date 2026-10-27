@@ -1,21 +1,22 @@
 import { Children } from "react";
 import { useStaggerReveal } from "@/hooks/useGsap.js";
 
-/* Wraps a card grid: attaches the scroll-triggered stagger reveal and
-   wraps each direct child so GSAP animates it in one-time on scroll.
-   Each child sits in a full-height wrapper so `h-full` cards still work. */
-export function RevealGroup({ as: Tag = "div", className = "", children }) {
-  const scope = useStaggerReveal();
+/* Wraps a card grid and reveals it row by row on scroll. Items are visible
+   without JavaScript; GSAP hides them only while it is about to animate them.
+   Pass `settleKey` (a tab or filter value) to fade the group on a switch;
+   search-driven changes just swap the cards. Children need stable keys. */
+export function RevealGroup({ as: Tag = "div", className = "", settleKey, children }) {
+  const items = Children.toArray(children).filter(Boolean);
+  const contentKey = items.map((c) => c.key).join("|");
+  const scope = useStaggerReveal({ contentKey, settleKey });
 
   return (
     <Tag ref={scope} className={className}>
-      {Children.map(children, (child, i) =>
-        child == null || child === false ? null : (
-          <div key={i} data-reveal-item className="reveal-init h-full">
-            {child}
-          </div>
-        ),
-      )}
+      {items.map((child) => (
+        <div key={child.key} data-reveal-item className="h-full">
+          {child}
+        </div>
+      ))}
     </Tag>
   );
 }

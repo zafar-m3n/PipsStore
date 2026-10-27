@@ -13,6 +13,7 @@ import { Icon } from "@iconify/react";
 const ToastContext = createContext(null);
 
 const AUTO_DISMISS_MS = 4000;
+const EXIT_MS = 150;
 
 /** useToast() -> { showToast(message, type), success(msg), error(msg) } */
 export function useToast() {
@@ -21,50 +22,74 @@ export function useToast() {
   return ctx;
 }
 
-function ToastItem({ toast, onClose }) {
-  const [visible, setVisible] = useState(false);
+/* The timer pauses while the toast is hovered or focused, and while the tab
+   is hidden, so a message is never missed. */
+function ToastItem({ toast, onRemove }) {
+  const [entered, setEntered] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const [held, setHeld] = useState(false);
+  const [tabHidden, setTabHidden] = useState(() => document.hidden);
+  const remaining = useRef(AUTO_DISMISS_MS);
 
   useEffect(() => {
-    const enter = requestAnimationFrame(() => setVisible(true));
-    const timer = setTimeout(() => setVisible(false), AUTO_DISMISS_MS - 220);
-    const remove = setTimeout(onClose, AUTO_DISMISS_MS);
+    const frame = requestAnimationFrame(() => setEntered(true));
+    const onVisibility = () => setTabHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      cancelAnimationFrame(enter);
-      clearTimeout(timer);
-      clearTimeout(remove);
+      cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [onClose]);
+  }, []);
+
+  useEffect(() => {
+    if (held || tabHidden || leaving) return;
+    const started = Date.now();
+    const timer = setTimeout(() => setLeaving(true), remaining.current);
+    return () => {
+      clearTimeout(timer);
+      remaining.current -= Date.now() - started;
+    };
+  }, [held, tabHidden, leaving]);
+
+  useEffect(() => {
+    if (!leaving) return;
+    const timer = setTimeout(() => onRemove(toast.id), EXIT_MS);
+    return () => clearTimeout(timer);
+  }, [leaving, onRemove, toast.id]);
 
   const isError = toast.type === "error";
+  const shown = entered && !leaving;
 
   return (
     <div
       role="status"
+      onPointerEnter={() => setHeld(true)}
+      onPointerLeave={() => setHeld(false)}
+      onFocus={() => setHeld(true)}
+      onBlur={() => setHeld(false)}
       className={[
-        "pointer-events-auto flex items-start gap-3 rounded-2xl border px-4 py-3 shadow-pips-hover",
-        "transition-all duration-200 ease-out",
-        visible
-          ? "translate-y-0 scale-100 opacity-100"
-          : "-translate-y-2 scale-95 opacity-0",
-        isError
-          ? "border-pips-bear/30 bg-pips-bear-soft text-pips-bear"
-          : "border-pips-bull/30 bg-pips-bull-soft text-pips-bull",
+        "chamfer pointer-events-auto flex max-w-md items-start gap-3 bg-surface-3 py-3 pr-2 pl-4 shadow-float",
+        "transition-[opacity,translate] ease-out motion-reduce:translate-y-0",
+        leaving ? "duration-150" : "duration-200",
+        shown ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
+        isError ? "text-error" : "text-success",
       ].join(" ")}
     >
       <Icon
         icon={isError ? "ph:warning-circle-fill" : "ph:check-circle-fill"}
-        className="mt-0.5 shrink-0 text-xl"
+        className="mt-0.5 shrink-0 text-lead"
+        aria-hidden="true"
       />
-      <p className="text-sm font-medium leading-snug text-pips-ink">
+      <p className="py-0.5 text-body font-medium text-ink">
         {toast.message}
       </p>
       <button
         type="button"
-        onClick={onClose}
-        className="ml-1 shrink-0 rounded-full p-0.5 text-pips-muted transition-colors hover:text-pips-ink"
+        onClick={() => setLeaving(true)}
+        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-muted press hover:bg-surface-2 hover:text-ink"
         aria-label="Dismiss notification"
       >
-        <Icon icon="ph:x-bold" className="text-sm" />
+        <Icon icon="ph:x-bold" className="text-small" aria-hidden="true" />
       </button>
     </div>
   );
@@ -99,11 +124,7 @@ export function ToastProvider({ children }) {
         createPortal(
           <div className="pointer-events-none fixed inset-x-0 top-4 z-[100] flex flex-col items-center gap-2 px-4">
             {toasts.map((toast) => (
-              <ToastItem
-                key={toast.id}
-                toast={toast}
-                onClose={() => remove(toast.id)}
-              />
+              <ToastItem key={toast.id} toast={toast} onRemove={remove} />
             ))}
           </div>,
           document.body,

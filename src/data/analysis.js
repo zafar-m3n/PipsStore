@@ -13,7 +13,7 @@ import {
 export const CHART_FUNDAMENTALS = [
   {
     title: "Candlesticks",
-    icon: "ph:chart-candlestick",
+    icon: "ph:chart-bar",
     description:
       "Each candle shows the open, high, low, and close for a period. The body is the range between open and close; the wicks are the extremes.",
   },

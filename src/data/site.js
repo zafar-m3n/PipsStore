@@ -1,7 +1,6 @@
 /* Site-wide static content: nav, footer, disclaimer, contact details. */
 
 export const NAV_LINKS = [
-  { label: "Home", to: "/" },
   { label: "Academy", to: "/academy" },
   { label: "Markets", to: "/markets" },
   { label: "Analysis", to: "/analysis" },
@@ -24,15 +23,15 @@ export const FOOTER_COLUMNS = [
     links: [
       { label: "All Courses", to: "/academy" },
       { label: "Beginner Path", to: "/academy" },
-      { label: "Glossary", to: "/academy" },
-      { label: "Beginner Roadmap", to: "/" },
+      { label: "Glossary", to: "/academy#glossary" },
+      { label: "Beginner Roadmap", to: "/#roadmap" },
     ],
   },
   {
     title: "Tools",
     links: [
-      { label: "Pip Calculator", to: "/tools" },
-      { label: "Profit Calculator", to: "/tools" },
+      { label: "Pip Calculator", to: "/tools#pip-calculator" },
+      { label: "Profit Calculator", to: "/tools#profit-calculator" },
       { label: "Market News", to: "/markets" },
       { label: "Economic Calendar", to: "/markets" },
     ],

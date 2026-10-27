@@ -29,7 +29,7 @@ const EXPERIENCE_SELECT_OPTIONS = EXPERIENCE_OPTIONS.map((o) => ({
 }));
 
 const fieldClass =
-  "w-full rounded-xl border border-pips-line bg-pips-surface px-4 py-2.5 text-sm text-pips-ink placeholder:text-pips-muted/70 outline-none transition-shadow focus:border-pips-accent focus:ring-2 focus:ring-pips-accent/30";
+  "min-h-12 w-full rounded-sm border border-field bg-surface-2 px-4 py-3 text-body text-ink placeholder:text-ink-muted outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand";
 
 export function ContactForm({ className = "", heading, blurb }) {
   const [values, setValues] = useState(EMPTY);
@@ -102,12 +102,12 @@ export function ContactForm({ className = "", heading, blurb }) {
     <form
       onSubmit={onSubmit}
       noValidate
-      className={["card-journal p-5 sm:p-6", className].join(" ")}
+      className={["panel p-6 sm:p-8", className].join(" ")}
     >
       {heading && (
-        <h3 className="text-lg font-semibold text-pips-ink">{heading}</h3>
+        <h3 className="text-lead font-bold text-ink">{heading}</h3>
       )}
-      {blurb && <p className="mt-1 text-sm text-pips-muted">{blurb}</p>}
+      {blurb && <p className="mt-2 text-body text-ink-soft">{blurb}</p>}
 
       <div className={heading || blurb ? "mt-4 space-y-3" : "space-y-3"}>
         <div>
@@ -197,24 +197,35 @@ export function ContactForm({ className = "", heading, blurb }) {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pips-accent px-6 py-3 text-sm font-semibold text-white shadow-pips transition-colors hover:bg-pips-accent-strong disabled:cursor-not-allowed disabled:opacity-70"
+          className="chamfer inline-flex min-h-12 w-full items-center justify-center gap-2 bg-brand px-6 py-3 text-body font-bold text-on-brand press hover:bg-brand-hover active:bg-brand-press disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {submitting ? (
-            <>
-              <Icon icon="ph:circle-notch-bold" className="animate-spin" />
-              Sending…
-            </>
-          ) : (
-            <>
+          <span className="grid">
+            <span
+              aria-hidden={submitting}
+              className={[
+                "inline-flex items-center justify-center gap-2 transition-[opacity,filter] duration-200 [grid-area:1/1]",
+                submitting ? "opacity-0 blur-[2px]" : "opacity-100",
+              ].join(" ")}
+            >
               Get started free
-              <Icon icon="ph:paper-plane-tilt-bold" className="text-sm" />
-            </>
-          )}
+              <Icon icon="ph:paper-plane-tilt-bold" aria-hidden="true" />
+            </span>
+            <span
+              aria-hidden={!submitting}
+              className={[
+                "inline-flex items-center justify-center gap-2 transition-[opacity,filter] duration-200 [grid-area:1/1]",
+                submitting ? "opacity-100" : "opacity-0 blur-[2px]",
+              ].join(" ")}
+            >
+              <Icon icon="ph:circle-notch-bold" aria-hidden="true" className={submitting ? "animate-spin motion-reduce:animate-none" : ""} />
+              Sending…
+            </span>
+          </span>
         </button>
 
-        <p className="text-center text-xs leading-relaxed text-pips-muted">
+        <p className="text-small text-ink-muted">
           Free educational content only. No signals, no spam. See our{" "}
-          <Link to="/privacy-policy" className="text-pips-accent hover:underline">
+          <Link to="/privacy-policy" className="text-brand underline hover:text-brand-hover">
             Privacy Policy
           </Link>
           .

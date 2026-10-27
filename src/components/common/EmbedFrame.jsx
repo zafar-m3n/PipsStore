@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
                 (TradingView timeline / events). Omit for self-sizing embeds.
      minHeight  fallback min height when `height` is not given.
      label      accessible loading label.
-     bare       drop the default card-journal treatment (caller styles it).
+     bare       drop the default panel treatment (caller styles it).
      clip       clip overflow to the frame (default true). Set false for
                 embeds that size themselves and may grow past `minHeight`.
 */
@@ -25,6 +25,7 @@ export function EmbedFrame({
 }) {
   const ref = useRef(null);
   const [ready, setReady] = useState(false);
+  const [skeletonGone, setSkeletonGone] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -63,25 +64,29 @@ export function EmbedFrame({
       className={[
         "relative",
         clip ? "overflow-hidden" : "",
-        bare ? "" : "card-journal p-2 sm:p-3",
+        bare ? "" : "panel p-2 sm:p-3",
         className,
       ].join(" ")}
       style={style}
     >
-      {!ready && (
+      {!skeletonGone && (
         <div
-          className="absolute inset-0 z-10 flex flex-col gap-3 p-4"
+          className={[
+            "pointer-events-none absolute inset-0 z-10 flex flex-col gap-3 p-4 transition-opacity duration-200 ease-out",
+            ready ? "opacity-0" : "opacity-100",
+          ].join(" ")}
+          onTransitionEnd={() => ready && setSkeletonGone(true)}
           aria-hidden="true"
         >
-          <div className="h-6 w-2/5 animate-pulse rounded bg-pips-surface-alt" />
-          <div className="flex-1 animate-pulse rounded-lg bg-pips-surface-alt" />
+          <div className="h-6 w-2/5 animate-pulse rounded-sm bg-surface-2 motion-reduce:animate-none" />
+          <div className="flex-1 animate-pulse rounded-sm bg-surface-2 motion-reduce:animate-none" />
         </div>
       )}
       <span className="sr-only">{ready ? "" : label}</span>
       <div
         ref={ref}
         className={[
-          "h-full w-full transition-opacity duration-500",
+          "h-full w-full transition-opacity duration-300 ease-out",
           ready ? "opacity-100" : "opacity-0",
         ].join(" ")}
       >

@@ -10,6 +10,7 @@ export default function TermsAndConditions() {
   return (
     <LegalPage
       title="Terms & Conditions"
+      subtitle="The rules for using the PipsStore website and its free educational content."
       lastUpdated={LEGAL_LAST_UPDATED}
       intro={TERMS_INTRO}
       summary={TERMS_SUMMARY}

@@ -66,7 +66,7 @@ export function ScaledFixedWidth({ width = 665, children, className = "" }) {
     <div
       ref={outerRef}
       className={[
-        "flex w-full justify-center overflow-hidden",
+        "flex w-full items-start justify-center overflow-hidden",
         className,
       ].join(" ")}
       style={{ height }}

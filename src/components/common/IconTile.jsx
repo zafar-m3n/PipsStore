@@ -1,26 +1,16 @@
-import { IconBadge } from "@/components/common/IconBadge.jsx";
+import { Icon } from "@iconify/react";
 
-/* Icon-in-rounded-square tile — the site's workhorse for simple
-   conceptual / functional content (benefit grids, roadmap steps,
-   teaches lists, who-it's-for, FAQ, contact tiles, etc.).
-   Styled as a notebook index card. The icon itself is static. */
+/* Text-led item: title with an inline icon, then its description. */
 export function IconTile({ icon, title, description, children, className = "" }) {
   return (
-    <div
-      className={[
-        "card-journal h-full p-6 transition-shadow duration-300 hover:shadow-pips-hover",
-        className,
-      ].join(" ")}
-    >
-      <IconBadge icon={icon} />
+    <div className={["h-full", className].join(" ")}>
       {title && (
-        <h3 className="mt-4 text-lg font-semibold text-pips-ink">{title}</h3>
+        <h3 className="flex items-center gap-3 text-lead font-bold text-ink">
+          {icon && <Icon icon={icon} aria-hidden="true" className="shrink-0 text-brand" />}
+          {title}
+        </h3>
       )}
-      {description && (
-        <p className="mt-2 text-sm leading-relaxed text-pips-muted">
-          {description}
-        </p>
-      )}
+      {description && <p className="mt-2 max-w-[60ch] text-body text-ink-soft">{description}</p>}
       {children}
     </div>
   );

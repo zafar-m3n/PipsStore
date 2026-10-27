@@ -11,7 +11,7 @@ function TradingViewWidget() {
         {
           "displayMode": "adaptive",
           "feedMode": "all_symbols",
-          "colorTheme": "light",
+          "colorTheme": "dark",
           "isTransparent": true,
           "locale": "en",
           "width": "100%",

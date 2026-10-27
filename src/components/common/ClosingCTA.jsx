@@ -1,44 +1,64 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
-/* Closing call-to-action band used at the foot of every content page. */
+/* Page closer with exactly one primary action. Variants keep neighbouring
+   pages from ending the same way:
+     band    full-bleed teal field, statement left, action right
+     split   on the page ground: title left, sentence and action right
+     inline  one sentence and a text link */
 export function ClosingCTA({
   title = "Start learning for free",
   subtitle = "No account, no cost, no signals. Just clear lessons and tools built for beginners.",
-  buttons = [
-    { label: "Go to Academy", to: "/academy" },
-    { label: "Explore Tools", to: "/tools", variant: "ghost" },
-  ],
+  action,
+  buttons,
+  variant = "band",
 }) {
-  return (
-    <section className="container-pips py-16">
-      <div className="relative overflow-hidden rounded-3xl border border-pips-accent-soft bg-pips-accent-tint px-6 py-12 text-center sm:px-12 sm:py-16">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-pips-accent/10 blur-2xl"
-        />
-        <h2 className="relative text-3xl font-bold text-pips-ink sm:text-4xl">
-          {title}
-        </h2>
-        <p className="relative mx-auto mt-3 max-w-xl text-pips-muted">
-          {subtitle}
+  const primary = action || buttons?.[0] || { label: "Go to Academy", to: "/academy" };
+
+  const button = (
+    <Link
+      to={primary.to}
+      className="chamfer inline-flex min-h-12 items-center gap-2 bg-brand px-6 text-body font-bold whitespace-nowrap text-on-brand press hover:bg-brand-hover active:bg-brand-press"
+    >
+      {primary.label}
+      <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
+    </Link>
+  );
+
+  if (variant === "inline") {
+    return (
+      <section className="container-page py-section">
+        <h2 className="text-title font-bold text-ink">{title}</h2>
+        <p className="mt-4 max-w-[60ch] text-body text-ink-soft sm:text-lead">
+          {subtitle}{" "}
+          <Link to={primary.to} className="font-bold text-brand underline hover:text-brand-hover">
+            {primary.label}
+          </Link>
         </p>
-        <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
-          {buttons.map((b) => (
-            <Link
-              key={b.to + b.label}
-              to={b.to}
-              className={
-                b.variant === "ghost"
-                  ? "inline-flex items-center gap-2 rounded-full border border-pips-accent/40 bg-pips-surface px-6 py-3 text-sm font-semibold text-pips-accent transition-colors hover:bg-pips-accent-soft"
-                  : "inline-flex items-center gap-2 rounded-full bg-pips-accent px-6 py-3 text-sm font-semibold text-white shadow-pips transition-colors hover:bg-pips-accent-strong"
-              }
-            >
-              {b.label}
-              <Icon icon="ph:arrow-right-bold" className="text-sm" />
-            </Link>
-          ))}
+      </section>
+    );
+  }
+
+  if (variant === "split") {
+    return (
+      <section className="container-page grid gap-8 py-section lg:grid-cols-12 lg:items-end">
+        <h2 className="text-title font-bold text-ink lg:col-span-6">{title}</h2>
+        <div className="lg:col-span-6">
+          <p className="max-w-[52ch] text-body text-ink-soft sm:text-lead">{subtitle}</p>
+          <div className="mt-6">{button}</div>
         </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="band-field">
+      <div className="container-page grid gap-8 py-24 lg:grid-cols-12 lg:items-center">
+        <div className="lg:col-span-8">
+          <h2 className="text-title font-bold text-ink">{title}</h2>
+          <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">{subtitle}</p>
+        </div>
+        <div className="lg:col-span-4 lg:justify-self-end">{button}</div>
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export const ROADMAP_STEPS = [
   {
     step: 3,
     title: "Read Candlestick Charts",
-    icon: "ph:chart-candlestick",
+    icon: "ph:chart-bar",
     description:
       "Learn what a candle shows, how to spot trends, and where price tends to react.",
   },

@@ -1,32 +1,27 @@
 import { Icon } from "@iconify/react";
 
-/* Small highlighted note box. Used for "Beginner Note" callouts and
-   the highlighted liability/privacy callouts on the legal pages. */
+/* Highlighted note: "Beginner note" callouts and the important notices
+   on the legal pages. */
+const TONES = {
+  accent: "text-brand",
+  warn: "text-warning",
+  info: "text-info",
+};
+
 export function Callout({
-  label = "Beginner Note",
+  label = "Beginner note",
   icon = "ph:lightbulb",
   children,
   tone = "accent",
   className = "",
 }) {
-  const tones = {
-    accent: "border-pips-accent-soft bg-pips-accent-tint text-pips-ink-soft",
-    warn: "border-pips-warn/30 bg-pips-warn-soft/70 text-pips-ink-soft",
-    dark: "border-white/15 bg-white/5 text-pips-bg/80",
-  };
   return (
-    <div
-      className={[
-        "rounded-2xl border px-4 py-3",
-        tones[tone] || tones.accent,
-        className,
-      ].join(" ")}
-    >
-      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide">
-        <Icon icon={icon} className="text-sm" />
+    <div className={["panel-raised px-5 py-4", className].join(" ")}>
+      <p className={["flex items-center gap-2 text-small font-bold", TONES[tone] || TONES.accent].join(" ")}>
+        <Icon icon={icon} aria-hidden="true" />
         {label}
       </p>
-      <p className="mt-1 text-sm leading-relaxed">{children}</p>
+      <p className="mt-1 text-body text-ink-soft">{children}</p>
     </div>
   );
 }

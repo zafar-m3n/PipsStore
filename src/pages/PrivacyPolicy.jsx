@@ -11,6 +11,7 @@ export default function PrivacyPolicy() {
   return (
     <LegalPage
       title="Privacy Policy"
+      subtitle="What information PipsStore collects, how it's used, and the choices you have."
       lastUpdated={LEGAL_LAST_UPDATED}
       intro={PRIVACY_INTRO}
       summary={PRIVACY_SUMMARY}

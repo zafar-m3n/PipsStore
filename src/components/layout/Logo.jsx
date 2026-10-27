@@ -1,31 +1,17 @@
 import { Link } from "react-router-dom";
+import markUrl from "@/assets/brand/pips-mark.png";
+import wordmarkUrl from "@/assets/brand/pips-wordmark.png";
 
-/* Wordmark with a hand-drawn underline flourish — echoes the
-   annotation device used across the site. */
 export function Logo({ className = "", onClick }) {
   return (
     <Link
       to="/"
       onClick={onClick}
-      className={["inline-flex flex-col leading-none", className].join(" ")}
+      className={["inline-flex shrink-0 items-center gap-2 chamfer", className].join(" ")}
       aria-label="PipsStore — home"
     >
-      <span className="font-display text-xl font-extrabold tracking-tight text-pips-ink">
-        Pips<span className="text-pips-accent">Store</span>
-      </span>
-      <svg
-        viewBox="0 0 120 12"
-        className="mt-0.5 h-2 w-[88px]"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M2 8C22 3 45 3 60 6c14 3 38 4 58-2"
-          stroke="#c2542f"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-      </svg>
+      <img src={markUrl} alt="" width={121} height={96} className="h-8 w-auto sm:h-10" />
+      <img src={wordmarkUrl} alt="" width={402} height={48} className="h-4 w-auto sm:h-5" />
     </Link>
   );
 }

@@ -12,10 +12,13 @@ const MiniChart = ({ symbol = "FX:EURUSD" }) => {
       height: 220,
       locale: "en",
       dateRange: "12M",
-      colorTheme: "light",
+      colorTheme: "dark",
       isTransparent: true,
       autosize: true,
       largeChartUrl: "",
+      trendLineColor: "rgba(184, 198, 193, 1)",
+      underLineColor: "rgba(184, 198, 193, 0.08)",
+      underLineBottomColor: "rgba(184, 198, 193, 0.08)",
     });
 
     const container = document.getElementById(`tradingview-mini-chart-${symbol}`);
@@ -29,7 +32,7 @@ const MiniChart = ({ symbol = "FX:EURUSD" }) => {
 
   return (
     <div
-      className="tradingview-widget-container mx-auto w-full rounded-lg shadow-3xl overflow-hidden pointer-events-none"
+      className="tradingview-widget-container chamfer pointer-events-none mx-auto w-full overflow-hidden"
       style={{ minHeight: "220px" }}
     >
       <div id={`tradingview-mini-chart-${symbol}`} className="tradingview-widget-container__widget h-full"></div>

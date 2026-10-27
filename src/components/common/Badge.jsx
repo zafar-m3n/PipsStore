@@ -1,30 +1,23 @@
-/* Functional badge — styled like a small inked rubber stamp (slightly
-   rotated, rough uneven edge via the `stamp` utility). Category colour
-   logic is unchanged: green = bullish/success, red = bearish/danger,
-   amber = warning/medium, neutral warm-gray otherwise. */
-
-const TONE_BY_KEYWORD = [
-  { match: /(bull|success|positive|up|beginner|holds?|complete)/i, tone: "bull" },
-  { match: /(bear|danger|negative|down|reject|high|expert|failed)/i, tone: "bear" },
-  { match: /(warn|medium|neutral|caution|intermediate|indecis|continuation|reversal)/i, tone: "warn" },
-];
-
+/* Plain text label with a small chamfered marker. Market tones (bull / bear)
+   are for chart signals only; everything else is neutral. */
 const TONE_CLASSES = {
-  bull: "text-pips-bull bg-pips-bull-soft/60",
-  bear: "text-pips-bear bg-pips-bear-soft/60",
-  warn: "text-pips-warn bg-pips-warn-soft/60",
-  neutral: "text-pips-ink-soft bg-pips-surface-alt",
+  bull: "text-bull",
+  bear: "text-bear",
+  neutral: "text-ink-soft",
 };
 
-export function Badge({ children, tone, className = "" }) {
-  let resolved = tone;
-  if (!resolved && typeof children === "string") {
-    resolved =
-      TONE_BY_KEYWORD.find((r) => r.match.test(children))?.tone ?? "neutral";
-  }
-  const cls = TONE_CLASSES[resolved] || TONE_CLASSES.neutral;
+export function Badge({ children, tone = "neutral", className = "" }) {
   return (
-    <span className={["stamp", cls, className].join(" ")}>{children}</span>
+    <span
+      className={[
+        "inline-flex items-center gap-2 text-small font-medium",
+        TONE_CLASSES[tone] || TONE_CLASSES.neutral,
+        className,
+      ].join(" ")}
+    >
+      <span aria-hidden="true" className="chamfer h-2.5 w-2.5 bg-current" />
+      {children}
+    </span>
   );
 }
 
