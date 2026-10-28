@@ -1,5 +1,5 @@
-import { DrawnChart } from "@/components/common/DrawnChart.jsx";
-import { Badge } from "@/components/common/Badge.jsx";
+import DrawnChart from "@/components/common/DrawnChart.jsx";
+import Badge from "@/components/common/Badge.jsx";
 
 const TONE_BY_KIND = {
   bullish: "bull",
@@ -7,11 +7,11 @@ const TONE_BY_KIND = {
 };
 
 /* Shared by Candlestick Patterns and Chart Patterns on the Analysis page. */
-export function PatternCard({ pattern }) {
+function PatternCard({ pattern }) {
   const art = pattern.art || {};
   return (
-    <div className="panel flex h-full flex-col p-4">
-      <div className="chamfer aspect-video overflow-hidden bg-ground">
+    <div className="card flex h-full flex-col p-4">
+      <div className="aspect-video overflow-hidden rounded-md bg-ground">
         <DrawnChart
           viewBox={art.viewBox}
           elements={art.elements || []}

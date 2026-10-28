@@ -220,5 +220,3 @@ export const GLOSSARY_TEASER_CHIPS = [
   "CPI",
   "Interest Rate",
 ];
-
-export const GLOSSARY_SAMPLE_TERM = GLOSSARY_TERMS[0];

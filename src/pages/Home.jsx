@@ -1,101 +1,337 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import { useHeroReveal, useScrollReveal } from "@/hooks/useGsap.js";
-import { RoadmapJourney } from "@/components/common/RoadmapJourney.jsx";
-import { DisclaimerBanner } from "@/components/common/DisclaimerBanner.jsx";
-import { ContactForm } from "@/components/common/ContactForm.jsx";
-import { LevelMeter } from "@/components/common/LevelMeter.jsx";
-import { ArchiveImage } from "@/components/common/ArchiveImage.jsx";
+import { useHeroReveal, useScrollReveal, useStepRail } from "@/hooks/useGsap.js";
+import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
+import ContactForm from "@/components/common/ContactForm.jsx";
+import ButtonLink from "@/components/common/ButtonLink.jsx";
+import FactList from "@/components/common/FactList.jsx";
+import SearchField from "@/components/common/SearchField.jsx";
+import SectionIntro from "@/components/common/SectionIntro.jsx";
+import RiskCard from "@/components/ui/RiskCard.jsx";
+import PipResultCard from "@/components/ui/PipResultCard.jsx";
+import CalendarEventCard from "@/components/ui/CalendarEventCard.jsx";
+import SessionClockCard from "@/components/ui/SessionClockCard.jsx";
+import TermCard from "@/components/ui/TermCard.jsx";
+import PathCard from "@/components/ui/PathCard.jsx";
+import EffectLayer from "@/components/effects/EffectLayer.jsx";
+import { chipClass } from "@/lib/ui.js";
+import { filterGlossary } from "@/lib/glossary.js";
 
 import { LEARNING_PATHS } from "@/data/learningPaths.js";
 import { ROADMAP_STEPS } from "@/data/roadmap.js";
 import { TOOLS_PREVIEW } from "@/data/tools.js";
 import { GLOSSARY_TERMS, GLOSSARY_TEASER_CHIPS } from "@/data/glossary.js";
-import { SITE_FACTS } from "@/data/facts.js";
 
-import royalExchange from "@/assets/archive/royal-exchange.jpg";
-import stockTicker from "@/assets/archive/edison-stock-ticker.jpg";
-import banknoteDesign from "@/assets/archive/banknote-design.jpg";
-import customersRoom from "@/assets/archive/brokerage-customers-room-1902.jpg";
+const AURORA_TOKENS = { colorStops: ["brand-deep", "brand", "brand-deep"] };
+const AURORA_PROPS = {
+  amplitude: 0.5,
+  blend: 0.7,
+  speed: 0.3,
+  height: 0.2,
+  opacity: 0.3,
+  layers: 2,
+  mouseInteraction: false,
+};
 
-const primaryLink =
-  "chamfer inline-flex min-h-12 items-center gap-2 bg-brand px-6 text-body font-bold whitespace-nowrap text-on-brand press hover:bg-brand-hover active:bg-brand-press";
+const tool = (id) => TOOLS_PREVIEW.find((t) => t.id === id);
 
+/* The aurora runs up under the floating nav (-mt-20 pt-20 cancels main's offset)
+   and fades into the ground at the bottom edge. */
 function HeroSection() {
   const scope = useHeroReveal();
 
   return (
-    <section ref={scope} className="relative overflow-hidden">
-      <div className="container-page pt-12 sm:pt-20">
-        <h1 className="text-display text-ink">
-          Learn forex, risk first.
-        </h1>
-      </div>
+    <section ref={scope} aria-labelledby="hero-title" className="relative isolate -mt-20 overflow-hidden pt-20">
+      <EffectLayer effect="aurora" tokens={AURORA_TOKENS} props={AURORA_PROPS} />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-linear-to-b from-ground/0 to-ground"
+      />
 
-      <div className="container-page grid gap-12 pt-8 pb-section sm:pt-12 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
-          <p className="max-w-[46ch] text-body text-ink sm:text-lead">
+      <div className="container-page grid gap-x-8 gap-y-10 pt-14 pb-24 sm:pt-24 lg:grid-cols-12 lg:items-center lg:gap-y-12 lg:pt-28 lg:pb-32 xl:pb-48">
+        <div className="lg:col-span-6">
+          <h1 id="hero-title" className="text-display text-ink">
+            <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+              <span data-hero-line className="block">
+                Learn forex,
+              </span>
+            </span>{" "}
+            <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+              <span data-hero-line className="block">
+                <em className="text-brand">risk first.</em>
+              </span>
+            </span>
+          </h1>
+          <p className="mt-6 max-w-[44ch] text-body text-ink-soft sm:text-lead">
             PipsStore is a free education platform for complete beginners. We teach market basics, risk management and
             chart reading in plain language. No signals, no profit promises, ever.
           </p>
-          <dl data-hero-rise className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
-            {SITE_FACTS.map((f) => (
-              <div key={f.label} className="flex flex-col-reverse">
-                <dt className="text-small text-ink-soft">{f.label}</dt>
-                <dd className="text-title font-bold text-ink tabular-nums">{f.value}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
-        <div data-hero-rise className="relative -mx-gutter px-gutter py-8 lg:col-span-7 lg:mx-0 lg:py-10 lg:pr-0 lg:pl-12">
+        <div id="plan" data-hero-rise className="relative isolate lg:col-span-5 lg:col-start-8 lg:row-span-2">
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-band [border-top-left-radius:48px] [corner-shape:bevel] lg:-right-[50vw] lg:[border-top-left-radius:112px]"
+            className="pointer-events-none absolute -inset-x-10 -inset-y-12 -z-10 hidden rounded-full bg-brand-deep/50 blur-3xl lg:block"
           />
-          <div className="relative max-w-xl">
-            <ContactForm
-              heading="Start with a free learning plan"
-              blurb="Tell us where you're at and we'll point you to the right path."
-            />
+          <div
+            aria-hidden="true"
+            inert
+            data-parallax="18"
+            className="pointer-events-none absolute -top-24 right-6 -z-10 hidden w-60 rotate-3 xl:block"
+          >
+            <TermCard term="Spread" />
           </div>
+          <div
+            aria-hidden="true"
+            inert
+            data-parallax="32"
+            className="pointer-events-none absolute -bottom-24 left-6 -z-10 hidden w-64 -rotate-2 xl:block"
+          >
+            <PipResultCard />
+          </div>
+          <ContactForm
+            surface="glass"
+            heading="Start with a free learning plan"
+            blurb="Tell us where you're at and we'll point you to the right path."
+          />
         </div>
+
+        <FactList
+          variant="inline"
+          data-hero-rise
+          className="border-t border-line pt-6 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:self-start"
+        />
       </div>
     </section>
   );
 }
 
-function RoadmapSection() {
+/* A bento tile: one card surface, a heading and sentence, an optional preview
+   well (bare UI-card content, so cards never nest), and one way onward. */
+function Tile({ title, children, preview, link, className = "" }) {
   return (
-    <section id="roadmap" aria-labelledby="roadmap-title" className="container-page pb-section">
-      <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div className="lg:col-span-6">
-          <h2 id="roadmap-title" className="text-title font-bold text-ink">
-            The beginner roadmap
-          </h2>
-          <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">
-            Five steps, in this order. Risk comes second, before any chart reading or strategy, and stays with you
-            from then on.
-          </p>
-          <div className="mt-8">
-            <Link to="/academy" className={primaryLink}>
-              See the learning paths
-              <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
-            </Link>
+    <article className={["card flex flex-col p-6 sm:p-7", className].join(" ")}>
+      <h3 className="text-lead font-semibold text-ink">{title}</h3>
+      <div className="mt-2 text-body text-ink-soft">{children}</div>
+      {preview && <div className="mt-6 rounded-lg bg-ground/70 p-4 ring-1 ring-line sm:p-5">{preview}</div>}
+      {link && (
+        <Link
+          to={link.to}
+          className="group mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-small font-semibold text-brand hover:text-brand-hover"
+        >
+          {link.label}
+          <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      )}
+    </article>
+  );
+}
+
+function RoadmapTile({ className = "" }) {
+  const rail = useStepRail();
+
+  return (
+    <article id="roadmap" className={["card flex flex-col p-6 sm:p-8", className].join(" ")}>
+      <h3 className="text-title text-ink">The beginner roadmap</h3>
+      <p className="mt-3 max-w-[48ch] text-body text-ink-soft">
+        Five steps, in this order. Risk comes second, before any chart reading or strategy, and stays with you from then on.
+      </p>
+      <div ref={rail} className="relative mt-8 flex flex-1 flex-col">
+        <span aria-hidden="true" className="absolute top-0 bottom-0 left-0 w-px bg-line">
+          <span data-rail className="block h-full w-full origin-top bg-brand" />
+        </span>
+        <ol className="flex flex-1 flex-col justify-between">
+        {ROADMAP_STEPS.map((s) => (
+          <li
+            key={s.step}
+            data-step
+            className="group grid grid-cols-[3rem_1fr] gap-x-3 border-t border-line py-4 lg:py-5"
+          >
+            <span className="pt-0.5 pl-4 font-mono text-small text-ink-muted transition-colors duration-300 group-data-[reached]:text-brand">
+              0{s.step}
+            </span>
+            <div>
+              <p className="flex flex-wrap items-center gap-2 text-body font-semibold text-ink">
+                <Icon icon={s.icon} aria-hidden="true" className="shrink-0 text-brand" />
+                {s.title}
+                {s.step === 2 && (
+                  <span className="rounded-full bg-brand-deep px-2.5 py-0.5 text-micro font-medium text-ink">Before any strategy</span>
+                )}
+              </p>
+              <p className="mt-1 text-small text-ink-soft">{s.description}</p>
+            </div>
+          </li>
+        ))}
+        </ol>
+      </div>
+      <div className="pt-6">
+        <ButtonLink to="/academy">See the learning paths</ButtonLink>
+      </div>
+    </article>
+  );
+}
+
+function GlossaryTile({ className = "" }) {
+  const [query, setQuery] = useState("");
+
+  const { results, total } = useMemo(() => {
+    const matches = query.trim()
+      ? filterGlossary(GLOSSARY_TERMS, { query })
+      : GLOSSARY_TERMS.filter((t) => GLOSSARY_TEASER_CHIPS.includes(t.term));
+    return { results: matches.slice(0, 2), total: matches.length };
+  }, [query]);
+
+  return (
+    <article className={["card flex flex-col p-6 sm:p-7", className].join(" ")}>
+      <h3 className="text-lead font-semibold text-ink">Look up any term</h3>
+      <p className="mt-2 text-body text-ink-soft">
+        Every entry in the glossary has a plain definition, an example and why it matters. Try it here.
+      </p>
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        <div>
+          <SearchField
+            id="home-glossary-search"
+            label="Search the glossary"
+            value={query}
+            onChange={setQuery}
+            placeholder="Try pip or leverage"
+          />
+          <div className="mt-4 flex flex-wrap gap-2">
+            {GLOSSARY_TEASER_CHIPS.slice(0, 6).map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setQuery(query === c ? "" : c)}
+                aria-pressed={query === c}
+                className={chipClass(query === c)}
+              >
+                {c}
+              </button>
+            ))}
           </div>
         </div>
-        <ArchiveImage
-          src={customersRoom}
-          width={1100}
-          height={827}
-          alt="Rows of wooden chairs in the customers' room of an early New York brokerage office."
-          caption="A brokerage customers' room, New York, 1902."
-          className="lg:col-span-6"
-          frameClassName="aspect-[4/3]"
-        />
+        <div>
+          <p aria-live="polite" className="text-small text-ink-muted">
+            {query.trim()
+              ? `${total} matching ${total === 1 ? "term" : "terms"}${total > 2 ? ", showing the first 2" : ""}`
+              : "A few terms beginners ask about first"}
+          </p>
+          {results.length > 0 ? (
+            <ul className="mt-3 flex flex-col gap-2">
+              {results.map((t) => (
+                <li key={t.term} className="rounded-lg bg-ground/70 p-4 ring-1 ring-line">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-display text-[1.5rem] leading-none text-ink">{t.term}</p>
+                    <span className="text-micro text-ink-muted">{t.category}</span>
+                  </div>
+                  <p className="mt-2 text-small text-ink-soft">{t.definition}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-3 rounded-lg bg-ground/70 p-4 text-small text-ink-soft ring-1 ring-line">
+              No term matches “{query.trim()}”. Try a shorter word, or open the full glossary.
+            </p>
+          )}
+        </div>
       </div>
-      <RoadmapJourney steps={ROADMAP_STEPS} />
+      <Link
+        to="/academy#glossary"
+        className="group mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-small font-semibold text-brand hover:text-brand-hover"
+      >
+        Open the full glossary
+        <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+      </Link>
+    </article>
+  );
+}
+
+function PlanTile({ className = "" }) {
+  return (
+    <article className={["card flex flex-col justify-between gap-8 p-6 sm:p-8", className].join(" ")}>
+      <div>
+        <h3 className="text-title text-ink">
+          Not sure where to start? <em className="text-brand">Ask us.</em>
+        </h3>
+        <p className="mt-3 max-w-[48ch] text-body text-ink-soft">
+          Tell us where you're at and we'll point you to the right path. Free, and no account needed.
+        </p>
+      </div>
+      <div className="flex flex-col gap-6">
+        <ul className="flex flex-wrap gap-2" aria-label="The four learning paths">
+          {LEARNING_PATHS.map((p) => (
+            <li key={p.id} className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-small text-ink-soft">
+              <Icon icon={p.icon} aria-hidden="true" className="text-brand" />
+              {p.title}
+            </li>
+          ))}
+        </ul>
+        <div>
+          <ButtonLink href="#plan">Get a free learning plan</ButtonLink>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function BentoSection() {
+  const grid = useScrollReveal(":scope > *");
+  const pip = tool("pip-calculator");
+  const news = tool("market-news");
+  const calendar = tool("economic-calendar");
+
+  return (
+    <section aria-labelledby="bento-title" className="container-page pb-section">
+      <SectionIntro
+        id="bento-title"
+        title={
+          <>
+            Everything a beginner needs, <em>in the right order.</em>
+          </>
+        }
+        width="52ch"
+      >
+        Lessons, two calculators and live market context, arranged so risk comes before any strategy.
+      </SectionIntro>
+
+      <div ref={grid} className="mt-12 grid gap-4 lg:grid-cols-12">
+        <RoadmapTile className="lg:col-span-7 lg:row-span-2" />
+        <Tile
+          title={pip.title}
+          preview={<PipResultCard bare />}
+          link={{ to: `/tools#${pip.id}`, label: "Open the pip calculator" }}
+          className="lg:col-span-5"
+        >
+          {pip.description}
+        </Tile>
+        <Tile
+          title="Size every trade by risk"
+          preview={<RiskCard bare />}
+          link={{ to: "/tools", label: "Open the calculators" }}
+          className="lg:col-span-5"
+        >
+          Decide what you can afford to lose first. The stop distance then tells you the position size.
+        </Tile>
+        <GlossaryTile className="lg:col-span-7" />
+        <Tile
+          title={calendar.title}
+          preview={<CalendarEventCard bare />}
+          link={{ to: calendar.to, label: "See the calendar" }}
+          className="lg:col-span-5"
+        >
+          {calendar.description}
+        </Tile>
+        <PlanTile className="lg:col-span-7" />
+        <Tile
+          title="Know when markets are open"
+          preview={<SessionClockCard bare />}
+          link={{ to: news.to, label: "See the market context" }}
+          className="lg:col-span-5"
+        >
+          The four main forex sessions, shown live in UTC, so you know which markets are trading right now.
+        </Tile>
+      </div>
     </section>
   );
 }
@@ -104,46 +340,27 @@ function PathsSection() {
   const list = useScrollReveal(":scope > li");
 
   return (
-    <section aria-labelledby="paths-title" className="band-field py-section">
-      <div className="container-page grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <h2 id="paths-title" className="text-title font-bold text-ink">
-            Four learning paths
-          </h2>
-          <p className="mt-4 max-w-[40ch] text-body text-ink-soft sm:text-lead">
-            Each path is an ordered outline of topics, from your first chart to a written trading plan.
-          </p>
-          <ArchiveImage
-            src={banknoteDesign}
-            width={1400}
-            height={643}
-            alt="An ornate engraved banknote design with scrollwork and a numeral five."
-            caption="Design for a banknote, 19th century."
-            className="mt-10"
-            frameClassName="aspect-[2/1]"
-          />
+    <section aria-labelledby="paths-title" className="section-lit py-section">
+      <div className="container-page">
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <SectionIntro id="paths-title" title="Four learning paths" width="48ch">
+              Taken in order: the basics first, then risk, then charts, then the news that moves them.
+            </SectionIntro>
+          </div>
+          <div className="lg:col-span-5 lg:justify-self-end">
+            <ButtonLink to="/academy">See every path</ButtonLink>
+          </div>
         </div>
-        <ul ref={list} className="flex flex-col gap-3 lg:col-span-8">
-          {LEARNING_PATHS.map((p) => (
+        <ul ref={list} className="mt-12 grid gap-4 md:grid-cols-2">
+          {LEARNING_PATHS.map((p, i) => (
             <li key={p.id}>
               <Link
                 to={`/academy#${p.id}`}
-                className="panel group grid gap-3 p-6 press-soft hover:bg-surface-2 sm:grid-cols-[1fr_auto] sm:gap-x-8 sm:p-8"
+                aria-label={`${p.title}: see the path outline`}
+                className="group block h-full rounded-lg press-soft"
               >
-                <div>
-                  <h3 className="flex items-center gap-3 text-lead font-bold text-ink">
-                    <Icon icon={p.icon} aria-hidden="true" className="shrink-0 text-brand" />
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 max-w-[60ch] text-body text-ink-soft">{p.description}</p>
-                </div>
-                <div className="flex items-center gap-6 sm:flex-col sm:items-end sm:justify-between">
-                  <LevelMeter level={p.level} />
-                  <span className="inline-flex items-center gap-2 text-small font-bold text-brand">
-                    <span className="tabular-nums">{p.lessons} topics</span>
-                    <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </div>
+                <PathCard id={p.id} label={`Path ${i + 1} of ${LEARNING_PATHS.length}`} linked className="h-full p-6 sm:p-7" />
               </Link>
             </li>
           ))}
@@ -153,178 +370,17 @@ function PathsSection() {
   );
 }
 
-function ToolsSection() {
-  const list = useScrollReveal(":scope > li");
-
-  return (
-    <section aria-labelledby="tools-title" className="container-page py-section">
-      <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-        <div className="order-last grid grid-cols-5 gap-3 lg:order-none lg:col-span-6">
-          <ArchiveImage
-            src={royalExchange}
-            width={843}
-            height={542}
-            alt="Horse-drawn traffic crowding the street in front of the columned Royal Exchange in London."
-            caption="The Royal Exchange, London, late 1800s."
-            className="col-span-3"
-            frameClassName="aspect-[3/4]"
-          />
-          <ArchiveImage
-            src={stockTicker}
-            width={900}
-            height={1113}
-            alt="A brass stock ticker under a glass dome, with paper tape curling from its wheel."
-            caption="Edison's stock ticker."
-            className="col-span-2 self-end"
-            frameClassName="aspect-[3/4]"
-          />
-        </div>
-        <div className="lg:col-span-6">
-          <h2 id="tools-title" className="text-title font-bold text-ink">
-            Practise with real tools
-          </h2>
-          <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">
-            Two calculators for the numbers behind a trade, and a live news feed and calendar for the events that move
-            currencies.
-          </p>
-          <ul ref={list} className="mt-8 flex flex-col gap-2">
-            {TOOLS_PREVIEW.map((t) => (
-              <li key={t.id}>
-                <Link
-                  to={t.to || `/tools#${t.id}`}
-                  className="chamfer group flex min-h-14 items-center gap-4 bg-surface-1 px-5 py-3 press-soft hover:bg-surface-2"
-                >
-                  <Icon icon={t.icon} aria-hidden="true" className="shrink-0 text-lead text-brand" />
-                  <span className="flex-1">
-                    <span className="block text-body font-bold text-ink">{t.title}</span>
-                    <span className="block text-small text-ink-soft">{t.description}</span>
-                  </span>
-                  <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <Link to="/tools" className={primaryLink}>
-              Open the calculators
-              <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function GlossarySection() {
-  const [query, setQuery] = useState("");
-
-  const { results, total } = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const matches = q
-      ? GLOSSARY_TERMS.filter(
-          (t) => t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q),
-        )
-      : GLOSSARY_TERMS.filter((t) => GLOSSARY_TEASER_CHIPS.includes(t.term));
-    return { results: matches.slice(0, 3), total: matches.length };
-  }, [query]);
-
-  return (
-    <section aria-labelledby="glossary-title" className="bg-surface-1 py-section">
-      <div className="container-page">
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <h2 id="glossary-title" className="text-title font-bold text-ink">
-              Look up any term
-            </h2>
-            <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">
-              Every entry in the glossary has a plain definition, an example and why it matters. Try it here.
-            </p>
-          </div>
-          <div className="lg:col-span-5 lg:justify-self-end">
-            <Link to="/academy#glossary" className={primaryLink}>
-              Open the full glossary
-              <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <label htmlFor="home-glossary-search" className="text-small font-bold text-ink">
-              Search the glossary
-            </label>
-            <div className="mt-2 flex items-center gap-2 rounded-sm border border-field bg-surface-2 px-4 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
-              <Icon icon="ph:magnifying-glass" aria-hidden="true" className="text-ink-muted" />
-              <input
-                id="home-glossary-search"
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Try pip, leverage or stop loss"
-                className="min-h-12 w-full bg-transparent text-body text-ink outline-none placeholder:text-ink-muted"
-              />
-            </div>
-            <p className="mt-6 text-small text-ink-soft">Common terms</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {GLOSSARY_TEASER_CHIPS.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setQuery(query === c ? "" : c)}
-                  aria-pressed={query === c}
-                  className={[
-                    "chamfer min-h-11 px-4 text-small font-medium press",
-                    query === c ? "bg-brand text-on-brand" : "bg-surface-2 text-ink hover:bg-surface-3",
-                  ].join(" ")}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:col-span-7">
-            <p aria-live="polite" className="text-small text-ink-muted">
-              {query.trim()
-                ? `${total} matching ${total === 1 ? "term" : "terms"}${total > 3 ? ", showing the first 3" : ""}`
-                : "A few terms beginners ask about first"}
-            </p>
-            {results.length > 0 ? (
-              <ul className="mt-3 flex flex-col gap-2">
-                {results.map((t) => (
-                  <li key={t.term} className="panel-raised p-5">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="text-lead font-bold text-ink">{t.term}</h3>
-                      <span className="text-small text-ink-muted">{t.category}</span>
-                    </div>
-                    <p className="mt-2 text-body text-ink-soft">{t.definition}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="panel-raised mt-3 p-5 text-body text-ink-soft">
-                No term matches “{query.trim()}”. Try a shorter word, or open the full glossary.
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default function Home() {
+function Home() {
   return (
     <>
       <HeroSection />
-      <RoadmapSection />
+      <BentoSection />
       <PathsSection />
-      <ToolsSection />
-      <GlossarySection />
       <div className="container-page py-16">
         <DisclaimerBanner />
       </div>
     </>
   );
 }
+
+export default Home;

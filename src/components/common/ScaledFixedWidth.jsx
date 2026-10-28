@@ -19,7 +19,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
    Nothing here touches the embed's own script/config — the fix lives
    entirely in this wrapper. */
-export function ScaledFixedWidth({ width = 665, children, className = "" }) {
+function ScaledFixedWidth({ width = 665, children, className = "" }) {
   const outerRef = useRef(null);
   const innerRef = useRef(null);
   const [scale, setScale] = useState(1);

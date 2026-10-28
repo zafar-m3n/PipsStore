@@ -1,97 +1,87 @@
 import { Icon } from "@iconify/react";
-import { PageHero } from "@/components/common/PageHero.jsx";
-import { DisclaimerBanner } from "@/components/common/DisclaimerBanner.jsx";
-import { RevealGroup } from "@/components/common/RevealGroup.jsx";
-import { ClosingCTA } from "@/components/common/ClosingCTA.jsx";
-import { IconTile } from "@/components/common/IconTile.jsx";
-import { Accordion } from "@/components/common/Accordion.jsx";
-import { ContactForm } from "@/components/common/ContactForm.jsx";
-import { ArchiveImage } from "@/components/common/ArchiveImage.jsx";
+import PageHero from "@/components/common/PageHero.jsx";
+import Chapter from "@/components/common/Chapter.jsx";
+import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
+import Accordion from "@/components/common/Accordion.jsx";
+import ContactForm from "@/components/common/ContactForm.jsx";
+import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
+import FactList from "@/components/common/FactList.jsx";
+import BulletList from "@/components/common/BulletList.jsx";
+import SectionIntro from "@/components/common/SectionIntro.jsx";
+import PathCard from "@/components/ui/PathCard.jsx";
+import SupportCard from "@/components/ui/SupportCard.jsx";
 import { useScrollReveal } from "@/hooks/useGsap.js";
 import { ABOUT_MISSION, CURRICULUM_PILLARS, WHO_ITS_FOR, OUR_APPROACH, ABOUT_FAQ } from "@/data/about.js";
-import { SITE_FACTS } from "@/data/facts.js";
 import { CONTACT_INFO, SOCIAL_LINKS } from "@/data/site.js";
 
-import dojimaSasaki from "@/assets/archive/dojima-rice-exchange-sasaki.jpg";
-import certificateDesign from "@/assets/archive/banknote-certificate-design.jpg";
-import customersRoom from "@/assets/archive/brokerage-customers-room-1902.jpg";
-import torontoExchange from "@/assets/archive/toronto-stock-exchange-1956.jpg";
+/* Risk is taught first, so it leads the pillars and takes the large tile. */
+const PILLARS = [
+  ...CURRICULUM_PILLARS.filter((p) => p.title === "Risk Management"),
+  ...CURRICULUM_PILLARS.filter((p) => p.title !== "Risk Management"),
+];
 
-function Bullets({ items }) {
-  return (
-    <ul className="mt-6 flex flex-col gap-4">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3 text-body text-ink-soft">
-          <span aria-hidden="true" className="chamfer mt-2 h-2.5 w-2.5 shrink-0 bg-brand" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+/* Risk large on the left with two pillars stacked beside it, then a row of three. */
+const PILLAR_SPANS = [
+  "md:col-span-2 lg:col-span-7 lg:row-span-2",
+  "lg:col-span-5",
+  "lg:col-span-5",
+  "lg:col-span-4",
+  "lg:col-span-4",
+  "md:col-span-2 lg:col-span-4",
+];
 
-function MissionSection() {
+function MissionChapter() {
   const facts = useScrollReveal(":scope > div");
 
   return (
-    <section aria-labelledby="mission-title" className="container-page pb-section">
-      <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-        <div className="lg:col-span-6">
-          <h2 id="mission-title" className="text-title font-bold text-ink">
-            Our mission
-          </h2>
-          <p className="mt-6 max-w-[52ch] text-body text-ink sm:text-lead">{ABOUT_MISSION}</p>
-        </div>
-        <ArchiveImage
-          src={dojimaSasaki}
-          width={1400}
-          height={606}
-          alt="A colour woodblock print of the Dōjima rice exchange on stilts beside the river, with boats in the foreground."
-          caption="The Dōjima Rice Exchange, Osaka, around 1880."
-          className="lg:col-span-6"
-          frameClassName="aspect-[7/3]"
-        />
-      </div>
-      <dl ref={facts} className="mt-16 grid grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
-        {SITE_FACTS.map((f) => (
-          <div key={f.label} className="flex flex-col-reverse">
-            <dt className="text-body text-ink-soft">{f.label}</dt>
-            <dd className="text-title font-bold text-ink tabular-nums">{f.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
+    <Chapter titleId="mission-title" title="Our mission" className="pt-0">
+      <p className="font-display text-[clamp(1.625rem,1.1rem+1.6vw,2.375rem)] leading-[1.2] text-ink">{ABOUT_MISSION}</p>
+      <ImagePlaceholder
+        aspect="aspect-7/3"
+        className="mt-10"
+        description="A small mixed-age study group around a table with notebooks, one person explaining a simple chart on a whiteboard."
+      />
+      <FactList
+        ref={facts}
+        labelSize="body"
+        className="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-line pt-8 md:grid-cols-4"
+      />
+    </Chapter>
   );
 }
 
 function PillarsSection() {
+  const grid = useScrollReveal(":scope > *");
+
   return (
-    <section aria-labelledby="pillars-title" className="band-field py-section">
+    <section aria-labelledby="pillars-title" className="section-lit py-section">
       <div className="container-page">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <h2 id="pillars-title" className="text-title font-bold text-ink">
-              What PipsStore teaches
-            </h2>
-            <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">
+            <SectionIntro id="pillars-title" title="What PipsStore teaches" width="52ch">
               Six pillars, taught in an order that puts protecting your account first.
-            </p>
+            </SectionIntro>
           </div>
-          <ArchiveImage
-            src={certificateDesign}
-            width={1400}
-            height={623}
-            alt="A pencil design for a bank note, with ornate numeral threes and blank spaces for the bank's name."
-            caption="Design for a bank note or certificate, 19th century."
-            className="lg:col-span-5"
-            frameClassName="aspect-[9/4]"
-          />
         </div>
-        <RevealGroup className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {CURRICULUM_PILLARS.map((p) => (
-            <IconTile key={p.title} icon={p.icon} title={p.title} description={p.description} />
+        <div ref={grid} className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
+          {PILLARS.map((p, i) => (
+            <article
+              key={p.title}
+              className={["card flex flex-col p-6 sm:p-7", PILLAR_SPANS[i]].join(" ")}
+            >
+              <h3 className="flex items-center gap-3 text-lead font-semibold text-ink">
+                <Icon icon={p.icon} aria-hidden="true" className="shrink-0 text-brand" />
+                {p.title}
+              </h3>
+              <p className="mt-2 max-w-[56ch] text-body text-ink-soft">{p.description}</p>
+              {i === 0 && (
+                <div className="mt-auto pt-6">
+                  <PathCard id="risk-first" bare className="rounded-lg bg-ground/70 p-5 ring-1 ring-line" />
+                </div>
+              )}
+            </article>
           ))}
-        </RevealGroup>
+        </div>
       </div>
     </section>
   );
@@ -100,137 +90,115 @@ function PillarsSection() {
 function AudienceSection() {
   return (
     <section aria-label="Who it's for and our approach" className="container-page py-section">
-      <div className="grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <h2 className="text-title font-bold text-ink">Who it's for</h2>
-          <Bullets items={WHO_ITS_FOR} />
-        </div>
-        <div className="lg:col-span-4">
-          <h2 className="text-title font-bold text-ink">Our approach</h2>
-          <Bullets items={OUR_APPROACH} />
-        </div>
-        <ArchiveImage
-          src={customersRoom}
-          width={1100}
-          height={827}
-          alt="Rows of wooden chairs in the customers' room of an early New York brokerage office."
-          caption="A brokerage customers' room, New York, 1902."
+      <div className="grid gap-4 lg:grid-cols-12">
+        <article className="card p-6 sm:p-8 lg:col-span-4">
+          <h2 className="text-title text-ink">Who it's for</h2>
+          <BulletList items={WHO_ITS_FOR} className="mt-6" />
+        </article>
+        <article className="card p-6 sm:p-8 lg:col-span-4">
+          <h2 className="text-title text-ink">Our approach</h2>
+          <BulletList items={OUR_APPROACH} className="mt-6" />
+        </article>
+        <ImagePlaceholder
+          aspect="aspect-4/5"
           className="lg:col-span-4"
-          frameClassName="aspect-[4/5]"
+          description="A beginner (student or career-changer) looking thoughtfully at a laptop in natural light, notebook open."
         />
       </div>
     </section>
   );
 }
 
-function FaqSection() {
+function FaqChapter() {
   return (
-    <section aria-labelledby="faq-title" className="bg-surface-1 py-section">
-      <div className="container-page grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <h2 id="faq-title" className="text-title font-bold text-ink">
-            Frequently asked questions
-          </h2>
-          <p className="mt-4 text-body text-ink-soft sm:text-lead">The things beginners ask us most.</p>
-          <ArchiveImage
-            src={torontoExchange}
-            width={1000}
-            height={1007}
-            alt="Traders in suits crowding the floor of a stock exchange around tall quotation posts, under a large clock."
-            caption="The floor of the Toronto Stock Exchange, 1956."
-            className="mt-10 hidden lg:block"
-            frameClassName="aspect-square"
-          />
-        </div>
-        <div className="lg:col-span-8">
-          <Accordion items={ABOUT_FAQ} />
-        </div>
-      </div>
-    </section>
+    <Chapter
+      titleId="faq-title"
+      title="Frequently asked questions"
+      intro="The things beginners ask us most."
+      aside={<SupportCard className="hidden lg:block" />}
+      lit
+    >
+      <Accordion items={ABOUT_FAQ} />
+    </Chapter>
   );
 }
 
-function ContactSection() {
+function ContactChapter() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="container-page py-section">
-      <div className="grid items-start gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <h2 id="contact-title" className="text-title font-bold text-ink">
-            Get in touch
-          </h2>
-          <p className="mt-4 max-w-[44ch] text-body text-ink-soft sm:text-lead">
-            Questions about where to start? Send a message — we read every one.
-          </p>
-          <dl className="mt-10 flex flex-col gap-6">
+    <Chapter
+      id="contact"
+      titleId="contact-title"
+      title="Get in touch"
+      intro="Questions about where to start? Send a message — we read every one."
+      introWidth="44ch"
+      aside={
+        <div className="flex flex-col gap-8">
+          <dl className="flex flex-col gap-5 border-t border-line pt-6">
             <div>
-              <dt className="text-body font-bold text-ink">Email</dt>
+              <dt className="text-small font-semibold text-ink">Email</dt>
               <dd className="mt-1">
-                <a
-                  href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-body text-brand underline underline-offset-4 hover:text-brand-hover"
-                >
+                <a href={`mailto:${CONTACT_INFO.email}`} className="text-body text-brand underline hover:text-brand-hover">
                   {CONTACT_INFO.email}
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="text-body font-bold text-ink">Response time</dt>
+              <dt className="text-small font-semibold text-ink">Response time</dt>
               <dd className="mt-1 text-body text-ink-soft">{CONTACT_INFO.responseTime}</dd>
             </div>
             <div>
-              <dt className="text-body font-bold text-ink">Hours</dt>
+              <dt className="text-small font-semibold text-ink">Hours</dt>
               <dd className="mt-1 text-body text-ink-soft">{CONTACT_INFO.hours}</dd>
             </div>
           </dl>
-          <p className="mt-10 text-body font-bold text-ink">Follow along</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {SOCIAL_LINKS.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-surface-2 text-ink-soft press hover:bg-surface-3 hover:text-ink"
-                >
-                  <Icon icon={s.icon} className="text-lead" aria-hidden="true" />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <p className="text-small font-semibold text-ink">Follow along</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {SOCIAL_LINKS.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="inline-flex size-11 items-center justify-center rounded-full border border-line text-ink-soft press hover:border-line-strong hover:bg-line hover:text-ink"
+                  >
+                    <Icon icon={s.icon} className="text-lead" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="lg:col-span-7">
-          <ContactForm
-            heading="Send us a message"
-            blurb="Tell us your experience level and we'll point you to the right starting place."
-          />
-        </div>
+      }
+    >
+      <div className="max-w-2xl">
+        <ContactForm
+          heading="Send us a message"
+          blurb="Tell us your experience level and we'll point you to the right starting place."
+        />
       </div>
-    </section>
+    </Chapter>
   );
 }
 
-export default function About() {
+function About() {
   return (
     <>
       <PageHero
         title="About PipsStore"
         subtitle="A calm, honest place for complete beginners to learn how the forex market works — starting with risk, not strategy."
       />
-      <MissionSection />
+      <MissionChapter />
       <PillarsSection />
       <AudienceSection />
-      <FaqSection />
-      <ContactSection />
-      <ClosingCTA
-        variant="inline"
-        title="Start where it makes sense"
-        subtitle="New here? Take the beginner roadmap. Know the basics? Pick a learning path in the Academy."
-        action={{ label: "Go to the Academy", to: "/academy" }}
-      />
+      <FaqChapter />
+      <ContactChapter />
       <div className="container-page pb-16">
         <DisclaimerBanner />
       </div>
     </>
   );
 }
+
+export default About;

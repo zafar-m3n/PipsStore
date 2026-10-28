@@ -7,7 +7,7 @@ const SIZES = {
   lg: "text-title",
 };
 
-export function IconBadge({ icon, size = "md", className = "" }) {
+function IconBadge({ icon, size = "md", className = "" }) {
   return (
     <Icon
       icon={icon}

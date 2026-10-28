@@ -1,22 +1,4 @@
-/* Tools page: calculator metadata + shared currency-pair reference data.
-
-   pipValuePerLot = USD value of 1 pip for 1.00 standard lot (100,000 units).
-   These are rounded, illustrative constants for an education tool — not a
-   live feed. Pairs where USD is the quote currency are exactly $10/pip.
-*/
-
-export const CURRENCY_PAIRS = [
-  { pair: "EUR/USD", pipValuePerLot: 10, pipSize: 0.0001 },
-  { pair: "GBP/USD", pipValuePerLot: 10, pipSize: 0.0001 },
-  { pair: "AUD/USD", pipValuePerLot: 10, pipSize: 0.0001 },
-  { pair: "NZD/USD", pipValuePerLot: 10, pipSize: 0.0001 },
-  { pair: "USD/JPY", pipValuePerLot: 6.6, pipSize: 0.01 },
-  { pair: "USD/CHF", pipValuePerLot: 11.2, pipSize: 0.0001 },
-  { pair: "USD/CAD", pipValuePerLot: 7.3, pipSize: 0.0001 },
-  { pair: "EUR/GBP", pipValuePerLot: 12.7, pipSize: 0.0001 },
-  { pair: "EUR/JPY", pipValuePerLot: 6.6, pipSize: 0.01 },
-  { pair: "GBP/JPY", pipValuePerLot: 6.6, pipSize: 0.01 },
-];
+/* Tools previewed on Home: the two calculators plus the Markets embeds. */
 
 export const TOOLS_PREVIEW = [
   {

@@ -8,7 +8,7 @@ const TONES = {
   info: "text-info",
 };
 
-export function Callout({
+function Callout({
   label = "Beginner note",
   icon = "ph:lightbulb",
   children,
@@ -16,7 +16,7 @@ export function Callout({
   className = "",
 }) {
   return (
-    <div className={["panel-raised px-5 py-4", className].join(" ")}>
+    <div className={["card-raised px-5 py-4", className].join(" ")}>
       <p className={["flex items-center gap-2 text-small font-bold", TONES[tone] || TONES.accent].join(" ")}>
         <Icon icon={icon} aria-hidden="true" />
         {label}

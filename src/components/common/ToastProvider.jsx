@@ -16,7 +16,7 @@ const AUTO_DISMISS_MS = 4000;
 const EXIT_MS = 150;
 
 /** useToast() -> { showToast(message, type), success(msg), error(msg) } */
-export function useToast() {
+function useToast() {
   const ctx = useContext(ToastContext);
   if (!ctx) throw new Error("useToast must be used within <ToastProvider>");
   return ctx;
@@ -68,7 +68,7 @@ function ToastItem({ toast, onRemove }) {
       onFocus={() => setHeld(true)}
       onBlur={() => setHeld(false)}
       className={[
-        "chamfer pointer-events-auto flex max-w-md items-start gap-3 bg-surface-3 py-3 pr-2 pl-4 shadow-float",
+        "pointer-events-auto flex rounded-lg max-w-md items-start gap-3 bg-surface-3 py-3 pr-2 pl-4 shadow-float",
         "transition-[opacity,translate] ease-out motion-reduce:translate-y-0",
         leaving ? "duration-150" : "duration-200",
         shown ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
@@ -86,7 +86,7 @@ function ToastItem({ toast, onRemove }) {
       <button
         type="button"
         onClick={() => setLeaving(true)}
-        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-muted press hover:bg-surface-2 hover:text-ink"
+        className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-ink-muted press hover:bg-surface-2 hover:text-ink"
         aria-label="Dismiss notification"
       >
         <Icon icon="ph:x-bold" className="text-small" aria-hidden="true" />
@@ -95,7 +95,7 @@ function ToastItem({ toast, onRemove }) {
   );
 }
 
-export function ToastProvider({ children }) {
+function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const idRef = useRef(0);
 
@@ -122,7 +122,7 @@ export function ToastProvider({ children }) {
       {children}
       {typeof document !== "undefined" &&
         createPortal(
-          <div className="pointer-events-none fixed inset-x-0 top-4 z-[100] flex flex-col items-center gap-2 px-4">
+          <div className="pointer-events-none fixed inset-x-0 top-4 z-100 flex flex-col items-center gap-2 px-4">
             {toasts.map((toast) => (
               <ToastItem key={toast.id} toast={toast} onRemove={remove} />
             ))}
@@ -133,4 +133,5 @@ export function ToastProvider({ children }) {
   );
 }
 
+export { useToast };
 export default ToastProvider;

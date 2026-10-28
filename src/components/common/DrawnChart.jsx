@@ -1,22 +1,16 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { prefersReducedMotion } from "@/hooks/useGsap.js";
 
 /* Elements inherit the ink colour from the SVG's CSS `color` via
    `currentColor`. Market colours go through `style`, because presentation
    attributes don't reliably accept CSS var() across browsers.
-   Bull candles are hollow blue, bear candles filled orange; brand mint
+   Bull candles are hollow blue, bear candles filled orange; the brand green
    never appears inside a chart. */
 const INK = "currentColor";
 const BULL = "var(--color-bull)";
 const BEAR = "var(--color-bear)";
-const BAND_FILL = "rgb(184 198 193 / 0.1)";
-
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const BAND_FILL = "rgb(166 166 174 / 0.1)";
 
 function totalLength(el) {
   if (el && typeof el.getTotalLength === "function") {
@@ -204,7 +198,7 @@ function renderElement(el, i) {
      ariaLabel     accessible description
      inkColor      stroke colour for non-market marks (default soft ink)
    ================================================================== */
-export function DrawnChart({
+function DrawnChart({
   viewBox = "0 0 320 200",
   elements = [],
   drawDuration = 0.9,

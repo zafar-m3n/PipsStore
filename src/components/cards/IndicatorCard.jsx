@@ -1,10 +1,10 @@
-import { DrawnChart } from "@/components/common/DrawnChart.jsx";
+import DrawnChart from "@/components/common/DrawnChart.jsx";
 
-export function IndicatorCard({ indicator }) {
+function IndicatorCard({ indicator }) {
   const art = indicator.art || {};
   return (
-    <div className="panel flex h-full flex-col p-4">
-      <div className="chamfer aspect-video overflow-hidden bg-ground">
+    <div className="card flex h-full flex-col p-4">
+      <div className="aspect-video overflow-hidden rounded-md bg-ground">
         <DrawnChart
           viewBox={art.viewBox}
           elements={art.elements || []}

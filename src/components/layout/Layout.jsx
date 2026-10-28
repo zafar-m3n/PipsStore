@@ -1,11 +1,13 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import gsap from "gsap";
-import { Navbar } from "@/components/layout/Navbar.jsx";
-import { Footer } from "@/components/layout/Footer.jsx";
+import Navbar from "@/components/layout/Navbar.jsx";
+import Footer from "@/components/layout/Footer.jsx";
 import { REDUCE } from "@/hooks/useGsap.js";
+import { useSpotlight } from "@/hooks/useSpotlight.js";
 
-export function Layout() {
+function Layout() {
+  useSpotlight();
   const { pathname, hash } = useLocation();
   const mainRef = useRef(null);
   const lastPath = useRef(pathname);
@@ -48,12 +50,12 @@ export function Layout() {
     <div className="flex min-h-svh flex-col bg-ground">
       <a
         href="#main"
-        className="chamfer sr-only bg-brand px-4 py-3 font-bold text-on-brand focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+        className="sr-only rounded-full bg-brand px-5 py-3 font-semibold text-on-brand focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-60"
       >
         Skip to content
       </a>
       <Navbar />
-      <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 focus:outline-none">
+      <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 pt-20 focus:outline-hidden">
         <Outlet />
       </main>
       <Footer />

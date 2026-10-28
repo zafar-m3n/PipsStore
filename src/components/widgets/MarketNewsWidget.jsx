@@ -1,34 +1,20 @@
-// MarketNewsWidget.jsx
-import React, { useEffect, useRef, memo } from "react";
-function TradingViewWidget() {
-  const container = useRef();
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-timeline.js";
-    script.type = "text/javascript";
-    script.async = true;
-    script.innerHTML = `
-        {
-          "displayMode": "adaptive",
-          "feedMode": "all_symbols",
-          "colorTheme": "dark",
-          "isTransparent": true,
-          "locale": "en",
-          "width": "100%",
-          "height": "100%"
-        }`;
-    container.current.appendChild(script);
-  }, []);
-  return (
-    <div className="tradingview-widget-container" ref={container}>
-      <div className="tradingview-widget-container__widget"></div>
-      <div className="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/news/top-providers/tradingview/" rel="noopener nofollow" target="_blank">
-          <span className="blue-text">Top stories</span>
-        </a>
-        <span className="trademark"> by TradingView</span>
-      </div>
-    </div>
-  );
+import { memo } from "react";
+import TradingViewEmbed from "@/components/widgets/TradingViewEmbed.jsx";
+
+const SRC = "https://s3.tradingview.com/external-embedding/embed-widget-timeline.js";
+const CONFIG = {
+  displayMode: "adaptive",
+  feedMode: "all_symbols",
+  colorTheme: "dark",
+  isTransparent: true,
+  locale: "en",
+  width: "100%",
+  height: "100%",
+};
+const COPYRIGHT = { href: "https://www.tradingview.com/news/top-providers/tradingview/", label: "Top stories" };
+
+function MarketNewsWidget() {
+  return <TradingViewEmbed src={SRC} config={CONFIG} copyright={COPYRIGHT} />;
 }
-export default memo(TradingViewWidget);
+
+export default memo(MarketNewsWidget);

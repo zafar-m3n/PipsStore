@@ -1,4 +1,4 @@
-import { LegalPage } from "@/components/common/LegalPage.jsx";
+import LegalPage from "@/components/common/LegalPage.jsx";
 import {
   LEGAL_LAST_UPDATED,
   PRIVACY_INTRO,
@@ -7,7 +7,7 @@ import {
 } from "@/data/legal.js";
 import { CONTACT_INFO } from "@/data/site.js";
 
-export default function PrivacyPolicy() {
+function PrivacyPolicy() {
   return (
     <LegalPage
       title="Privacy Policy"
@@ -24,3 +24,5 @@ export default function PrivacyPolicy() {
     />
   );
 }
+
+export default PrivacyPolicy;

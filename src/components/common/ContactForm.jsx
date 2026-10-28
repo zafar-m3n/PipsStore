@@ -7,6 +7,7 @@ import { getAdTracking, clearAdTracking } from "@/lib/tracking.js";
 import { useToast } from "@/components/common/ToastProvider.jsx";
 import { EXPERIENCE_OPTIONS } from "@/data/site.js";
 import { selectStyles, selectTheme, menuPortalTarget } from "@/lib/selectStyles.js";
+import { BUTTON_PRIMARY, FIELD, FIELD_FOCUS } from "@/lib/ui.js";
 
 const EMPTY = {
   name: "",
@@ -29,9 +30,14 @@ const EXPERIENCE_SELECT_OPTIONS = EXPERIENCE_OPTIONS.map((o) => ({
 }));
 
 const fieldClass =
-  "min-h-12 w-full rounded-sm border border-field bg-surface-2 px-4 py-3 text-body text-ink placeholder:text-ink-muted outline-none transition-colors focus:border-brand focus:ring-1 focus:ring-brand";
+  [
+    "min-h-12 w-full",
+    FIELD,
+    "px-4 py-3 text-body text-ink placeholder:text-ink-muted outline-hidden transition-colors",
+    FIELD_FOCUS,
+  ].join(" ");
 
-export function ContactForm({ className = "", heading, blurb }) {
+function ContactForm({ className = "", heading, blurb, surface = "card" }) {
   const [values, setValues] = useState(EMPTY);
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -102,7 +108,7 @@ export function ContactForm({ className = "", heading, blurb }) {
     <form
       onSubmit={onSubmit}
       noValidate
-      className={["panel p-6 sm:p-8", className].join(" ")}
+      className={[surface === "glass" ? "glass" : "card", "p-6 sm:p-8", className].join(" ")}
     >
       {heading && (
         <h3 className="text-lead font-bold text-ink">{heading}</h3>
@@ -181,7 +187,7 @@ export function ContactForm({ className = "", heading, blurb }) {
         </div>
 
         {/* Honeypot — visually hidden, off-screen, not focusable */}
-        <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px]">
+        <div aria-hidden="true" className="absolute -left-[9999px] -top-[9999px]">
           <label>
             Leave this box unchecked
             <input
@@ -197,7 +203,7 @@ export function ContactForm({ className = "", heading, blurb }) {
         <button
           type="submit"
           disabled={submitting}
-          className="chamfer inline-flex min-h-12 w-full items-center justify-center gap-2 bg-brand px-6 py-3 text-body font-bold text-on-brand press hover:bg-brand-hover active:bg-brand-press disabled:cursor-not-allowed disabled:opacity-70"
+          className={[BUTTON_PRIMARY, "w-full justify-center py-3 disabled:cursor-not-allowed disabled:opacity-70"].join(" ")}
         >
           <span className="grid">
             <span

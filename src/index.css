@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-/* PipsStore tokens: dark only, colours from src/assets/logo.png. Motif: the wordmark's chamfered corner. */
+/* PipsStore tokens: near-black and neutral, one leaf-green light, calm contrast.
+   Instrument Serif speaks; Geist does the work; Geist Mono carries numbers. */
 @theme static {
   --color-*: initial;
   --text-*: initial;
@@ -8,56 +9,67 @@
   --shadow-*: initial;
   --font-*: initial;
 
-  --color-ground: #070d0b;
-  --color-surface-1: #0d1613;
-  --color-surface-2: #13201c;
-  --color-surface-3: #1b2b26;
-  --color-band: #0a3a2f;
+  --color-ground: #0a0a0b;
+  --color-surface-1: #111113;
+  --color-surface-2: #18181b;
+  --color-surface-3: #222226;
 
-  --color-ink: #e3ece9;
-  --color-ink-soft: #b8c6c1;
-  --color-ink-muted: #8fa19a;
-  --color-field: #76908a;
-  --color-line: #24352f;
+  --color-ink: #d4d4d9;
+  --color-ink-soft: #a6a6ae;
+  --color-ink-muted: #8a8a93;
+  --color-field: #6e6e77;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.14);
 
-  --color-brand: #12e5a8;
-  --color-brand-hover: #4ff0c0;
-  --color-brand-press: #0bc28d;
-  --color-brand-deep: #0b6b55;
-  --color-on-brand: #03140e;
+  --color-brand: #3fe05a;
+  --color-brand-hover: #6ae87f;
+  --color-brand-press: #2fc248;
+  --color-brand-deep: #1a4725;
+  --color-on-brand: #07140a;
 
-  --color-bull: #5aa8ff;
-  --color-bear: #ff8a5c;
+  --color-bull: #6ea8ea;
+  --color-bear: #e8916c;
 
-  --color-success: #b6e36a;
-  --color-warning: #f5be4f;
-  --color-error: #ff7a7a;
-  --color-info: #79c6f2;
+  --color-success: #5fcfc0;
+  --color-warning: #e3b65c;
+  --color-error: #ec8585;
+  --color-info: #8cbfe0;
 
-  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
 
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.4;
   --text-small: 0.875rem;
   --text-small--line-height: 1.5;
   --text-body: 1.0625rem;
   --text-body--line-height: 1.6;
-  --text-lead: 1.375rem;
-  --text-lead--line-height: 1.4;
-  --text-title: clamp(1.75rem, 1.1rem + 2.4vw, 3rem);
+  --text-lead: 1.1875rem;
+  --text-lead--line-height: 1.5;
+  --text-figure: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+  --text-figure--line-height: 1.05;
+  --text-figure--letter-spacing: -0.03em;
+  --text-title: clamp(2rem, 1.5rem + 1.8vw, 3rem);
   --text-title--line-height: 1.05;
-  --text-title--letter-spacing: -0.02em;
-  --text-display: clamp(2.5rem, 1.2rem + 5.6vw, 6.5rem);
+  --text-title--letter-spacing: -0.01em;
+  --text-headline: clamp(2.75rem, 1.7rem + 3.6vw, 4.75rem);
+  --text-headline--line-height: 1;
+  --text-headline--letter-spacing: -0.015em;
+  --text-display: clamp(3rem, 1.6rem + 5.6vw, 6rem);
   --text-display--line-height: 0.95;
-  --text-display--letter-spacing: -0.035em;
-  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.02em;
 
   --spacing-gutter: clamp(1rem, 3vw, 2rem);
-  --spacing-section: clamp(6rem, 8vw + 3rem, 11rem);
+  --spacing-section: clamp(4.5rem, 4vw + 3rem, 7.5rem);
 
-  --radius-sm: 4px;
-  --radius-md: 10px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
-  --shadow-float: 0 16px 40px -8px rgb(0 0 0 / 0.7), 0 0 0 1px var(--color-line);
+  --shadow-float: 0 24px 48px -16px rgb(0 0 0 / 0.75);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -65,6 +77,7 @@
 
 :root {
   color-scheme: dark;
+  scrollbar-color: var(--color-surface-3) var(--color-ground);
 }
 
 html {
@@ -83,18 +96,35 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
+  caret-color: var(--color-brand);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-ink);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
+/* The display sizes always speak in the serif, at its single weight. Unlayered
+   so it wins over a stray font-weight utility. */
+.text-display,
+.text-headline,
+.text-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.text-figure {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
 [id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
 }
 
 :focus-visible {
@@ -107,6 +137,11 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-ink);
 }
 
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
 @utility container-page {
   width: 100%;
   max-width: 76rem;
@@ -114,33 +149,130 @@ h1, h2, h3, h4, h5, h6 {
   padding-inline: var(--spacing-gutter);
 }
 
-/* The motif. Chromium draws a true bevel; other browsers fall back to the same radius, rounded. */
-@utility chamfer {
-  border-radius: var(--radius-md);
-  corner-shape: bevel;
-}
-
-@utility panel {
+/* Cards: one hairline border for elevation, plus a faint lit top edge. On
+   hover (fine pointers) a soft light follows the cursor; useSpotlight sets
+   --mx / --my. */
+@utility card {
   background-color: var(--color-surface-1);
-  border-radius: var(--radius-md);
-  corner-shape: bevel;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.04);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: var(--color-line-strong);
+      background-image: radial-gradient(
+        26rem circle at var(--mx, 50%) var(--my, 0%),
+        color-mix(in oklab, var(--color-ink) 5%, transparent),
+        transparent 70%
+      );
+    }
+  }
 }
 
-@utility panel-raised {
+@utility card-raised {
   background-color: var(--color-surface-2);
-  border-radius: var(--radius-md);
-  corner-shape: bevel;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: var(--color-line-strong);
+      background-image: radial-gradient(
+        26rem circle at var(--mx, 50%) var(--my, 0%),
+        color-mix(in oklab, var(--color-ink) 5%, transparent),
+        transparent 70%
+      );
+    }
+  }
 }
 
-@utility band-field {
-  background-color: var(--color-band);
+/* Frosted glass, for the one primary panel over a lit background. */
+@utility glass {
+  background-color: color-mix(in oklab, var(--color-surface-1) 62%, transparent);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.06);
+  backdrop-filter: blur(20px) saturate(1.15);
+}
+
+/* The floating navigation bar: blurs whatever scrolls beneath it. */
+@utility glass-bar {
+  background-color: color-mix(in oklab, var(--color-surface-1) 72%, transparent);
+  border: 1px solid var(--color-line);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+
+/* The interior page header's light: a soft green glow falling from the top edge. */
+@utility glow-top {
+  background-image:
+    radial-gradient(50% 70% at 50% 0%, color-mix(in oklab, var(--color-brand) 14%, transparent), transparent 70%),
+    radial-gradient(35% 50% at 85% 0%, color-mix(in oklab, var(--color-brand-deep) 60%, transparent), transparent 70%);
+}
+
+/* A section lit from above: replaces the old teal band. */
+@utility section-lit {
+  background-color: var(--color-ground);
+  background-image: radial-gradient(60% 45% at 50% 0%, color-mix(in oklab, var(--color-brand) 7%, transparent), transparent 72%);
+  border-block: 1px solid var(--color-line);
+}
+
+/* Skeleton sweep for image placeholders; a still highlight under reduced motion. */
+@utility shimmer {
+  background-image: linear-gradient(
+    100deg,
+    transparent 35%,
+    color-mix(in oklab, var(--color-ink) 6%, transparent) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: shimmer 2.6s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
+/* Still fallbacks for the WebGL effects (reduced motion, no WebGL2, while loading). */
+@utility fx-aurora {
+  background-image: radial-gradient(
+    120% 70% at 50% 0%,
+    color-mix(in oklab, var(--color-brand-deep) 55%, transparent),
+    transparent 70%
+  );
+}
+
+@utility fx-rays {
+  background-image: radial-gradient(
+    55% 80% at 50% 0%,
+    color-mix(in oklab, var(--color-brand) 10%, transparent),
+    transparent 70%
+  );
+}
+
+@utility fx-orb {
+  background-image: radial-gradient(
+    closest-side,
+    transparent 52%,
+    color-mix(in oklab, var(--color-brand) 16%, transparent) 68%,
+    transparent 100%
+  );
 }
 
 /* Press feedback for buttons and button-like links; colour changes ride along. */
 @utility press {
-  transition-property: color, background-color, transform;
-  transition-duration: 150ms, 150ms, 120ms;
-  transition-timing-function: ease, ease, var(--ease-out);
+  transition-property: color, background-color, border-color, transform;
+  transition-duration: 150ms, 150ms, 150ms, 120ms;
+  transition-timing-function: ease, ease, ease, var(--ease-out);
   @media (prefers-reduced-motion: no-preference) {
     &:active:not(:disabled) {
       transform: scale(0.97);
@@ -148,11 +280,11 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* The same for whole-panel links, where 0.97 would look like a jump. */
+/* The same for whole-card links, where 0.97 would look like a jump. */
 @utility press-soft {
-  transition-property: color, background-color, transform;
-  transition-duration: 150ms, 150ms, 120ms;
-  transition-timing-function: ease, ease, var(--ease-out);
+  transition-property: color, background-color, border-color, transform;
+  transition-duration: 150ms, 150ms, 150ms, 120ms;
+  transition-timing-function: ease, ease, ease, var(--ease-out);
   @media (prefers-reduced-motion: no-preference) {
     &:active:not(:disabled) {
       transform: scale(0.99);

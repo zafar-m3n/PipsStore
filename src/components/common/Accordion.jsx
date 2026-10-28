@@ -27,7 +27,7 @@ function Panel({ id, open, children }) {
 }
 
 /* One-open-at-a-time accordion for the About page FAQ. */
-export function Accordion({ items = [] }) {
+function Accordion({ items = [] }) {
   const [open, setOpen] = useState(0);
   const baseId = useId();
 
@@ -39,7 +39,7 @@ export function Accordion({ items = [] }) {
         return (
           <div
             key={item.q}
-            className={["chamfer transition-colors", isOpen ? "bg-surface-2" : "bg-surface-1"].join(" ")}
+            className={["rounded-lg border border-line transition-colors", isOpen ? "bg-surface-2" : "bg-surface-1"].join(" ")}
           >
             <h3>
               <button
@@ -47,7 +47,7 @@ export function Accordion({ items = [] }) {
                 onClick={() => setOpen(isOpen ? -1 : i)}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                className="chamfer flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left press-soft hover:bg-surface-2"
+                className="flex min-h-14 w-full rounded-lg items-center justify-between gap-4 px-5 py-4 text-left press-soft hover:bg-surface-2"
               >
                 <span className="text-body font-bold text-ink">{item.q}</span>
                 <Icon

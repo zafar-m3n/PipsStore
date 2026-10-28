@@ -1,4 +1,4 @@
-/* Plain text label with a small chamfered marker. Market tones (bull / bear)
+/* Plain text label with a small round marker. Market tones (bull / bear)
    are for chart signals only; everything else is neutral. */
 const TONE_CLASSES = {
   bull: "text-bull",
@@ -6,7 +6,7 @@ const TONE_CLASSES = {
   neutral: "text-ink-soft",
 };
 
-export function Badge({ children, tone = "neutral", className = "" }) {
+function Badge({ children, tone = "neutral", className = "" }) {
   return (
     <span
       className={[
@@ -15,7 +15,7 @@ export function Badge({ children, tone = "neutral", className = "" }) {
         className,
       ].join(" ")}
     >
-      <span aria-hidden="true" className="chamfer h-2.5 w-2.5 bg-current" />
+      <span aria-hidden="true" className="size-2 rounded-full bg-current" />
       {children}
     </span>
   );

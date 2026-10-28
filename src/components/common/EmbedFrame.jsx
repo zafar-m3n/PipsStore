@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
      clip       clip overflow to the frame (default true). Set false for
                 embeds that size themselves and may grow past `minHeight`.
 */
-export function EmbedFrame({
+function EmbedFrame({
   children,
   height,
   minHeight = 360,
@@ -64,7 +64,7 @@ export function EmbedFrame({
       className={[
         "relative",
         clip ? "overflow-hidden" : "",
-        bare ? "" : "panel p-2 sm:p-3",
+        bare ? "" : "card p-2 sm:p-3",
         className,
       ].join(" ")}
       style={style}

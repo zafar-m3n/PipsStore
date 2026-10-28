@@ -19,7 +19,7 @@ export const MOTION = {
 export const REDUCE = "(prefers-reduced-motion: reduce)";
 export const ALLOW = "(prefers-reduced-motion: no-preference)";
 
-const prefersReducedMotion = () =>
+export const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia(REDUCE).matches;
 
 /* Embeds and lazy images change the page height after ScrollTriggers have
@@ -37,8 +37,13 @@ if (typeof window !== "undefined" && "ResizeObserver" in window) {
 }
 
 /* ------------------------------------------------------------------
-   Hero entrance. The heading and lead sentence are never hidden; only
-   elements marked [data-hero-rise] rise in, in DOM order. One-time.
+   Hero entrance, the site's one authored moment. Everything renders
+   visible; with motion allowed, GSAP then:
+     [data-hero-line]  headline lines rise out of their mask
+     [data-hero-rise]  supporting blocks rise in after them
+     [data-count]      a number counts up once to its real value
+     [data-parallax]   drifts up by that many percent as the hero
+                       scrolls away (wide screens only)
 ------------------------------------------------------------------ */
 export function useHeroReveal() {
   const scope = useRef(null);
@@ -46,20 +51,92 @@ export function useHeroReveal() {
   useLayoutEffect(() => {
     const root = scope.current;
     if (!root) return;
+    const lines = root.querySelectorAll("[data-hero-line]");
     const items = root.querySelectorAll("[data-hero-rise]");
-    if (!items.length) return;
+    const counts = Array.from(root.querySelectorAll("[data-count]"));
+    const drift = root.querySelectorAll("[data-parallax]");
 
     const mm = gsap.matchMedia(root);
     mm.add(ALLOW, () => {
-      gsap.from(items, {
-        opacity: 0,
-        y: MOTION.rise,
-        duration: MOTION.reveal,
-        ease: MOTION.easeOut,
-        stagger: 0.08,
-        delay: 0.05,
-        clearProps: "opacity,transform",
+      if (lines.length) {
+        gsap.from(lines, { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.09, clearProps: "transform" });
+      }
+      if (items.length) {
+        gsap.from(items, {
+          opacity: 0,
+          y: MOTION.rise,
+          duration: MOTION.reveal,
+          ease: MOTION.easeOut,
+          stagger: 0.08,
+          delay: lines.length ? 0.3 : 0.05,
+          clearProps: "opacity,transform",
+        });
+      }
+      const finals = counts.map((el) => {
+        const text = el.textContent;
+        const m = text.trim().match(/^(\d+)(.*)$/);
+        if (m) {
+          const end = Number(m[1]);
+          const v = { n: 0 };
+          el.textContent = `0${m[2]}`;
+          gsap.to(v, {
+            n: end,
+            duration: 1.2,
+            delay: 0.4,
+            ease: "power2.out",
+            onUpdate: () => (el.textContent = `${Math.round(v.n)}${m[2]}`),
+          });
+        }
+        return text;
       });
+      return () => counts.forEach((el, i) => (el.textContent = finals[i]));
+    });
+    mm.add(`${ALLOW} and (min-width: 1280px)`, () => {
+      drift.forEach((el) =>
+        gsap.to(el, {
+          yPercent: -Number(el.dataset.parallax || 15),
+          ease: "none",
+          scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true },
+        }),
+      );
+    });
+    return () => mm.revert();
+  }, []);
+
+  return scope;
+}
+
+/* A progress rail beside an ordered list: [data-rail] fills as the list
+   scrolls through, and each [data-step] gains data-reached when it passes
+   the reading line. Text never dims, so contrast holds. Without motion, or
+   on small screens, the rail stays full and nothing toggles. */
+export function useStepRail() {
+  const scope = useRef(null);
+
+  useLayoutEffect(() => {
+    const root = scope.current;
+    if (!root) return;
+    const steps = Array.from(root.querySelectorAll("[data-step]"));
+    const rail = root.querySelector("[data-rail]");
+
+    const mm = gsap.matchMedia(root);
+    mm.add(`${ALLOW} and (min-width: 768px)`, () => {
+      if (rail) {
+        gsap.fromTo(
+          rail,
+          { scaleY: 0 },
+          { scaleY: 1, ease: "none", scrollTrigger: { trigger: root, start: "top 70%", end: "bottom 55%", scrub: 0.4 } },
+        );
+      }
+      steps.forEach((li) =>
+        ScrollTrigger.create({
+          trigger: li,
+          start: "top 65%",
+          onEnter: () => li.setAttribute("data-reached", ""),
+          onLeaveBack: () => li.removeAttribute("data-reached"),
+        }),
+      );
+      return () => steps.forEach((li) => li.removeAttribute("data-reached"));
     });
     return () => mm.revert();
   }, []);
@@ -106,14 +183,6 @@ export const RISE = {
   to: { opacity: 1, y: 0, duration: MOTION.reveal, ease: MOTION.easeOut },
   clear: "opacity,transform",
   stagger: true,
-};
-
-export const DEVELOP = {
-  start: "top 85%",
-  from: { clipPath: "inset(100% 0% 0% 0%)" },
-  to: { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: MOTION.easeInOut },
-  clear: "clipPath",
-  stagger: false,
 };
 
 function attachReveal(root, items, preset) {

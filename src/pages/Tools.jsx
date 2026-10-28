@@ -1,15 +1,15 @@
 import { lazy, Suspense } from "react";
-import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import { PageHero } from "@/components/common/PageHero.jsx";
-import { DisclaimerBanner } from "@/components/common/DisclaimerBanner.jsx";
-import { EmbedFrame } from "@/components/common/EmbedFrame.jsx";
-import { ScaledFixedWidth } from "@/components/common/ScaledFixedWidth.jsx";
-import { ArchiveImage } from "@/components/common/ArchiveImage.jsx";
-
-import arithmometer from "@/assets/archive/tates-arithmometer.jpg";
-import contest1921 from "@/assets/archive/calculating-machine-contest-1921.jpg";
-import banknoteDesign from "@/assets/archive/banknote-design.jpg";
+import PageHero from "@/components/common/PageHero.jsx";
+import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
+import EmbedFrame from "@/components/common/EmbedFrame.jsx";
+import EmbedTile from "@/components/common/EmbedTile.jsx";
+import InfoTile from "@/components/common/InfoTile.jsx";
+import ScaledFixedWidth from "@/components/common/ScaledFixedWidth.jsx";
+import ButtonLink from "@/components/common/ButtonLink.jsx";
+import SectionIntro from "@/components/common/SectionIntro.jsx";
+import PipResultCard from "@/components/ui/PipResultCard.jsx";
+import RiskCard from "@/components/ui/RiskCard.jsx";
+import LevelCard from "@/components/ui/LevelCard.jsx";
 
 const PipCalculatorWidget = lazy(() => import("@/components/widgets/PipCalculatorWidget.jsx"));
 const ProfitCalculatorWidget = lazy(() => import("@/components/widgets/ProfitCalculatorWidget.jsx"));
@@ -31,85 +31,40 @@ const PROFIT_INPUTS = [
 
 function Inputs({ items }) {
   return (
-    <dl className="mt-8 flex flex-col gap-5">
+    <dl className="flex flex-col gap-4">
       {items.map(([term, text]) => (
         <div key={term}>
-          <dt className="text-body font-bold text-ink">{term}</dt>
-          <dd className="mt-1 text-body text-ink-soft">{text}</dd>
+          <dt className="text-small font-semibold text-ink">{term}</dt>
+          <dd className="mt-1 text-small text-ink-soft">{text}</dd>
         </div>
       ))}
     </dl>
   );
 }
 
-function Calculator({ label, children }) {
+/* One calculator as a bento row: the live embed wide, the reading guide and
+   a worked example beside it. */
+function ToolSection({ id, titleId, title, intro, inputs, example, label, lit = false, children }) {
   return (
-    <EmbedFrame minHeight={420} label={label} clip={false} bare>
-      <Suspense fallback={null}>
-        <ScaledFixedWidth width={665}>{children}</ScaledFixedWidth>
-      </Suspense>
-    </EmbedFrame>
-  );
-}
-
-function PipSection() {
-  return (
-    <section id="pip-calculator" aria-labelledby="pip-title" className="container-page pb-section">
-      <div className="grid gap-12 lg:grid-cols-12">
-        <div className="min-w-0 lg:col-span-5">
-          <h2 id="pip-title" className="text-title font-bold text-ink">
-            Pip calculator
-          </h2>
-          <p className="mt-4 max-w-[48ch] text-body text-ink-soft sm:text-lead">
-            What a single pip is worth for your pair, trade size and account currency.
-          </p>
-          <Inputs items={PIP_INPUTS} />
-          <ArchiveImage
-            src={arithmometer}
-            width={1200}
-            height={769}
-            alt="A brass arithmometer with rows of sliding number settings, in an open wooden case."
-            caption="Tate's Patent Arithmometer, a 19th-century calculating machine."
-            className="mt-10 hidden lg:block"
-            frameClassName="aspect-[3/2]"
-          />
-        </div>
-        <div className="min-w-0 lg:col-span-7">
-          <Calculator label="Loading pip calculator…">
-            <PipCalculatorWidget />
-          </Calculator>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ProfitSection() {
-  return (
-    <section id="profit-calculator" aria-labelledby="profit-title" className="band-field py-section">
-      <div className="container-page grid gap-12 lg:grid-cols-12">
-        <div className="min-w-0 lg:order-last lg:col-span-5">
-          <h2 id="profit-title" className="text-title font-bold text-ink">
-            Profit calculator
-          </h2>
-          <p className="mt-4 max-w-[48ch] text-body text-ink-soft sm:text-lead">
-            The profit or loss on a trade, from its direction, size, and where it opened and closed.
-          </p>
-          <Inputs items={PROFIT_INPUTS} />
-          <ArchiveImage
-            src={contest1921}
-            width={1200}
-            height={842}
-            alt="A woman in a cloche hat working a large calculating machine at a table, with onlookers behind her."
-            caption="A calculating-machine competition in Paris, 1921."
-            className="mt-10 hidden lg:block"
-            frameClassName="aspect-[3/2]"
-          />
-        </div>
-        <div className="min-w-0 lg:col-span-7">
-          <Calculator label="Loading profit calculator…">
-            <ProfitCalculatorWidget />
-          </Calculator>
+    <section id={id} aria-labelledby={titleId} className={lit ? "section-lit py-section" : "pb-section"}>
+      <div className="container-page">
+        <SectionIntro id={titleId} title={title} width="52ch">
+          {intro}
+        </SectionIntro>
+        <div className="mt-10 grid gap-4 lg:grid-cols-12">
+          <EmbedTile label="Live calculator" source="Provided by CashbackForex" className="lg:col-span-8">
+            <EmbedFrame minHeight={420} label={label} clip={false} bare>
+              <Suspense fallback={null}>
+                <ScaledFixedWidth width={665}>{children}</ScaledFixedWidth>
+              </Suspense>
+            </EmbedFrame>
+          </EmbedTile>
+          <div className="flex min-w-0 flex-col gap-4 lg:col-span-4">
+            <InfoTile title="How to fill it in">
+              <Inputs items={inputs} />
+            </InfoTile>
+            {example}
+          </div>
         </div>
       </div>
     </section>
@@ -119,48 +74,51 @@ function ProfitSection() {
 function ClosingSection() {
   return (
     <section aria-labelledby="tools-next-title" className="container-page py-section">
-      <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-        <div className="lg:col-span-6">
-          <h2 id="tools-next-title" className="text-title font-bold text-ink">
-            Know where the levels are
-          </h2>
-          <p className="mt-4 max-w-[52ch] text-body text-ink-soft sm:text-lead">
-            The calculators tell you what a move is worth. Chart Analysis shows how to find the levels that moves tend
-            to start and stop at.
-          </p>
-          <div className="mt-8">
-            <Link
-              to="/analysis"
-              className="chamfer inline-flex min-h-12 items-center gap-2 bg-brand px-6 text-body font-bold whitespace-nowrap text-on-brand press hover:bg-brand-hover active:bg-brand-press"
-            >
-              Go to Chart Analysis
-              <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
-            </Link>
+      <div className="grid gap-4 lg:grid-cols-12">
+        <article className="card flex flex-col justify-between gap-8 p-6 sm:p-8 lg:col-span-7">
+          <SectionIntro id="tools-next-title" title="Know where the levels are" width="52ch">
+            The calculators tell you what a move is worth. Chart Analysis shows how to find the levels that moves tend to start and stop at.
+          </SectionIntro>
+          <div>
+            <ButtonLink to="/analysis">Go to Chart Analysis</ButtonLink>
           </div>
-        </div>
-        <ArchiveImage
-          src={banknoteDesign}
-          width={1400}
-          height={643}
-          alt="An ornate engraved banknote design with scrollwork and a numeral five."
-          caption="Design for a banknote, 19th century."
-          className="lg:col-span-5 lg:col-start-8"
-          frameClassName="aspect-[2/1]"
-        />
+        </article>
+        <LevelCard className="lg:col-span-5" />
       </div>
     </section>
   );
 }
 
-export default function Tools() {
+function Tools() {
   return (
     <>
       <PageHero
         title="Free Trading Tools"
         subtitle="Two everyday calculators, pip value and trade profit, free to use. They're provided by CashbackForex and embedded here; PipsStore doesn't store anything you type into them."
       />
-      <PipSection />
-      <ProfitSection />
+      <ToolSection
+        id="pip-calculator"
+        titleId="pip-title"
+        title="Pip calculator"
+        intro="What a single pip is worth for your pair, trade size and account currency."
+        inputs={PIP_INPUTS}
+        example={<PipResultCard />}
+        label="Loading pip calculator…"
+      >
+        <PipCalculatorWidget />
+      </ToolSection>
+      <ToolSection
+        id="profit-calculator"
+        titleId="profit-title"
+        title="Profit calculator"
+        intro="The profit or loss on a trade, from its direction, size, and where it opened and closed."
+        inputs={PROFIT_INPUTS}
+        example={<RiskCard />}
+        label="Loading profit calculator…"
+        lit
+      >
+        <ProfitCalculatorWidget />
+      </ToolSection>
       <ClosingSection />
       <div className="container-page pb-16">
         <DisclaimerBanner />
@@ -168,3 +126,5 @@ export default function Tools() {
     </>
   );
 }
+
+export default Tools;

@@ -1,76 +1,64 @@
 import { useMemo, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
-import { PageHero } from "@/components/common/PageHero.jsx";
-import { RevealGroup } from "@/components/common/RevealGroup.jsx";
-import { DisclaimerBanner } from "@/components/common/DisclaimerBanner.jsx";
-import { ContactForm } from "@/components/common/ContactForm.jsx";
-import { LevelMeter } from "@/components/common/LevelMeter.jsx";
-import { ArchiveImage } from "@/components/common/ArchiveImage.jsx";
-import { GlossaryCard } from "@/components/cards/GlossaryCard.jsx";
+import PageHero from "@/components/common/PageHero.jsx";
+import Chapter from "@/components/common/Chapter.jsx";
+import RevealGroup from "@/components/common/RevealGroup.jsx";
+import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
+import ContactForm from "@/components/common/ContactForm.jsx";
+import LevelMeter from "@/components/common/LevelMeter.jsx";
+import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
+import ButtonLink from "@/components/common/ButtonLink.jsx";
+import SearchField from "@/components/common/SearchField.jsx";
+import TermCard from "@/components/ui/TermCard.jsx";
+import GlossaryCard from "@/components/cards/GlossaryCard.jsx";
 import { useSettle } from "@/hooks/useGsap.js";
 import { LEARNING_PATHS } from "@/data/learningPaths.js";
 import { COURSES, COURSE_LEVELS } from "@/data/courses.js";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/data/glossary.js";
-
-import stereograph from "@/assets/archive/royal-exchange-stereograph.jpg";
-import certificateDesign from "@/assets/archive/banknote-certificate-design.jpg";
-import stockTicker from "@/assets/archive/edison-stock-ticker.jpg";
-import customersRoom from "@/assets/archive/brokerage-customers-room-1902.jpg";
+import { chipClass, tabClass } from "@/lib/ui.js";
+import { filterGlossary } from "@/lib/glossary.js";
 
 const KNOWN_TERMS = new Set(GLOSSARY_TERMS.map((t) => t.term.toLowerCase()));
 
-const primaryLink =
-  "chamfer inline-flex min-h-12 items-center gap-2 bg-brand px-6 text-body font-bold whitespace-nowrap text-on-brand press hover:bg-brand-hover active:bg-brand-press";
-
-function PathsSection() {
+function PathsChapter() {
   return (
-    <section aria-labelledby="paths-title" className="container-page pb-section">
-      <div className="grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <h2 id="paths-title" className="text-title font-bold text-ink">
-            Learning paths
-          </h2>
-          <p className="mt-4 max-w-[40ch] text-body text-ink-soft sm:text-lead">
-            Four paths, each an ordered outline of topics. Pick the one that fits and ask for it to be sent to you.
-          </p>
-          <ArchiveImage
-            src={stereograph}
-            width={720}
-            height={832}
-            alt="The columned front of the Royal Exchange in London, with carts and crowds in the street."
-            caption="The Royal Exchange, London, from a stereograph card."
-            className="mt-10 hidden lg:block"
-            frameClassName="aspect-[4/5]"
-          />
-        </div>
-        <ol className="flex flex-col gap-3 lg:col-span-8">
-          {LEARNING_PATHS.map((p) => (
-            <li key={p.id} id={p.id} aria-labelledby={`${p.id}-title`} className="panel p-6 sm:p-8">
-              <h3 id={`${p.id}-title`} className="text-lead font-bold text-ink">
-                {p.title}
-              </h3>
-              <p className="mt-3 max-w-[62ch] text-body text-ink-soft">{p.description}</p>
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-                <span className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <LevelMeter level={p.level} />
-                  <span className="text-small text-ink-muted tabular-nums">{p.lessons} topics in this outline</span>
-                </span>
-                <a
-                  href="#get-plan"
-                  className="inline-flex min-h-11 items-center text-body font-bold text-brand underline underline-offset-4 transition-colors hover:text-brand-hover"
-                >
-                  Get this path sent to you
-                </a>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
+    <Chapter
+      titleId="paths-title"
+      title="Learning paths"
+      intro="Four paths, each an ordered outline of topics. Pick the one that fits and ask for it to be sent to you."
+      aside={
+        <ButtonLink href="#get-plan" icon="ph:arrow-down-bold">
+          Get a path sent to you
+        </ButtonLink>
+      }
+      className="pt-0"
+    >
+      <ol className="flex flex-col gap-4">
+        {LEARNING_PATHS.map((p) => (
+          <li key={p.id} id={p.id} aria-labelledby={`${p.id}-title`} className="card p-6 sm:p-8">
+            <h3 id={`${p.id}-title`} className="text-lead font-semibold text-ink">
+              {p.title}
+            </h3>
+            <p className="mt-3 max-w-[62ch] text-body text-ink-soft">{p.description}</p>
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
+              <span className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <LevelMeter level={p.level} />
+                <span className="font-mono text-small text-ink-muted">{p.lessons} topics in this outline</span>
+              </span>
+              <a
+                href="#get-plan"
+                className="inline-flex min-h-11 items-center text-small font-semibold text-brand underline transition-colors hover:text-brand-hover"
+              >
+                Get this path sent to you
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Chapter>
   );
 }
 
-function TopicsSection() {
+function TopicsChapter() {
   const [level, setLevel] = useState(COURSE_LEVELS[0]);
   const tabRefs = useRef([]);
   const courses = useMemo(() => COURSES.filter((c) => c.level === level), [level]);
@@ -89,30 +77,12 @@ function TopicsSection() {
   };
 
   return (
-    <section aria-labelledby="topics-title" className="band-field py-section">
-      <div className="container-page">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <h2 id="topics-title" className="text-title font-bold text-ink">
-              What each level covers
-            </h2>
-            <p className="mt-4 max-w-[56ch] text-body text-ink-soft sm:text-lead">
-              The topic outline behind the paths, grouped by level. These are outlines of what we teach, not
-              on-demand video courses.
-            </p>
-          </div>
-          <ArchiveImage
-            src={certificateDesign}
-            width={1400}
-            height={623}
-            alt="A pencil design for a bank note, with ornate numeral threes and blank spaces for the bank's name."
-            caption="Design for a bank note or certificate, 19th century."
-            className="lg:col-span-5"
-            frameClassName="aspect-[9/4]"
-          />
-        </div>
-
-        <div role="tablist" aria-label="Level" className="mt-12 flex flex-wrap gap-2">
+    <Chapter
+      titleId="topics-title"
+      title="What each level covers"
+      intro="The topic outline behind the paths, grouped by level. These are outlines of what we teach, not on-demand video courses."
+      aside={
+        <div role="tablist" aria-label="Level" className="flex flex-wrap gap-2">
           {COURSE_LEVELS.map((lvl, i) => {
             const selected = level === lvl;
             return (
@@ -127,192 +97,145 @@ function TopicsSection() {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setLevel(lvl)}
                 onKeyDown={(e) => onKeyDown(e, i)}
-                className={[
-                  "chamfer min-h-12 px-5 text-body font-bold press",
-                  selected ? "bg-brand text-on-brand" : "bg-surface-1 text-ink hover:bg-surface-2",
-                ].join(" ")}
+                className={tabClass(selected)}
               >
                 {lvl}
               </button>
             );
           })}
         </div>
-
-        <ul ref={panel} id="level-panel" role="tabpanel" aria-labelledby={`level-tab-${level}`} className="mt-6 grid gap-3 lg:grid-cols-2">
-          {courses.map((c) => (
-            <li key={c.id} className="panel p-6">
-              <h3 className="text-lead font-bold text-ink">{c.title}</h3>
-              <p className="mt-2 text-body text-ink-soft">{c.description}</p>
-            </li>
-          ))}
-        </ul>
+      }
+      lit
+    >
+      <ul ref={panel} id="level-panel" role="tabpanel" aria-labelledby={`level-tab-${level}`} className="grid gap-4 md:grid-cols-2">
+        {courses.map((c) => (
+          <li key={c.id} className="card p-6">
+            <h3 className="text-lead font-semibold text-ink">{c.title}</h3>
+            <p className="mt-2 text-body text-ink-soft">{c.description}</p>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <TermCard term="Pip" />
+        <TermCard term="Lot" />
       </div>
-    </section>
+    </Chapter>
   );
 }
 
-function GlossarySection() {
+function GlossaryChapter() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
-  const sectionRef = useRef(null);
 
-  const terms = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return GLOSSARY_TERMS.filter((t) => {
-      const matchesCat = category === "All" || t.category === category;
-      const matchesQuery = !q || t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q);
-      return matchesCat && matchesQuery;
-    }).sort((a, b) => (b.term.toLowerCase() === q) - (a.term.toLowerCase() === q));
-  }, [query, category]);
+  const terms = useMemo(() => filterGlossary(GLOSSARY_TERMS, { query, category }), [query, category]);
 
   const lookUp = (term) => {
     setCategory("All");
     setQuery(term);
-    sectionRef.current?.scrollIntoView({ block: "start" });
+    document.getElementById("glossary")?.scrollIntoView({ block: "start" });
   };
 
   return (
-    <section id="glossary" ref={sectionRef} aria-labelledby="glossary-title" className="container-page py-section">
-      <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div className="lg:col-span-8">
-          <h2 id="glossary-title" className="text-title font-bold text-ink">
-            Forex glossary
-          </h2>
-          <p className="mt-4 max-w-[56ch] text-body text-ink-soft sm:text-lead">
-            {GLOSSARY_TERMS.length} terms, each with a plain definition, an example and why it matters. Search, or
-            filter by topic.
-          </p>
-        </div>
-        <ArchiveImage
-          src={stockTicker}
-          width={900}
-          height={1113}
-          alt="A brass stock ticker under a glass dome, with paper tape curling from its wheel."
-          caption="Edison's stock ticker."
-          className="hidden lg:col-span-3 lg:col-start-10 lg:block"
-          frameClassName="aspect-square"
-        />
-      </div>
-
-      <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:items-end">
-        <div className="lg:col-span-5">
-          <label htmlFor="glossary-search" className="text-small font-bold text-ink">
-            Search the glossary
-          </label>
-          <div className="mt-2 flex items-center gap-2 rounded-sm border border-field bg-surface-2 pr-1 pl-4 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
-            <Icon icon="ph:magnifying-glass" aria-hidden="true" className="text-ink-muted" />
-            <input
+    <Chapter
+      id="glossary"
+      titleId="glossary-title"
+      title="Forex glossary"
+      intro={`${GLOSSARY_TERMS.length} terms, each with a plain definition, an example and why it matters. Search, or filter by topic.`}
+      aside={
+        <div className="flex flex-col gap-6">
+          <div>
+            <SearchField
               id="glossary-search"
-              type="search"
+              label="Search the glossary"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={setQuery}
               placeholder="Search terms and definitions"
-              className="min-h-12 w-full bg-transparent text-body text-ink outline-none placeholder:text-ink-muted"
+              clearable
             />
-            {query && (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                aria-label="Clear search"
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink-muted press hover:bg-surface-3 hover:text-ink"
-              >
-                <Icon icon="ph:x-bold" aria-hidden="true" />
-              </button>
-            )}
           </div>
-        </div>
-        <div className="lg:col-span-7">
-          <p id="glossary-filter-label" className="text-small font-bold text-ink">
-            Topic
+          <div>
+            <p id="glossary-filter-label" className="text-small font-semibold text-ink">
+              Topic
+            </p>
+            <div role="group" aria-labelledby="glossary-filter-label" className="mt-2 flex flex-wrap gap-2">
+              {["All", ...GLOSSARY_CATEGORIES].map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setCategory(cat)}
+                  aria-pressed={category === cat}
+                  className={chipClass(category === cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+          <p aria-live="polite" className="text-small text-ink-muted">
+            {terms.length === GLOSSARY_TERMS.length
+              ? `Showing all ${terms.length} terms`
+              : `${terms.length} of ${GLOSSARY_TERMS.length} terms`}
           </p>
-          <div role="group" aria-labelledby="glossary-filter-label" className="mt-2 flex flex-wrap gap-2">
-            {["All", ...GLOSSARY_CATEGORIES].map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setCategory(cat)}
-                aria-pressed={category === cat}
-                className={[
-                  "chamfer min-h-11 px-4 text-small font-medium press",
-                  category === cat ? "bg-brand text-on-brand" : "bg-surface-2 text-ink hover:bg-surface-3",
-                ].join(" ")}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
-      </div>
-
-      <p aria-live="polite" className="mt-8 text-small text-ink-muted">
-        {terms.length === GLOSSARY_TERMS.length
-          ? `Showing all ${terms.length} terms`
-          : `${terms.length} of ${GLOSSARY_TERMS.length} terms`}
-      </p>
-
+      }
+    >
       {terms.length > 0 ? (
-        <RevealGroup settleKey={category} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <RevealGroup settleKey={category} className="grid gap-4 md:grid-cols-2">
           {terms.map((t) => (
             <GlossaryCard key={t.term} item={t} onRelated={lookUp} knownTerms={KNOWN_TERMS} />
           ))}
         </RevealGroup>
       ) : (
-        <p className="panel-raised mt-4 p-6 text-body text-ink-soft">
-          No terms match that search. Try a shorter word or another topic.
-        </p>
+        <p className="card-raised p-6 text-body text-ink-soft">No terms match that search. Try a shorter word or another topic.</p>
       )}
-    </section>
+    </Chapter>
   );
 }
 
-function GetPlanSection() {
+function GetPlanChapter() {
   return (
-    <section id="get-plan" aria-labelledby="get-plan-title" className="bg-surface-1 py-section">
-      <div className="container-page grid gap-12 lg:grid-cols-12 lg:items-start">
-        <div className="lg:col-span-5">
-          <h2 id="get-plan-title" className="text-title font-bold text-ink">
-            Get a path sent to you
-          </h2>
-          <p className="mt-4 max-w-[44ch] text-body text-ink-soft sm:text-lead">
-            Tell us where you're at and we'll point you to the right path. Free, and no account needed.
-          </p>
-          <ArchiveImage
-            src={customersRoom}
-            width={1100}
-            height={827}
-            alt="Rows of wooden chairs in the customers' room of an early New York brokerage office."
-            caption="A brokerage customers' room, New York, 1902."
-            className="mt-10"
-            frameClassName="aspect-[4/3]"
-          />
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7">
-          <ContactForm />
-        </div>
+    <Chapter
+      id="get-plan"
+      titleId="get-plan-title"
+      title="Get a path sent to you"
+      intro="Tell us where you're at and we'll point you to the right path. Free, and no account needed."
+      introWidth="44ch"
+      aside={
+        <ImagePlaceholder
+          aspect="aspect-4/3"
+          className="hidden lg:block"
+          description="A person reading an email on their phone, a printed one-page study plan on the desk beside them; relaxed, unhurried."
+        />
+      }
+      lit
+    >
+      <div className="max-w-2xl">
+        <ContactForm />
       </div>
-    </section>
+    </Chapter>
   );
 }
 
-export default function Academy() {
+function Academy() {
   return (
     <>
       <PageHero
         title="The Academy"
         subtitle="A free forex curriculum for beginners: four learning paths, the topics each level covers, and a glossary that explains every term."
       >
-        <a href="#get-plan" className={primaryLink}>
+        <ButtonLink href="#get-plan" icon="ph:arrow-down-bold">
           Get a path sent to you
-          <Icon icon="ph:arrow-down-bold" aria-hidden="true" />
-        </a>
+        </ButtonLink>
       </PageHero>
-      <PathsSection />
-      <TopicsSection />
-      <GlossarySection />
-      <GetPlanSection />
+      <PathsChapter />
+      <TopicsChapter />
+      <GlossaryChapter />
+      <GetPlanChapter />
       <div className="container-page py-16">
         <DisclaimerBanner />
       </div>
     </>
   );
 }
+
+export default Academy;

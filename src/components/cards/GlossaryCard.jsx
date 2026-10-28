@@ -1,13 +1,13 @@
 /* Glossary entry. With `onRelated`, related terms that have their own entry
    (listed in `knownTerms`, lower-cased) are buttons that look them up; the
    rest stay plain text. */
-export function GlossaryCard({ item, onRelated, knownTerms }) {
+function GlossaryCard({ item, onRelated, knownTerms }) {
   const related = item.related || [];
   const linkable = onRelated && knownTerms ? related.filter((r) => knownTerms.has(r.toLowerCase())) : [];
   const plain = related.filter((r) => !linkable.includes(r));
 
   return (
-    <div className="panel flex h-full flex-col p-6">
+    <div className="card flex h-full flex-col p-6">
       <div className="flex items-baseline justify-between gap-3">
         <h3 className="text-lead font-bold text-ink">{item.term}</h3>
         <span className="shrink-0 text-small text-ink-muted">{item.category}</span>
@@ -36,7 +36,7 @@ export function GlossaryCard({ item, onRelated, knownTerms }) {
                     key={r}
                     type="button"
                     onClick={() => onRelated(r)}
-                    className="chamfer min-h-11 bg-surface-2 px-4 text-small font-medium text-ink press hover:bg-surface-3"
+                    className="min-h-11 rounded-full border border-line bg-surface-2 px-4 text-small font-medium text-ink press hover:border-line-strong hover:bg-surface-3"
                   >
                     {r}
                   </button>

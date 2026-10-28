@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
-import { PageHero } from "@/components/common/PageHero.jsx";
-import { IconTile } from "@/components/common/IconTile.jsx";
-import { Callout } from "@/components/common/Callout.jsx";
-import { DisclaimerBanner } from "@/components/common/DisclaimerBanner.jsx";
+import PageHero from "@/components/common/PageHero.jsx";
+import IconTile from "@/components/common/IconTile.jsx";
+import Callout from "@/components/common/Callout.jsx";
+import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
 
 const slug = (text) =>
   text
@@ -13,7 +13,7 @@ const slug = (text) =>
 
 /* Shared shell for Privacy Policy and Terms & Conditions: a reading column on
    the page's left margin, with a contents list beside it. */
-export function LegalPage({ title, subtitle, lastUpdated, intro, summary = [], sections = [], closing }) {
+function LegalPage({ title, subtitle, lastUpdated, intro, summary = [], sections = [], closing }) {
   return (
     <>
       <PageHero title={title} subtitle={subtitle} lastUpdated={lastUpdated} />
@@ -34,7 +34,7 @@ export function LegalPage({ title, subtitle, lastUpdated, intro, summary = [], s
 
       <div className="container-page grid gap-12 py-section lg:grid-cols-12">
         <nav aria-labelledby="legal-contents" className="lg:order-last lg:col-span-4 lg:col-start-9">
-          <div className="panel p-6 lg:sticky lg:top-24">
+          <div className="card p-6 lg:sticky lg:top-24">
             <h2 id="legal-contents" className="text-body font-bold text-ink">
               On this page
             </h2>
@@ -56,7 +56,7 @@ export function LegalPage({ title, subtitle, lastUpdated, intro, summary = [], s
         <div className="min-w-0 lg:col-span-7">
           <ol className="max-w-[68ch] list-decimal space-y-12 pl-8 marker:font-bold marker:text-ink-muted">
             {sections.map((sec) => (
-              <li key={sec.heading} id={slug(sec.heading)} className="pl-2 text-lead">
+              <li key={sec.heading} id={slug(sec.heading)} className="pl-2 text-body">
                 <h2 className="text-lead font-bold text-ink">{sec.heading}</h2>
                 <div className="mt-3 space-y-4">
                   {sec.body.map((p, j) => (
@@ -75,7 +75,7 @@ export function LegalPage({ title, subtitle, lastUpdated, intro, summary = [], s
           </ol>
 
           {closing && (
-            <section aria-labelledby="legal-closing" className="panel mt-16 max-w-[68ch] p-6 sm:p-8">
+            <section aria-labelledby="legal-closing" className="card mt-16 max-w-[68ch] p-6 sm:p-8">
               <h2 id="legal-closing" className="flex items-center gap-3 text-lead font-bold text-ink">
                 <Icon icon={closing.icon || "ph:chat-circle-text"} aria-hidden="true" className="text-brand" />
                 {closing.heading}

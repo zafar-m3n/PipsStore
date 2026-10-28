@@ -1,4 +1,4 @@
-import { LegalPage } from "@/components/common/LegalPage.jsx";
+import LegalPage from "@/components/common/LegalPage.jsx";
 import {
   LEGAL_LAST_UPDATED,
   TERMS_INTRO,
@@ -6,7 +6,7 @@ import {
   TERMS_SECTIONS,
 } from "@/data/legal.js";
 
-export default function TermsAndConditions() {
+function TermsAndConditions() {
   return (
     <LegalPage
       title="Terms & Conditions"
@@ -23,3 +23,5 @@ export default function TermsAndConditions() {
     />
   );
 }
+
+export default TermsAndConditions;

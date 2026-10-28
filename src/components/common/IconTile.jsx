@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 
 /* Text-led item: title with an inline icon, then its description. */
-export function IconTile({ icon, title, description, children, className = "" }) {
+function IconTile({ icon, title, description, children, className = "" }) {
   return (
     <div className={["h-full", className].join(" ")}>
       {title && (
