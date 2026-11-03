@@ -2,31 +2,17 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import logoUrl from "@/assets/brand/pips-logo.png";
 import ButtonLink from "@/components/common/ButtonLink.jsx";
-import EffectLayer from "@/components/effects/EffectLayer.jsx";
 import { FOOTER_COLUMNS, SOCIAL_LINKS, EDUCATIONAL_DISCLAIMER_LONG, CONTACT_INFO } from "@/data/site.js";
 
 const linkClass = "text-ink-soft transition-colors hover:text-ink";
 
-const RAYS_TOKENS = { raysColor: "brand" };
-const RAYS_PROPS = {
-  raysOrigin: "top-center",
-  intensity: 0.4,
-  opacity: 0.45,
-  raySharpness: 0.5,
-  followMouse: false,
-  cursorShadow: false,
-  clickPulse: false,
-  pulsating: false,
-};
-
-/* Every page closes here: the closing statement and CTA sit under a soft
-   spotlight (Light Rays), then the site map, disclaimer and legal line. */
+/* Every page closes here, where the light river pools: the closing statement
+   and CTA, then the site map, disclaimer and legal line. */
 function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="section-lit relative isolate overflow-hidden text-ink-soft">
-      <EffectLayer effect="rays" tokens={RAYS_TOKENS} props={RAYS_PROPS} className="inset-x-0 top-0 h-[36rem]" />
+    <footer className="relative text-ink-soft">
       <div className="container-page pt-24 pb-10 sm:pt-32">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">

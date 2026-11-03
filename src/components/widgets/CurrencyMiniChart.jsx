@@ -14,9 +14,9 @@ function CurrencyMiniChart({ symbol = "FX:EURUSD" }) {
     isTransparent: true,
     autosize: true,
     largeChartUrl: "",
-    trendLineColor: "rgba(166, 166, 174, 1)",
-    underLineColor: "rgba(166, 166, 174, 0.08)",
-    underLineBottomColor: "rgba(166, 166, 174, 0.08)",
+    trendLineColor: "rgba(182, 182, 190, 1)",
+    underLineColor: "rgba(182, 182, 190, 0.08)",
+    underLineBottomColor: "rgba(182, 182, 190, 0.08)",
   };
 
   return (

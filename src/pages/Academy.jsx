@@ -105,7 +105,6 @@ function TopicsChapter() {
           })}
         </div>
       }
-      lit
     >
       <ul ref={panel} id="level-panel" role="tabpanel" aria-labelledby={`level-tab-${level}`} className="grid gap-4 md:grid-cols-2">
         {courses.map((c) => (
@@ -207,7 +206,6 @@ function GetPlanChapter() {
           description="A person reading an email on their phone, a printed one-page study plan on the desk beside them; relaxed, unhurried."
         />
       }
-      lit
     >
       <div className="max-w-2xl">
         <ContactForm />

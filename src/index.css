@@ -15,8 +15,8 @@
   --color-surface-3: #222226;
 
   --color-ink: #d4d4d9;
-  --color-ink-soft: #a6a6ae;
-  --color-ink-muted: #8a8a93;
+  --color-ink-soft: #b6b6be;
+  --color-ink-muted: #a0a0a8;
   --color-field: #6e6e77;
   --color-line: rgb(255 255 255 / 0.08);
   --color-line-strong: rgb(255 255 255 / 0.14);
@@ -142,6 +142,37 @@ a {
   text-decoration-thickness: 1px;
 }
 
+/* Text on the light river carries a dark outline painted under each letter
+   (stroke first, then fill, so letter shapes don't change) plus a soft glow
+   beyond it, so it stays readable when a bright strand passes behind.
+   Anything on its own surface (cards, glass, filled controls) drops both. */
+:where(main, footer) {
+  -webkit-text-stroke: 8px var(--color-ground);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 5px var(--color-ground),
+    0 0 9px var(--color-ground),
+    0 0 14px rgb(10 10 11 / 0.7);
+}
+
+/* Icons get the same solid dark outline, painted under the icon's shape. */
+:where(main, footer) svg.iconify :where(path, circle, rect, ellipse, polygon) {
+  stroke: var(--color-ground);
+  stroke-width: 8px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  paint-order: stroke fill;
+}
+
+:where(main, footer) :where(.card, .card-raised, .glass, [class*="bg-"]) {
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+
+:where(main, footer) :where(.card, .card-raised, .glass, [class*="bg-"]) svg.iconify :where(path, circle, rect, ellipse, polygon) {
+  stroke: none;
+}
+
 @utility container-page {
   width: 100%;
   max-width: 76rem;
@@ -149,14 +180,19 @@ a {
   padding-inline: var(--spacing-gutter);
 }
 
-/* Cards: one hairline border for elevation, plus a faint lit top edge. On
-   hover (fine pointers) a soft light follows the cursor; useSpotlight sets
-   --mx / --my. */
+/* Cards are frosted glass, so the light river shows through as a soft moving
+   glow: a mostly opaque dark surface (dense enough for AA text inside), a
+   hairline border and a faint lit top edge. On hover (fine pointers) a soft
+   light follows the cursor; useSpotlight sets --mx / --my. */
 @utility card {
-  background-color: var(--color-surface-1);
+  background-color: color-mix(in oklab, var(--color-surface-1) 62%, transparent);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.04);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(18px) saturate(1.3);
+  @media (max-width: 767px) {
+    backdrop-filter: blur(12px) saturate(1.3);
+  }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       border-color: var(--color-line-strong);
@@ -170,10 +206,14 @@ a {
 }
 
 @utility card-raised {
-  background-color: var(--color-surface-2);
+  background-color: color-mix(in oklab, var(--color-surface-2) 68%, transparent);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.06);
+  backdrop-filter: blur(18px) saturate(1.3);
+  @media (max-width: 767px) {
+    backdrop-filter: blur(12px) saturate(1.3);
+  }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       border-color: var(--color-line-strong);
@@ -188,11 +228,11 @@ a {
 
 /* Frosted glass, for the one primary panel over a lit background. */
 @utility glass {
-  background-color: color-mix(in oklab, var(--color-surface-1) 62%, transparent);
+  background-color: color-mix(in oklab, var(--color-surface-1) 66%, transparent);
   border: 1px solid var(--color-line-strong);
   border-radius: var(--radius-xl);
   box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.06);
-  backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.2);
 }
 
 /* The floating navigation bar: blurs whatever scrolls beneath it. */
@@ -201,20 +241,6 @@ a {
   border: 1px solid var(--color-line);
   box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
   backdrop-filter: blur(16px) saturate(1.2);
-}
-
-/* The interior page header's light: a soft green glow falling from the top edge. */
-@utility glow-top {
-  background-image:
-    radial-gradient(50% 70% at 50% 0%, color-mix(in oklab, var(--color-brand) 14%, transparent), transparent 70%),
-    radial-gradient(35% 50% at 85% 0%, color-mix(in oklab, var(--color-brand-deep) 60%, transparent), transparent 70%);
-}
-
-/* A section lit from above: replaces the old teal band. */
-@utility section-lit {
-  background-color: var(--color-ground);
-  background-image: radial-gradient(60% 45% at 50% 0%, color-mix(in oklab, var(--color-brand) 7%, transparent), transparent 72%);
-  border-block: 1px solid var(--color-line);
 }
 
 /* Skeleton sweep for image placeholders; a still highlight under reduced motion. */
@@ -242,21 +268,12 @@ a {
   }
 }
 
-/* Still fallbacks for the WebGL effects (reduced motion, no WebGL2, while loading). */
-@utility fx-aurora {
-  background-image: radial-gradient(
-    120% 70% at 50% 0%,
-    color-mix(in oklab, var(--color-brand-deep) 55%, transparent),
-    transparent 70%
-  );
-}
-
-@utility fx-rays {
-  background-image: radial-gradient(
-    55% 80% at 50% 0%,
-    color-mix(in oklab, var(--color-brand) 10%, transparent),
-    transparent 70%
-  );
+/* Still fallbacks for the WebGL effects (reduced motion, no WebGL2, while loading).
+   The river's fallback is only for browsers without WebGL2: a fixed soft wash. */
+@utility fx-river {
+  background-image:
+    radial-gradient(45% 55% at 30% 15%, color-mix(in oklab, var(--color-brand-deep) 55%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 72% 75%, color-mix(in oklab, var(--color-brand-deep) 40%, transparent), transparent 70%);
 }
 
 @utility fx-orb {

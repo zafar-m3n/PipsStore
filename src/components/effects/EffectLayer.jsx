@@ -3,21 +3,15 @@ import { resolveTokens } from "@/lib/tokens.js";
 import { REDUCE } from "@/hooks/useGsap.js";
 
 const EFFECTS = {
-  aurora: lazy(() => import("@/components/effects/Aurora.jsx")),
-  rays: lazy(() => import("@/components/effects/LightRays.jsx")),
   orb: lazy(() => import("@/components/effects/Orb.jsx")),
 };
 
 /* Phones and touch devices get one still frame instead of an animation loop. */
 const STILL = {
-  aurora: { paused: true, intro: false, dpr: 1 },
-  rays: { raysSpeed: 0, intro: false, maxDevicePixelRatio: 1 },
   orb: { paused: true, intro: false, dpr: 1 },
 };
 
 const FALLBACK = {
-  aurora: "fx-aurora",
-  rays: "fx-rays",
   orb: "fx-orb",
 };
 

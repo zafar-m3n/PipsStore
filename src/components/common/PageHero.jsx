@@ -1,18 +1,17 @@
 import { useHeroReveal } from "@/hooks/useGsap.js";
 
-/* Interior page header: a large serif title and one line, lit by a soft green
-   glow from the top edge. It runs up under the floating nav (-mt-20 pt-20
-   cancels main's offset) so the light starts at the very top of the page. */
+/* Interior page header: a large serif title and one line over the start of the
+   light river. It runs up under the floating nav (-mt-20 pt-20 cancels main's
+   offset), like the Home hero. */
 function PageHero({ title, subtitle, lastUpdated, children }) {
   const scope = useHeroReveal();
 
   return (
     <header ref={scope} className="relative isolate -mt-20 overflow-hidden pt-20">
-      <div aria-hidden="true" className="glow-top pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem]" />
       <div className="container-page pt-16 pb-16 sm:pt-24 sm:pb-20">
         <div className="max-w-3xl">
           <h1 className="text-headline text-ink">
-            <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+            <span className="-my-[0.12em] block overflow-hidden py-[0.12em]">
               <span data-hero-line className="block">
                 {title}
               </span>

@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import Navbar from "@/components/layout/Navbar.jsx";
 import Footer from "@/components/layout/Footer.jsx";
+import LightRiver from "@/components/effects/LightRiver.jsx";
 import { REDUCE } from "@/hooks/useGsap.js";
 import { useSpotlight } from "@/hooks/useSpotlight.js";
 
@@ -29,15 +30,23 @@ function Layout() {
     return () => tween.progress(1).kill();
   }, [pathname]);
 
+  // A new page always opens at the top. Instant, before paint: the global
+  // smooth scroll would otherwise animate, and ScrollTrigger's re-measure on
+  // the new page interrupts it partway down.
+  useLayoutEffect(() => {
+    if (hash && document.getElementById(decodeURIComponent(hash.slice(1)))) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname, hash]);
+
   useEffect(() => {
     const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
     if (!target) {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       return;
     }
     // Scroll after paint, and again once the page has loaded: ScrollTrigger
     // re-measures on load and can otherwise leave a deep link at the top.
-    const go = () => target.scrollIntoView();
+    const go = () => target.scrollIntoView({ behavior: "instant", block: "start" });
     const frame = requestAnimationFrame(go);
     if (document.readyState !== "complete") window.addEventListener("load", go, { once: true });
     return () => {
@@ -47,7 +56,8 @@ function Layout() {
   }, [pathname, hash]);
 
   return (
-    <div className="flex min-h-svh flex-col bg-ground">
+    <div className="relative isolate flex min-h-svh flex-col bg-ground">
+      <LightRiver />
       <a
         href="#main"
         className="sr-only rounded-full bg-brand px-5 py-3 font-semibold text-on-brand focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-60"

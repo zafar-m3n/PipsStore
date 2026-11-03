@@ -14,7 +14,6 @@ import CalendarEventCard from "@/components/ui/CalendarEventCard.jsx";
 import SessionClockCard from "@/components/ui/SessionClockCard.jsx";
 import TermCard from "@/components/ui/TermCard.jsx";
 import PathCard from "@/components/ui/PathCard.jsx";
-import EffectLayer from "@/components/effects/EffectLayer.jsx";
 import { chipClass } from "@/lib/ui.js";
 import { filterGlossary } from "@/lib/glossary.js";
 
@@ -23,41 +22,24 @@ import { ROADMAP_STEPS } from "@/data/roadmap.js";
 import { TOOLS_PREVIEW } from "@/data/tools.js";
 import { GLOSSARY_TERMS, GLOSSARY_TEASER_CHIPS } from "@/data/glossary.js";
 
-const AURORA_TOKENS = { colorStops: ["brand-deep", "brand", "brand-deep"] };
-const AURORA_PROPS = {
-  amplitude: 0.5,
-  blend: 0.7,
-  speed: 0.3,
-  height: 0.2,
-  opacity: 0.3,
-  layers: 2,
-  mouseInteraction: false,
-};
-
 const tool = (id) => TOOLS_PREVIEW.find((t) => t.id === id);
 
-/* The aurora runs up under the floating nav (-mt-20 pt-20 cancels main's offset)
-   and fades into the ground at the bottom edge. */
+/* The hero runs up under the floating nav (-mt-20 pt-20 cancels main's offset);
+   the light river is brightest here, where it begins. */
 function HeroSection() {
   const scope = useHeroReveal();
 
   return (
     <section ref={scope} aria-labelledby="hero-title" className="relative isolate -mt-20 overflow-hidden pt-20">
-      <EffectLayer effect="aurora" tokens={AURORA_TOKENS} props={AURORA_PROPS} />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-linear-to-b from-ground/0 to-ground"
-      />
-
       <div className="container-page grid gap-x-8 gap-y-10 pt-14 pb-24 sm:pt-24 lg:grid-cols-12 lg:items-center lg:gap-y-12 lg:pt-28 lg:pb-32 xl:pb-48">
         <div className="lg:col-span-6">
           <h1 id="hero-title" className="text-display text-ink">
-            <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+            <span className="-my-[0.12em] block overflow-hidden py-[0.12em]">
               <span data-hero-line className="block">
                 Learn forex,
               </span>
             </span>{" "}
-            <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+            <span className="-my-[0.12em] block overflow-hidden py-[0.12em]">
               <span data-hero-line className="block">
                 <em className="text-brand">risk first.</em>
               </span>
@@ -340,7 +322,7 @@ function PathsSection() {
   const list = useScrollReveal(":scope > li");
 
   return (
-    <section aria-labelledby="paths-title" className="section-lit py-section">
+    <section aria-labelledby="paths-title" className="py-section">
       <div className="container-page">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">

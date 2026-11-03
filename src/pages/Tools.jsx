@@ -44,9 +44,9 @@ function Inputs({ items }) {
 
 /* One calculator as a bento row: the live embed wide, the reading guide and
    a worked example beside it. */
-function ToolSection({ id, titleId, title, intro, inputs, example, label, lit = false, children }) {
+function ToolSection({ id, titleId, title, intro, inputs, example, label, first = false, children }) {
   return (
-    <section id={id} aria-labelledby={titleId} className={lit ? "section-lit py-section" : "pb-section"}>
+    <section id={id} aria-labelledby={titleId} className={first ? "pb-section" : "py-section"}>
       <div className="container-page">
         <SectionIntro id={titleId} title={title} width="52ch">
           {intro}
@@ -104,6 +104,7 @@ function Tools() {
         inputs={PIP_INPUTS}
         example={<PipResultCard />}
         label="Loading pip calculator…"
+        first
       >
         <PipCalculatorWidget />
       </ToolSection>
@@ -115,7 +116,6 @@ function Tools() {
         inputs={PROFIT_INPUTS}
         example={<RiskCard />}
         label="Loading profit calculator…"
-        lit
       >
         <ProfitCalculatorWidget />
       </ToolSection>

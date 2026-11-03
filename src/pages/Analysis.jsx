@@ -150,7 +150,6 @@ function LibraryChapter() {
           </p>
         </div>
       }
-      lit
     >
       <div id="library-panel" role="tabpanel" aria-labelledby={`library-tab-${active}`}>
         <p className="max-w-[60ch] text-body text-ink-soft">{current.intro}</p>

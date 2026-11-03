@@ -58,7 +58,7 @@ function WatchlistSection() {
   const charts = useScrollReveal(":scope > *");
 
   return (
-    <section aria-labelledby="watchlist-title" className="section-lit py-section">
+    <section aria-labelledby="watchlist-title" className="py-section">
       <div className="container-page">
         <div className="grid gap-4 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">

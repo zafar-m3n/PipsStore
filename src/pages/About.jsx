@@ -54,7 +54,7 @@ function PillarsSection() {
   const grid = useScrollReveal(":scope > *");
 
   return (
-    <section aria-labelledby="pillars-title" className="section-lit py-section">
+    <section aria-labelledby="pillars-title" className="py-section">
       <div className="container-page">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -116,7 +116,6 @@ function FaqChapter() {
       title="Frequently asked questions"
       intro="The things beginners ask us most."
       aside={<SupportCard className="hidden lg:block" />}
-      lit
     >
       <Accordion items={ABOUT_FAQ} />
     </Chapter>

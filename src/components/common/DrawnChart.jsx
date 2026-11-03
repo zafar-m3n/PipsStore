@@ -10,7 +10,7 @@ import { prefersReducedMotion } from "@/hooks/useGsap.js";
 const INK = "currentColor";
 const BULL = "var(--color-bull)";
 const BEAR = "var(--color-bear)";
-const BAND_FILL = "rgb(166 166 174 / 0.1)";
+const BAND_FILL = "rgb(182 182 190 / 0.1)";
 
 function totalLength(el) {
   if (el && typeof el.getTotalLength === "function") {
