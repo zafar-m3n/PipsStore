@@ -1,8 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import LinkRow from "@/components/common/LinkRow.jsx";
-import { fireContactConversion } from "@/lib/gtag.js";
 import { useHeroReveal } from "@/hooks/useGsap.js";
 import { CONTACT_INFO } from "@/data/site.js";
 import EffectLayer from "@/components/effects/EffectLayer.jsx";
@@ -37,15 +36,7 @@ function ThankYou() {
   const location = useLocation();
   const navigate = useNavigate();
   const legit = location.state?.fromContactForm === true;
-  const conversionFired = useRef(false);
   const scope = useHeroReveal();
-
-  useEffect(() => {
-    if (legit && !conversionFired.current) {
-      conversionFired.current = true;
-      fireContactConversion();
-    }
-  }, [legit]);
 
   useEffect(() => {
     if (!legit) {

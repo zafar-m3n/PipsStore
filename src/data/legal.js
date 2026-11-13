@@ -1,28 +1,29 @@
 /* Content for the Privacy Policy and Terms & Conditions pages. */
+import { CONTACT_INFO } from "@/data/site.js";
 
-export const LEGAL_LAST_UPDATED = "September 1, 2026";
+export const LEGAL_LAST_UPDATED = "13 November 2026";
 
 export const PRIVACY_INTRO =
-  "This Privacy Policy explains what information PipsStore collects when you use this website, how that information is used, and the choices you have. PipsStore is an educational website. We keep data collection to the minimum needed to run the site and to understand how people find our lessons.";
+  "This Privacy Policy explains what personal information PipsStore collects, how it is used, and the choices you have. PipsStore is an educational website, and you don't need an account to use it.";
 
 export const PRIVACY_SUMMARY = [
   {
-    title: "Privacy-first by default",
+    title: "Only what you send us",
     icon: "ph:lock-key",
     description:
-      "We only collect what we need — mainly the details you type into the contact form and basic analytics.",
+      "We collect only the details you type into the contact form. No analytics, advertising or tracking cookies.",
   },
   {
-    title: "You control your email",
+    title: "You control your details",
     icon: "ph:envelope-simple",
     description:
-      "We use your email to reply to you. You can ask us to delete it at any time.",
+      "Ask us to update, correct or delete your information at any time. Deletion requests are completed within 72 hours.",
   },
   {
-    title: "No selling to brokers",
+    title: "Never sold or traded",
     icon: "ph:hand-palm",
     description:
-      "Your information is never sold to third-party brokers or trading services. Ever.",
+      "We don't sell, rent or trade your personal information, or share it without your consent unless the law requires it.",
   },
 ];
 
@@ -30,127 +31,150 @@ export const PRIVACY_SECTIONS = [
   {
     heading: "Information we collect",
     body: [
-      "When you submit the contact form we collect the name, email address, phone number, and trading-experience level you provide.",
-      "We also automatically receive standard technical data such as your browser type, device, approximate location, referring page, and the pages you view on this site.",
-      "If you arrive from an online ad, we may receive click identifiers (such as a Google click ID), the keyword, and a general location parameter so we can understand which campaigns bring learners to the site.",
+      "PipsStore does not require you to create an account. The only personal information we collect is what you choose to send us through the contact form: your name, email address, phone number and trading experience level.",
     ],
   },
   {
-    heading: "Cookies and web beacons",
+    heading: "How we use your information",
     body: [
-      "Like most websites, PipsStore uses cookies and similar technologies to remember preferences and to measure traffic.",
-      "Third-party vendors, including Google, use cookies to serve and measure ads based on your prior visits to this and other websites.",
-      "You can disable cookies in your browser settings. Some parts of the site may not work as smoothly if you do.",
+      "We use the information you send us to respond to your enquiry, to send you the learning information you asked for, and to contact you about your request by email or phone. We also use it where necessary to comply with the law. We do not use your details for any other commercial purpose.",
     ],
   },
   {
-    heading: "Google Ads and Google Analytics",
+    heading: "Sharing your information",
     body: [
-      "We use Google Analytics to understand how visitors use the site and Google Ads to promote our free lessons.",
-      "Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and other sites on the internet.",
-      "You can opt out of personalised advertising by visiting Google's Ads Settings, and you can install the Google Analytics opt-out browser add-on.",
+      "We do not sell, rent or trade your personal information. We will not share it with third parties without your consent, except where we are legally required to (for example, in response to a court order or for the prevention of fraud or other crime). We may also disclose information where we reasonably believe it is necessary to protect our legal rights, our property, the users of this website or the public. If PipsStore is ever reorganised, sold or merged with another organisation, your information may be transferred to the new owner, who will be bound by this policy.",
     ],
   },
   {
-    heading: "How we use information",
+    heading: "Cookies and embedded content",
     body: [
-      "To respond to your enquiries and provide the educational content you request.",
-      "To measure and improve the website, its lessons, and its tools.",
-      "To understand which marketing channels are effective so we can reach more beginners.",
-    ],
-    callout:
-      "We do not sell, rent, or trade your personal information to third-party brokers, trading platforms, or signal services. Contact details submitted through this site are used only to communicate with you about PipsStore's educational content.",
-  },
-  {
-    heading: "Third-party privacy policies",
-    body: [
-      "This Privacy Policy does not cover the practices of other companies or individuals we do not control.",
-      "Third-party services we use — such as Google — have their own privacy policies that govern how they handle data collected through their tools.",
-      "We encourage you to review the privacy policy of any third-party service before relying on it.",
+      "PipsStore does not use analytics, advertising or tracking cookies. Some pages include tools and widgets embedded from third parties, such as market charts and trading calculators. These providers may set their own cookies or collect usage data under their own privacy policies, which we do not control.",
     ],
   },
   {
-    heading: "Your data protection rights",
+    heading: "Third-party websites",
     body: [
-      "Depending on where you live, you may have the right to access, correct, or delete the personal information we hold about you.",
-      "You may also have the right to object to or restrict certain processing, and to request a copy of your data in a portable format.",
-      "To exercise any of these rights, contact us using the details on the About page. We will respond within a reasonable timeframe.",
+      "This website contains links to, and embedded content from, third-party websites. We are not responsible for their content or their privacy practices, and using them is at your own risk. We recommend reading the privacy policy of any website you visit. A link to another website does not mean we endorse it.",
     ],
   },
   {
-    heading: "Consent",
+    heading: "Keeping or deleting your information",
     body: [
-      "By using this website, you consent to this Privacy Policy and agree to its terms.",
-      "If we make material changes, we will update the date at the top of this page and, where appropriate, provide a more prominent notice.",
+      `We keep your information only for as long as we need it to respond to you and to meet any legal requirements. You can ask us to update, correct or delete your personal information at any time by emailing ${CONTACT_INFO.email}. Deletion requests are completed within 72 hours.`,
     ],
+  },
+  {
+    heading: "Changes to this policy",
+    body: [
+      "We may update this Privacy Policy from time to time. Any changes will be posted on this page, so please check it periodically.",
+    ],
+  },
+  {
+    heading: "Contact us",
+    body: [`If you have any questions about this Privacy Policy, email us at ${CONTACT_INFO.email}.`],
   },
 ];
 
 export const TERMS_INTRO =
-  "These Terms and Conditions govern your use of the PipsStore website. By accessing or using the site, you agree to be bound by these terms. If you do not agree with any part of them, please do not use the site.";
+  "These Terms & Conditions govern your use of the PipsStore website. By using the website, you agree to them. If you do not agree, please do not use the website.";
 
 export const TERMS_SUMMARY = [
   {
     title: "Education only",
     icon: "ph:graduation-cap",
     description:
-      "Everything on PipsStore is for learning. Nothing here is financial, investment, or trading advice.",
+      "Everything on PipsStore is for learning. Nothing here is financial, investment, tax or legal advice, and we don't provide trading signals.",
   },
   {
     title: "Risk awareness",
     icon: "ph:warning",
     description:
-      "Trading carries real risk of loss. You are responsible for your own financial decisions.",
+      "Trading carries a high level of risk, and you can lose some or all of the money you trade. Your decisions are your own.",
   },
   {
     title: "Protected content",
     icon: "ph:copyright",
     description:
-      "Lessons, tools, and text on this site are ours. Please don't republish them as your own.",
+      "The PipsStore name, logo, text and designs are ours. Please don't use them commercially without our written permission.",
   },
 ];
 
 export const TERMS_SECTIONS = [
   {
+    heading: "About PipsStore",
+    body: [
+      "PipsStore provides educational material about the foreign exchange market. By using this website, you agree to these Terms & Conditions. If you do not agree, please do not use the website.",
+    ],
+  },
+  {
+    heading: "Accuracy of information",
+    body: [
+      "We aim to use reliable sources, but PipsStore does not guarantee that the information on this website is accurate, correct or complete, and we are not liable for any loss arising from its use. We may change any part of the website or its content at any time without notice.",
+    ],
+  },
+  {
     heading: "Educational purposes only",
     body: [
-      "All content on PipsStore — lessons, articles, tools, glossary entries, and market commentary — is provided for general educational purposes.",
-      "It is not financial advice, investment advice, or a recommendation to enter into any transaction.",
-      "PipsStore is not a broker, a fund, or a signals service, and does not manage money or place trades on anyone's behalf.",
+      "All content, examples and chart illustrations on this website are for educational purposes only. They are not instructions or recommendations to buy or sell any financial instrument. PipsStore, its writers and its affiliates are not responsible for your trading decisions or results.",
     ],
   },
   {
     heading: "Risk warning",
     body: [
-      "Foreign exchange trading is high risk and can result in the loss of some or all of your invested capital.",
-      "Past performance and hypothetical examples are not indicative of future results.",
-      "You should not trade with money you cannot afford to lose, and you should seek independent advice if you are unsure.",
-    ],
-    callout:
-      "To the fullest extent permitted by law, PipsStore and its contributors accept no liability for any loss or damage — direct or indirect — arising from your use of this site or reliance on any information it contains. Any trading decisions you make are your own responsibility.",
-  },
-  {
-    heading: "User conduct",
-    body: [
-      "You agree to use the site lawfully and not to misuse it, including by attempting to gain unauthorised access, disrupting the service, or scraping content at scale.",
-      "You agree not to submit false information through the contact form or to use it to send spam or automated messages.",
-      "We may restrict or withdraw access to anyone who breaches these terms.",
+      "Trading forex, cryptocurrencies, commodities and indices carries a high level of risk and may not be suitable for everyone. You can lose some or all of the money you trade. Nothing on this website should be taken to mean that the methods, techniques or indicators it describes will produce profits or avoid losses. Past performance is not a reliable indicator of future results, and hypothetical or practice trading does not carry the same risk as real trading.",
     ],
   },
   {
-    heading: "Limitation of liability",
+    heading: "No professional or investment advice",
     body: [
-      "The site is provided on an 'as is' and 'as available' basis without warranties of any kind, express or implied.",
-      "We do not warrant that the site will be uninterrupted, error-free, or free of harmful components, or that the information is complete or current.",
-      "Nothing in these terms excludes liability that cannot be excluded under applicable law.",
+      "PipsStore is not an investment adviser and does not provide trading signals. Nothing on this website is financial, investment, tax or legal advice, or a personal recommendation. You are solely responsible for your own investment decisions. Please consult a qualified professional about your financial, tax or legal situation.",
     ],
   },
   {
-    heading: "Modifications to the service",
+    heading: "Website availability",
     body: [
-      "We may change, suspend, or discontinue any part of the site at any time without notice.",
-      "We may also update these Terms and Conditions from time to time; the 'Last updated' date at the top of this page shows when they last changed.",
-      "Continuing to use the site after changes take effect means you accept the revised terms.",
+      "We do not guarantee that the website will be available at all times, uninterrupted or error-free. PipsStore is not responsible for any unavailability of the website, or for emails that are delayed or not delivered because of internet, equipment or other technical problems.",
     ],
+  },
+  {
+    heading: "Third-party links and tools",
+    body: [
+      "This website contains links to third-party websites and embedded third-party tools, such as market charts and calculators. These are provided for convenience only and are used at your own risk. We have no control over their content or availability, and a link to or an embed from another website does not mean we endorse it.",
+    ],
+  },
+  {
+    heading: "Acceptable use",
+    body: [
+      "You must not use this website, including the contact form, to send any unlawful, harmful, threatening, abusive, harassing, defamatory, obscene or otherwise objectionable material, any material that encourages fraud or criminal activity, or any unsolicited commercial messages (spam). We may refuse or remove any communication or content that we consider unlawful or harmful.",
+    ],
+  },
+  {
+    heading: "Disclosure of communications",
+    body: [
+      "We may disclose any communication sent to us through the website if required to comply with any law, regulation or government request, if necessary to operate the website, or to protect the rights or property of PipsStore and its users.",
+    ],
+  },
+  {
+    heading: "Use of website content",
+    body: [
+      "You may not copy, reproduce, frame or otherwise use any part of this website, including its text, images, layout, logos or other branding, for commercial purposes without our prior written permission.",
+    ],
+  },
+  {
+    heading: "Trademarks",
+    body: [
+      "The PipsStore name, logo, graphics and page designs are trademarks of PipsStore. They may not be used in connection with any product or service that is not PipsStore's, or in any way that is likely to cause confusion or that discredits PipsStore. Other trademarks that appear on the website belong to their respective owners.",
+    ],
+  },
+  {
+    heading: "Changes to these terms",
+    body: [
+      "We may update these Terms & Conditions at any time without notice. It is your responsibility to check this page regularly for changes.",
+    ],
+  },
+  {
+    heading: "Contact us",
+    body: [`If you have any questions about these Terms & Conditions, email us at ${CONTACT_INFO.email}.`],
   },
 ];

@@ -34,12 +34,12 @@ function HeroSection() {
       <div className="container-page grid gap-x-8 gap-y-10 pt-14 pb-24 sm:pt-24 lg:grid-cols-12 lg:items-center lg:gap-y-12 lg:pt-28 lg:pb-32 xl:pb-48">
         <div className="lg:col-span-6">
           <h1 id="hero-title" className="text-display text-ink">
-            <span className="-my-[0.12em] block overflow-hidden py-[0.12em]">
+            <span className="my-[-0.12em] block overflow-hidden py-[0.12em]">
               <span data-hero-line className="block">
                 Learn forex,
               </span>
             </span>{" "}
-            <span className="-my-[0.12em] block overflow-hidden py-[0.12em]">
+            <span className="my-[-0.12em] block overflow-hidden py-[0.12em]">
               <span data-hero-line className="block">
                 <em className="text-brand">risk first.</em>
               </span>
@@ -74,7 +74,7 @@ function HeroSection() {
           </div>
           <ContactForm
             surface="glass"
-            heading="Start with a free learning plan"
+            heading="Start with a learning plan"
             blurb="Tell us where you're at and we'll point you to the right path."
           />
         </div>
@@ -103,7 +103,11 @@ function Tile({ title, children, preview, link, className = "" }) {
           className="group mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-small font-semibold text-brand hover:text-brand-hover"
         >
           {link.label}
-          <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+          <Icon
+            icon="ph:arrow-right-bold"
+            aria-hidden="true"
+            className="transition-transform group-hover:translate-x-0.5"
+          />
         </Link>
       )}
     </article>
@@ -117,34 +121,37 @@ function RoadmapTile({ className = "" }) {
     <article id="roadmap" className={["card flex flex-col p-6 sm:p-8", className].join(" ")}>
       <h3 className="text-title text-ink">The beginner roadmap</h3>
       <p className="mt-3 max-w-[48ch] text-body text-ink-soft">
-        Five steps, in this order. Risk comes second, before any chart reading or strategy, and stays with you from then on.
+        Five steps, in this order. Risk comes second, before any chart reading or strategy, and stays with you from then
+        on.
       </p>
       <div ref={rail} className="relative mt-8 flex flex-1 flex-col">
         <span aria-hidden="true" className="absolute top-0 bottom-0 left-0 w-px bg-line">
           <span data-rail className="block h-full w-full origin-top bg-brand" />
         </span>
         <ol className="flex flex-1 flex-col justify-between">
-        {ROADMAP_STEPS.map((s) => (
-          <li
-            key={s.step}
-            data-step
-            className="group grid grid-cols-[3rem_1fr] gap-x-3 border-t border-line py-4 lg:py-5"
-          >
-            <span className="pt-0.5 pl-4 font-mono text-small text-ink-muted transition-colors duration-300 group-data-[reached]:text-brand">
-              0{s.step}
-            </span>
-            <div>
-              <p className="flex flex-wrap items-center gap-2 text-body font-semibold text-ink">
-                <Icon icon={s.icon} aria-hidden="true" className="shrink-0 text-brand" />
-                {s.title}
-                {s.step === 2 && (
-                  <span className="rounded-full bg-brand-deep px-2.5 py-0.5 text-micro font-medium text-ink">Before any strategy</span>
-                )}
-              </p>
-              <p className="mt-1 text-small text-ink-soft">{s.description}</p>
-            </div>
-          </li>
-        ))}
+          {ROADMAP_STEPS.map((s) => (
+            <li
+              key={s.step}
+              data-step
+              className="group grid grid-cols-[3rem_1fr] gap-x-3 border-t border-line py-4 lg:py-5"
+            >
+              <span className="pt-0.5 pl-4 font-mono text-small text-ink-muted transition-colors duration-300 group-data-reached:text-brand">
+                0{s.step}
+              </span>
+              <div>
+                <p className="flex flex-wrap items-center gap-2 text-body font-semibold text-ink">
+                  <Icon icon={s.icon} aria-hidden="true" className="shrink-0 text-brand" />
+                  {s.title}
+                  {s.step === 2 && (
+                    <span className="rounded-full bg-brand-deep px-2.5 py-0.5 text-micro font-medium text-ink">
+                      Before any strategy
+                    </span>
+                  )}
+                </p>
+                <p className="mt-1 text-small text-ink-soft">{s.description}</p>
+              </div>
+            </li>
+          ))}
         </ol>
       </div>
       <div className="pt-6">
@@ -223,7 +230,11 @@ function GlossaryTile({ className = "" }) {
         className="group mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-small font-semibold text-brand hover:text-brand-hover"
       >
         Open the full glossary
-        <Icon icon="ph:arrow-right-bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+        <Icon
+          icon="ph:arrow-right-bold"
+          aria-hidden="true"
+          className="transition-transform group-hover:translate-x-0.5"
+        />
       </Link>
     </article>
   );
@@ -243,14 +254,17 @@ function PlanTile({ className = "" }) {
       <div className="flex flex-col gap-6">
         <ul className="flex flex-wrap gap-2" aria-label="The four learning paths">
           {LEARNING_PATHS.map((p) => (
-            <li key={p.id} className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-small text-ink-soft">
+            <li
+              key={p.id}
+              className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-small text-ink-soft"
+            >
               <Icon icon={p.icon} aria-hidden="true" className="text-brand" />
               {p.title}
             </li>
           ))}
         </ul>
         <div>
-          <ButtonLink href="#plan">Get a free learning plan</ButtonLink>
+          <ButtonLink href="#plan">Get a learning plan</ButtonLink>
         </div>
       </div>
     </article>
@@ -342,7 +356,12 @@ function PathsSection() {
                 aria-label={`${p.title}: see the path outline`}
                 className="group block h-full rounded-lg press-soft"
               >
-                <PathCard id={p.id} label={`Path ${i + 1} of ${LEARNING_PATHS.length}`} linked className="h-full p-6 sm:p-7" />
+                <PathCard
+                  id={p.id}
+                  label={`Path ${i + 1} of ${LEARNING_PATHS.length}`}
+                  linked
+                  className="h-full p-6 sm:p-7"
+                />
               </Link>
             </li>
           ))}
