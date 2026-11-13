@@ -4,7 +4,9 @@ import Chapter from "@/components/common/Chapter.jsx";
 import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
 import Accordion from "@/components/common/Accordion.jsx";
 import ContactForm from "@/components/common/ContactForm.jsx";
-import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
+import Photo from "@/components/common/Photo.jsx";
+import aboutMissionPhoto from "@/assets/aboutMission.webp";
+import aboutWhoPhoto from "@/assets/aboutWho.webp";
 import FactList from "@/components/common/FactList.jsx";
 import BulletList from "@/components/common/BulletList.jsx";
 import SectionIntro from "@/components/common/SectionIntro.jsx";
@@ -36,10 +38,11 @@ function MissionChapter() {
   return (
     <Chapter titleId="mission-title" title="Our mission" className="pt-0">
       <p className="font-display text-[clamp(1.625rem,1.1rem+1.6vw,2.375rem)] leading-[1.2] text-ink">{ABOUT_MISSION}</p>
-      <ImagePlaceholder
+      <Photo
+        src={aboutMissionPhoto}
+        alt="A woman presents a bar chart projected on the wall to three colleagues at a meeting table, one pointing at the chart with a pen."
         aspect="aspect-7/3"
         className="mt-10"
-        description="A small mixed-age study group around a table with notebooks, one person explaining a simple chart on a whiteboard."
       />
       <FactList
         ref={facts}
@@ -99,10 +102,11 @@ function AudienceSection() {
           <h2 className="text-title text-ink">Our approach</h2>
           <BulletList items={OUR_APPROACH} className="mt-6" />
         </article>
-        <ImagePlaceholder
+        <Photo
+          src={aboutWhoPhoto}
+          alt="A young woman sits on a sofa in a dim, green-lit room, looking at her phone with a laptop open on her lap."
           aspect="aspect-4/5"
           className="lg:col-span-4"
-          description="A beginner (student or career-changer) looking thoughtfully at a laptop in natural light, notebook open."
         />
       </div>
     </section>

@@ -1,6 +1,6 @@
 /* ============================================================
    Line-art definitions for <DrawnChart />.
-   Every visual on the site is vector — no photography anywhere.
+   Every chart on the site is vector line art.
 
    Element descriptors (see DrawnChart.renderElement):
      { type: "polyline", points }

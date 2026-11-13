@@ -5,7 +5,6 @@ import RevealGroup from "@/components/common/RevealGroup.jsx";
 import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
 import ButtonLink from "@/components/common/ButtonLink.jsx";
 import DrawnChart from "@/components/common/DrawnChart.jsx";
-import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
 import CandleCard from "@/components/ui/CandleCard.jsx";
 import LevelCard from "@/components/ui/LevelCard.jsx";
 import TermCard from "@/components/ui/TermCard.jsx";
@@ -83,11 +82,7 @@ function OriginsChapter() {
       intro="Candlestick charts are usually traced back to rice traders at Osaka's Dōjima exchange in the 1700s. Every candle still records the same four prices: the open, the high, the low and the close."
       introWidth="44ch"
     >
-      <ImagePlaceholder
-        aspect="aspect-7/3"
-        description="Stacked rice bales in a traditional Japanese warehouse, softly lit: a nod to the Dōjima rice market where candlesticks began."
-      />
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         <CandleCard />
         <LevelCard />
         <TermCard term="Trend" showExample className="md:col-span-2" />

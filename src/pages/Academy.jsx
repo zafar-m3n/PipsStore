@@ -5,7 +5,8 @@ import RevealGroup from "@/components/common/RevealGroup.jsx";
 import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
 import ContactForm from "@/components/common/ContactForm.jsx";
 import LevelMeter from "@/components/common/LevelMeter.jsx";
-import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
+import Photo from "@/components/common/Photo.jsx";
+import academyPhoto from "@/assets/academy.webp";
 import ButtonLink from "@/components/common/ButtonLink.jsx";
 import SearchField from "@/components/common/SearchField.jsx";
 import TermCard from "@/components/ui/TermCard.jsx";
@@ -200,10 +201,11 @@ function GetPlanChapter() {
       intro="Tell us where you're at and we'll point you to the right path. Free, and no account needed."
       introWidth="44ch"
       aside={
-        <ImagePlaceholder
+        <Photo
+          src={academyPhoto}
+          alt="A smiling man in glasses sits at an office desk looking at his phone, holding a sheet of paper, with a laptop and notebook in front of him."
           aspect="aspect-4/3"
           className="hidden lg:block"
-          description="A person reading an email on their phone, a printed one-page study plan on the desk beside them; relaxed, unhurried."
         />
       }
     >

@@ -12,7 +12,7 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative text-ink-soft">
+    <footer className="card relative rounded-none! border-x-0! border-b-0! text-ink-soft">
       <div className="container-page pt-24 pb-10 sm:pt-32">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">

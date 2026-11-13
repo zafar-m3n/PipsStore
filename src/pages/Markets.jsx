@@ -4,7 +4,8 @@ import DisclaimerBanner from "@/components/common/DisclaimerBanner.jsx";
 import EmbedFrame from "@/components/common/EmbedFrame.jsx";
 import EmbedTile from "@/components/common/EmbedTile.jsx";
 import InfoTile from "@/components/common/InfoTile.jsx";
-import ImagePlaceholder from "@/components/common/ImagePlaceholder.jsx";
+import Photo from "@/components/common/Photo.jsx";
+import marketsPhoto from "@/assets/markets.webp";
 import ButtonLink from "@/components/common/ButtonLink.jsx";
 import BulletList from "@/components/common/BulletList.jsx";
 import SectionIntro from "@/components/common/SectionIntro.jsx";
@@ -43,10 +44,11 @@ function NewsSection() {
               ]}
             />
           </InfoTile>
-          <ImagePlaceholder
+          <Photo
+            src={marketsPhoto}
+            alt="A bearded man in a suit reads a newspaper at a café table, with a latte and a takeaway cup beside him."
             aspect="aspect-4/5"
             className="hidden lg:block"
-            description="Someone reading a newspaper’s business pages over morning coffee, a central-bank headline visible."
           />
         </div>
       </div>
@@ -63,7 +65,8 @@ function WatchlistSection() {
         <div className="grid gap-4 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">
             <SectionIntro id="watchlist-title" title="Watchlist" width="52ch">
-              Twelve months of price for three major currency pairs and gold, so you can see the bigger picture behind the day's headlines.
+              Twelve months of price for three major currency pairs and gold, so you can see the bigger picture behind
+              the day's headlines.
             </SectionIntro>
           </div>
           <SessionClockCard className="lg:col-span-5" />
@@ -96,7 +99,7 @@ function CalendarSection() {
         Upcoming data releases and central-bank events across the major economies, with their expected impact.
       </SectionIntro>
       <div className="mt-10 grid gap-4 lg:grid-cols-12">
-        <div className="order-last flex min-w-0 flex-col gap-4 lg:order-none lg:col-span-4">
+        <div className="order-last flex min-w-0 flex-col gap-4 lg:order-0 lg:col-span-4">
           <InfoTile title="How to read the calendar">
             <BulletList
               items={[
@@ -123,10 +126,11 @@ function ClosingSection() {
   return (
     <section aria-labelledby="markets-next-title" className="container-page pb-section">
       <div className="grid gap-4 lg:grid-cols-12">
-        <TermCard term="Interest Rate" showExample className="order-last lg:order-none lg:col-span-5" />
+        <TermCard term="Interest Rate" showExample className="order-last lg:order-0 lg:col-span-5" />
         <article className="card flex flex-col justify-between gap-8 p-6 sm:p-8 lg:col-span-7">
           <SectionIntro id="markets-next-title" title="Learn why the news moves prices" width="52ch">
-            The News & Market Context path explains interest rates, inflation data and central banks, so headlines stop feeling like noise.
+            The News & Market Context path explains interest rates, inflation data and central banks, so headlines stop
+            feeling like noise.
           </SectionIntro>
           <div>
             <ButtonLink to="/academy#news-and-context">See the path outline</ButtonLink>
