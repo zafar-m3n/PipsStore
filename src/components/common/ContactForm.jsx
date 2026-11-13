@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Select from "react-select";
 import http from "@/lib/http.js";
-import { getAdTracking, clearAdTracking } from "@/lib/tracking.js";
 import { useToast } from "@/components/common/ToastProvider.jsx";
 import { EXPERIENCE_OPTIONS } from "@/data/site.js";
 import { selectStyles, selectTheme, menuPortalTarget } from "@/lib/selectStyles.js";
@@ -24,18 +23,19 @@ const REQUIRED = [
   ["trading_experience", "your trading experience"],
 ];
 
+const backendError = (data) => (typeof data?.error === "string" && data.error.trim()) || "";
+
 const EXPERIENCE_SELECT_OPTIONS = EXPERIENCE_OPTIONS.map((o) => ({
   value: o,
   label: o,
 }));
 
-const fieldClass =
-  [
-    "min-h-12 w-full",
-    FIELD,
-    "px-4 py-3 text-body text-ink placeholder:text-ink-muted outline-hidden transition-colors",
-    FIELD_FOCUS,
-  ].join(" ");
+const fieldClass = [
+  "min-h-12 w-full",
+  FIELD,
+  "px-4 py-3 text-body text-ink placeholder:text-ink-muted outline-hidden transition-colors",
+  FIELD_FOCUS,
+].join(" ");
 
 function ContactForm({ className = "", heading, blurb, surface = "card" }) {
   const [values, setValues] = useState(EMPTY);
@@ -49,10 +49,7 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
   };
 
   const experienceValue = useMemo(
-    () =>
-      EXPERIENCE_SELECT_OPTIONS.find(
-        (o) => o.value === values.trading_experience,
-      ) || null,
+    () => EXPERIENCE_SELECT_OPTIONS.find((o) => o.value === values.trading_experience) || null,
     [values.trading_experience],
   );
 
@@ -69,15 +66,11 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
       return;
     }
 
-    const { gclid = "", keyword = "", location = "" } = getAdTracking();
     const payload = {
       name: values.name.trim(),
       email: values.email.trim(),
       phone: values.phone.trim(),
       trading_experience: values.trading_experience,
-      gclid,
-      keyword,
-      location,
       botcheck: values.botcheck,
     };
 
@@ -86,19 +79,12 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
       const { data } = await http.post("/api/v1/contact", payload);
       if (data?.code === "OK") {
         setValues(EMPTY);
-        clearAdTracking();
         navigate("/thank-you", { state: { fromContactForm: true } });
       } else {
-        toast.error(
-          data?.message || "Something went wrong. Please try again in a moment.",
-        );
+        toast.error(backendError(data) || "Something went wrong. Please try again in a moment.");
       }
     } catch (err) {
-      const message =
-        err?.response?.data?.message ||
-        err?.message ||
-        "We couldn't send your message. Please try again shortly.";
-      toast.error(message);
+      toast.error(backendError(err?.response?.data) || "We couldn't send your message. Please try again shortly.");
     } finally {
       setSubmitting(false);
     }
@@ -110,9 +96,7 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
       noValidate
       className={[surface === "glass" ? "glass" : "card", "p-6 sm:p-8", className].join(" ")}
     >
-      {heading && (
-        <h3 className="text-lead font-bold text-ink">{heading}</h3>
-      )}
+      {heading && <h3 className="text-lead font-bold text-ink">{heading}</h3>}
       {blurb && <p className="mt-2 text-body text-ink-soft">{blurb}</p>}
 
       <div className={heading || blurb ? "mt-4 space-y-3" : "space-y-3"}>
@@ -187,7 +171,7 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
         </div>
 
         {/* Honeypot — visually hidden, off-screen, not focusable */}
-        <div aria-hidden="true" className="absolute -left-[9999px] -top-[9999px]">
+        <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px]">
           <label>
             Leave this box unchecked
             <input
@@ -203,7 +187,10 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
         <button
           type="submit"
           disabled={submitting}
-          className={[BUTTON_PRIMARY, "w-full justify-center py-3 disabled:cursor-not-allowed disabled:opacity-70"].join(" ")}
+          className={[
+            BUTTON_PRIMARY,
+            "w-full justify-center py-3 disabled:cursor-not-allowed disabled:opacity-70",
+          ].join(" ")}
         >
           <span className="grid">
             <span
@@ -223,7 +210,11 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
                 submitting ? "opacity-100" : "opacity-0 blur-[2px]",
               ].join(" ")}
             >
-              <Icon icon="ph:circle-notch-bold" aria-hidden="true" className={submitting ? "animate-spin motion-reduce:animate-none" : ""} />
+              <Icon
+                icon="ph:circle-notch-bold"
+                aria-hidden="true"
+                className={submitting ? "animate-spin motion-reduce:animate-none" : ""}
+              />
               Sending…
             </span>
           </span>

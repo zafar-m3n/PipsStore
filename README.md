@@ -52,5 +52,5 @@ All content on PipsStore is for educational purposes only and does not constitut
 
 ## Contact
 
-- **Email:** support@pipsstore.com
+- **Email:** trade@pipsstore.com
 - **Response time:** within 48 hours

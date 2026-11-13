@@ -19,7 +19,7 @@ function PrivacyPolicy() {
       closing={{
         icon: "ph:lifebuoy",
         heading: "Questions about your data?",
-        body: `Contact us at ${CONTACT_INFO.email} and we'll help you access, correct, or delete any personal information we hold about you.`,
+        body: `Contact us at ${CONTACT_INFO.email} and we'll help you update, correct or delete any personal information we hold about you.`,
       }}
     />
   );

@@ -52,7 +52,7 @@ export const EDUCATIONAL_DISCLAIMER_LONG =
   "PipsStore provides free educational material about the foreign exchange market. We are not a broker, a financial adviser, or a signals service. We never sell trading signals and we make no promises about profit. Foreign exchange trading carries a high level of risk and may not be suitable for every investor. Before trading real money, make sure you fully understand the risks involved and, if needed, seek advice from an independent licensed professional.";
 
 export const CONTACT_INFO = {
-  email: "support@pipsstore.com",
+  email: "trade@pipsstore.com",
   responseTime: "We usually reply within 1–2 business days.",
   hours: "Support hours: Monday to Friday, 9am – 5pm (UTC)",
 };
