@@ -79,6 +79,10 @@ export const ABOUT_FAQ = [
   },
   {
     q: "Is it really free?",
-    a: "Yes — the whole site, every lesson and tool. There's no account required to read the material and no paid tier.",
+    a: "Yes — the whole site, every lesson and tool, with no account required. Separately, we offer optional paid mentoring packages with one-on-one consultations, but you never need one to use the free material.",
+  },
+  {
+    q: "Are your packages trading accounts or a trading service?",
+    a: "No. Our mentoring packages are education only. We are not a trading company or a broker, we don't open or manage trading accounts, and we don't give trading advice, signals or trade calls.",
   },
 ];

@@ -20,6 +20,7 @@ import { filterGlossary } from "@/lib/glossary.js";
 import { LEARNING_PATHS } from "@/data/learningPaths.js";
 import { ROADMAP_STEPS } from "@/data/roadmap.js";
 import { TOOLS_PREVIEW } from "@/data/tools.js";
+import { PACKAGES, TRIAL_DAYS } from "@/data/packages.js";
 import { GLOSSARY_TERMS, GLOSSARY_TEASER_CHIPS } from "@/data/glossary.js";
 
 const tool = (id) => TOOLS_PREVIEW.find((t) => t.id === id);
@@ -371,12 +372,39 @@ function PathsSection() {
   );
 }
 
+function PackagesTeaser() {
+  const from = Math.min(...PACKAGES.map((p) => p.price));
+
+  return (
+    <section aria-labelledby="mentoring-title" className="container-page pb-section">
+      <div className="card grid gap-8 p-6 sm:p-10 lg:grid-cols-12 lg:items-end">
+        <div className="lg:col-span-8">
+          <h2 id="mentoring-title" className="text-title text-ink">
+            Want a mentor? <em className="text-brand">Learn one-on-one.</em>
+          </h2>
+          <p className="mt-4 max-w-[56ch] text-body text-ink-soft sm:text-lead">
+            The academy stays free. If you'd like guidance, our mentoring packages add a study plan and one-on-one
+            consultations, from ${from} USD, with a {TRIAL_DAYS}-day free trial.
+          </p>
+          <p className="mt-4 max-w-[60ch] text-small text-ink-muted">
+            Education only. Trading involves high risk. We don't give trading advice and we are not a trading company.
+          </p>
+        </div>
+        <div className="lg:col-span-4 lg:justify-self-end">
+          <ButtonLink to="/packages">See the packages</ButtonLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Home() {
   return (
     <>
       <HeroSection />
       <BentoSection />
       <PathsSection />
+      <PackagesTeaser />
       <div className="container-page py-16">
         <DisclaimerBanner />
       </div>

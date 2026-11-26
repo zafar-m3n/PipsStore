@@ -10,7 +10,7 @@ function TermsAndConditions() {
   return (
     <LegalPage
       title="Terms & Conditions"
-      subtitle="The rules for using the PipsStore website and its free educational content."
+      subtitle="The rules for using the PipsStore website, its free educational content and its mentoring packages."
       lastUpdated={LEGAL_LAST_UPDATED}
       intro={TERMS_INTRO}
       summary={TERMS_SUMMARY}
@@ -18,7 +18,7 @@ function TermsAndConditions() {
       closing={{
         icon: "ph:handshake",
         heading: "In short",
-        body: "PipsStore is a free educational resource. Use it to learn, not as a substitute for professional advice, and understand that any trading decisions — and their outcomes — are yours alone.",
+        body: "PipsStore is an educational resource, free or paid, and never a trading service. Use it to learn, not as a substitute for professional advice, and understand that any trading decisions — and their outcomes — are yours alone.",
       }}
     />
   );

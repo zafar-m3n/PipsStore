@@ -37,7 +37,14 @@ const fieldClass = [
   FIELD_FOCUS,
 ].join(" ");
 
-function ContactForm({ className = "", heading, blurb, surface = "card" }) {
+function ContactForm({
+  className = "",
+  heading,
+  blurb,
+  surface = "card",
+  submitLabel = "Get started free",
+  successMessage,
+}) {
   const [values, setValues] = useState(EMPTY);
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -79,7 +86,8 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
       const { data } = await http.post("/api/v1/contact", payload);
       if (data?.code === "OK") {
         setValues(EMPTY);
-        navigate("/thank-you", { state: { fromContactForm: true } });
+        if (successMessage) toast.success(successMessage);
+        else navigate("/thank-you", { state: { fromContactForm: true } });
       } else {
         toast.error(backendError(data) || "Something went wrong. Please try again in a moment.");
       }
@@ -200,7 +208,7 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
                 submitting ? "opacity-0 blur-[2px]" : "opacity-100",
               ].join(" ")}
             >
-              Get started free
+              {submitLabel}
               <Icon icon="ph:paper-plane-tilt-bold" aria-hidden="true" />
             </span>
             <span
@@ -221,7 +229,7 @@ function ContactForm({ className = "", heading, blurb, surface = "card" }) {
         </button>
 
         <p className="text-small text-ink-muted">
-          Free educational content only. No signals, no spam. See our{" "}
+          Education only. We don't provide trading advice, signals or financial services. No spam. See our{" "}
           <Link to="/privacy-policy" className="text-brand underline hover:text-brand-hover">
             Privacy Policy
           </Link>

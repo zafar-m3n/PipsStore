@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { label: "Markets", to: "/markets" },
   { label: "Analysis", to: "/analysis" },
   { label: "Tools", to: "/tools" },
+  { label: "Packages", to: "/packages" },
   { label: "About", to: "/about" },
 ];
 
@@ -14,6 +15,7 @@ export const FOOTER_COLUMNS = [
     links: [
       { label: "Home", to: "/" },
       { label: "About PipsStore", to: "/about" },
+      { label: "Mentoring Packages", to: "/packages" },
       { label: "Market Insights", to: "/markets" },
       { label: "Chart Analysis", to: "/analysis" },
     ],
@@ -45,11 +47,14 @@ export const SOCIAL_LINKS = [
   { label: "Telegram", href: "https://t.me/pipsstore", icon: "ph:telegram-logo" },
 ];
 
+export const RISK_WARNING =
+  "Trading forex involves a high level of risk and you can lose all of the money you trade with. PipsStore is an education provider only. We are not a trading company, broker or financial adviser, we don't provide trading, investment or financial services, and we don't give trading advice.";
+
 export const DISCLAIMER_TEXT =
-  "All content on PipsStore is for educational purposes only and should not be considered financial advice. Trading involves risk, and you should always do your own research before making any financial decisions.";
+  "Everything on PipsStore, including our paid mentoring packages and one-on-one consultations, is education only and is not financial or trading advice. Trading involves high risk and you can lose all of your money. We are not a trading company and don't provide trading or financial services.";
 
 export const EDUCATIONAL_DISCLAIMER_LONG =
-  "PipsStore provides free educational material about the foreign exchange market. We are not a broker, a financial adviser, or a signals service. We never sell trading signals and we make no promises about profit. Foreign exchange trading carries a high level of risk and may not be suitable for every investor. Before trading real money, make sure you fully understand the risks involved and, if needed, seek advice from an independent licensed professional.";
+  "PipsStore provides free educational material about the foreign exchange market, and optional paid mentoring packages that are also purely educational. We are not a trading company, a broker, a financial adviser or a signals service. We don't provide trading, investment or financial services, we don't give trading advice or trade calls, we don't open or manage trading accounts, and we make no promises about profit. Foreign exchange trading carries a high level of risk, may not be suitable for every investor, and can result in the loss of all of your capital. Before trading real money, make sure you fully understand the risks involved and, if needed, seek advice from an independent licensed professional.";
 
 export const CONTACT_INFO = {
   email: "trade@pipsstore.com",

@@ -135,7 +135,7 @@ function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Link to="/academy" className={["hidden sm:inline-flex", ctaClass].join(" ")}>
+          <Link to="/academy" className={["hidden sm:inline-flex md:hidden lg:inline-flex", ctaClass].join(" ")}>
             Start free
             <Icon icon="ph:arrow-right-bold" aria-hidden="true" />
           </Link>

@@ -1,7 +1,7 @@
 /* Content for the Privacy Policy and Terms & Conditions pages. */
 import { CONTACT_INFO } from "@/data/site.js";
 
-export const LEGAL_LAST_UPDATED = "13 November 2026";
+export const LEGAL_LAST_UPDATED = "26 November 2026";
 
 export const PRIVACY_INTRO =
   "This Privacy Policy explains what personal information PipsStore collects, how it is used, and the choices you have. PipsStore is an educational website, and you don't need an account to use it.";
@@ -84,7 +84,7 @@ export const TERMS_SUMMARY = [
     title: "Education only",
     icon: "ph:graduation-cap",
     description:
-      "Everything on PipsStore is for learning. Nothing here is financial, investment, tax or legal advice, and we don't provide trading signals.",
+      "Everything on PipsStore, including paid mentoring packages, is for learning. Nothing here is financial, investment, tax or legal advice, and we don't provide trading signals or trading services.",
   },
   {
     title: "Risk awareness",
@@ -128,7 +128,14 @@ export const TERMS_SECTIONS = [
   {
     heading: "No professional or investment advice",
     body: [
-      "PipsStore is not an investment adviser and does not provide trading signals. Nothing on this website is financial, investment, tax or legal advice, or a personal recommendation. You are solely responsible for your own investment decisions. Please consult a qualified professional about your financial, tax or legal situation.",
+      "PipsStore is not a trading company or an investment adviser, does not provide trading or financial services, and does not provide trading signals. Nothing on this website is financial, investment, tax or legal advice, or a personal recommendation. You are solely responsible for your own investment decisions. Please consult a qualified professional about your financial, tax or legal situation.",
+    ],
+  },
+  {
+    heading: "Paid mentoring packages",
+    body: [
+      "PipsStore offers optional paid mentoring packages, including one-on-one consultations. These packages are educational services only. They are not trading, investment, brokerage or financial services, and they do not include trading advice, signals, trade recommendations or account management. Any free trial of a package is for education only, and prices and schedules are confirmed with you directly before any payment.",
+      "PipsStore is not a trading company. Nothing said in a consultation, study plan or review is a recommendation to buy, sell or hold any financial instrument, and you remain solely responsible for any trading decisions you make.",
     ],
   },
   {

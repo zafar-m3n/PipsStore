@@ -5,6 +5,7 @@ import Academy from "@/pages/Academy.jsx";
 import Markets from "@/pages/Markets.jsx";
 import Analysis from "@/pages/Analysis.jsx";
 import Tools from "@/pages/Tools.jsx";
+import Packages from "@/pages/Packages.jsx";
 import About from "@/pages/About.jsx";
 import ThankYou from "@/pages/ThankYou.jsx";
 import PrivacyPolicy from "@/pages/PrivacyPolicy.jsx";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/markets" element={<Markets />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/tools" element={<Tools />} />
+        <Route path="/packages" element={<Packages />} />
         <Route path="/about" element={<About />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

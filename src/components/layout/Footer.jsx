@@ -79,7 +79,7 @@ function Footer() {
         <section aria-labelledby="footer-disclaimer" className="card mt-16 p-6 sm:p-8">
           <h2 id="footer-disclaimer" className="flex items-center gap-2 text-body font-semibold text-ink">
             <Icon icon="ph:warning-circle" className="text-warning" aria-hidden="true" />
-            Educational disclaimer
+            Risk warning and disclaimer
           </h2>
           <p className="mt-3 max-w-[75ch] text-small text-ink-soft">{EDUCATIONAL_DISCLAIMER_LONG}</p>
         </section>
